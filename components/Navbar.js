@@ -1,12 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
 import SpitFireLogo from '../public/SpitFireLogo.png'
 import { useStateContext } from '../context/StateContext'
+import Login from './Login'
+import Signup from './Signup'
 
 const Navbar = () => {
 
   const { currentUser } = useStateContext();
+
+  //LOG IN
+  const [showLogInModal, setShowLogInModal] = useState(false);
+  const openLogInModal = () => {
+    setShowLogInModal(prev => !prev)
+  }
+
+  //SIGN UP
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
+  const openSignUpModal = () => {
+    setShowSignUpModal(prev => !prev)
+  }
+
 
   return (
     <Section>
@@ -16,11 +31,13 @@ const Navbar = () => {
           <LogoText>SpitFire</LogoText>
         </LogoContainer>
         <ButtonContainer>
-          <Button1>Log In</Button1>
-          <Button2>Sign Up</Button2>
+          <Button1 onClick={openLogInModal}>Log In</Button1>
+          <Button2 onClick={openSignUpModal}>Sign Up</Button2>
         </ButtonContainer>
-
       </Container>
+
+      <Login showModal={showLogInModal} setShowModal={setShowLogInModal}/>
+      <Signup showModal={showSignUpModal} setShowModal={setShowSignUpModal}/>
 
     </Section>
   )
