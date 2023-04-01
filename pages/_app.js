@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { Toaster } from "react-hot-toast"
 import { createGlobalStyle } from 'styled-components'
 import { StateContext } from "../context/StateContext"
 import "@fontsource/inter-tight"
@@ -23,6 +24,7 @@ function MyApp({ Component, pageProps, ...appProps }) {
         </Head>
 
         <GlobalStyle />
+        <Toaster />
 
           <StateContext>
               <Component {...pageProps} />

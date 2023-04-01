@@ -2,8 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
 import SpitFireLogo from '../public/SpitFireLogo.png'
+import { useStateContext } from '../context/StateContext'
 
 const Navbar = () => {
+
+  const { currentUser } = useStateContext();
+
   return (
     <Section>
       <Container>
