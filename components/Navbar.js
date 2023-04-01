@@ -139,8 +139,8 @@ const NameAndProfile = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 2vw;
-  background-color: gainsboro;
-  border: 0.1vw solid gainsboro;
+  background-color: #f5f5f5;
+  border: 0.1vw solid #f5f5f5;
   border-radius: 1vw;
   padding: 0.35vw 1vw;
   cursor: pointer;
