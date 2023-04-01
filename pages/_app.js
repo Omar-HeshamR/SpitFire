@@ -11,6 +11,14 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+
+    // disable global scroll bar
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;
+    ::-webkit-scrollbar { // chrome disable scroll
+      display: none;
+    } 
+
   }
 `
 

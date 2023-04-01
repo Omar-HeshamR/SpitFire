@@ -1,9 +1,7 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { auth, database, googleProvider, facebookProvider } from "../library/firebase"
+import React, { createContext, useContext, useState } from 'react';
+import { auth, database } from "../library/firebase"
 import { toast } from "react-hot-toast"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, 
-  signOut, sendPasswordResetEmail, updateProfile, GoogleAuthProvider , 
-  FacebookAuthProvider , signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 const Context = createContext();
 
@@ -14,22 +12,23 @@ export const StateContext = ({ children }) => {
   // AUTH FUNCTIONALTIES
   async function register(name, email, password) {
     let WillLogIn = false;
+    let userCreds;
     await createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      setCurrentUser(userCredential.user) 
       WillLogIn = true;
-      set(ref(database, 'users/' + currentUser.uid + "/user-details/" + `type`), "unpaid");
     })
     .catch((error) => {
+      console.log(error)
       toast.error(`Account Creation Failed`)
     });
 
     await updateProfile(auth.currentUser, {displayName: name})
     .then(() => {
-      // console.log("UPDATED!")
+      console.log("UPDATED!")
     }).catch((error) => {
       // console.log(error)
     });
+
     if(WillLogIn){
       await login(email, password)
     }
@@ -38,14 +37,11 @@ export const StateContext = ({ children }) => {
   async function login(email, password) {
     await signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      window.localStorage.setItem("userToken", JSON.stringify(userCredential.user))
-      setCurrentUser(JSON.parse(window.localStorage.getItem("userToken")));
-      window.localStorage.setItem("isLoggedIn", true)
-      RouteAfterAuth()
+      setCurrentUser(userCredential.user);
     })
     .catch((error) => {
       toast.error(`Invalid Credentials`)
-      return(error.message)
+      console.log(error)
     });
   
   }

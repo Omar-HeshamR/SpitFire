@@ -1,12 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
 import SpitFireLogo from '../public/SpitFireLogo.png'
 import { useStateContext } from '../context/StateContext'
+import Login from './Login'
+import Signup from './Signup'
+import { VscAccount } from "react-icons/vsc";
+import { SlSettings, SlLogout } from "react-icons/sl";
 
 const Navbar = () => {
 
-  const { currentUser } = useStateContext();
+  const { currentUser, setCurrentUser } = useStateContext();
+
+  //LOG IN
+  const [showLogInModal, setShowLogInModal] = useState(false);
+  const openLogInModal = () => {
+    setShowLogInModal(prev => !prev)
+  }
+
+  //SIGN UP
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
+  const openSignUpModal = () => {
+    setShowSignUpModal(prev => !prev)
+  }
+
+  const truncateString = (str) => (str.length > 25 ? str.slice(0, 25) + "..." : str);
 
   return (
     <Section>
@@ -15,12 +33,26 @@ const Navbar = () => {
           <Logo><Image src={SpitFireLogo} alt="Logo"/></Logo>
           <LogoText>SpitFire</LogoText>
         </LogoContainer>
-        <ButtonContainer>
-          <Button1>Log In</Button1>
-          <Button2>Sign Up</Button2>
-        </ButtonContainer>
 
+        {currentUser ? 
+        <ProfileItemsContainer>
+          <NameAndProfile>
+            <ProfileIcon />
+            <NameDisplay>{truncateString(currentUser.displayName)}</NameDisplay>
+          </NameAndProfile>
+          <SettingsIcon />
+          <LogOutIcon onClick={() => setCurrentUser(undefined)}/>
+        </ProfileItemsContainer>
+        : 
+        <ButtonContainer>
+        <LogInButton onClick={openLogInModal}>Log In</LogInButton>
+        <SignUpButton onClick={openSignUpModal}>Sign Up</SignUpButton>
+        </ButtonContainer>
+        }
       </Container>
+
+      <Login showModal={showLogInModal} setShowModal={setShowLogInModal}/>
+      <Signup showModal={showSignUpModal} setShowModal={setShowSignUpModal}/>
 
     </Section>
   )
@@ -62,7 +94,7 @@ const ButtonContainer = styled.div`
 display: flex;
 align-items: center;
 `
-const Button1 = styled.button`
+const LogInButton = styled.button`
 height: 3vw;
 width: 8vw;
 background-color: #FE5F55;
@@ -79,7 +111,7 @@ box-shadow: 0.1vw 0.1vw 0.5vw gainsboro;
   box-shadow: none;
 }
 `
-const Button2 = styled.button`
+const SignUpButton = styled.button`
 height: 3vw;
 width: 8vw;
 background-color: #5B618A;
@@ -96,6 +128,47 @@ box-shadow: 0.1vw 0.1vw 0.5vw gainsboro;
   opacity: 1;
   box-shadow: none;
 }
+`
+const ProfileItemsContainer = styled.div`
+  display: flex;
+  align-items: center;
+`
+const NameAndProfile = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-right: 2vw;
+  background-color: gainsboro;
+  border: 0.1vw solid gainsboro;
+  border-radius: 1vw;
+  padding: 0.35vw 1vw;
+  cursor: pointer;
+  &:hover{
+    border: 0.1vw solid black;
+    background-color: white;
+  }
+`
+
+const NameDisplay = styled.div`
+  font-size: 1.25vw;
+`
+
+const ProfileIcon = styled(VscAccount)`
+  margin-right: 0.75vw;
+  font-size: 2vw;
+`
+
+const SettingsIcon = styled(SlSettings)`
+  margin-right: 2vw;
+  font-size: 2vw;
+  cursor: pointer;
+`
+
+const LogOutIcon = styled(SlLogout)`
+  font-size: 2vw;
+  transform: rotate(-180deg);
+  cursor: pointer;
 `
 
 export default Navbar
