@@ -1,8 +1,7 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { auth, database, googleProvider } from "../library/firebase"
+import React, { createContext, useContext, useState } from 'react';
+import { auth, database } from "../library/firebase"
 import { toast } from "react-hot-toast"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, 
-  updateProfile, GoogleAuthProvider , signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 const Context = createContext();
 
