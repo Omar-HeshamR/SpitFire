@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { auth, database, googleProvider, facebookProvider } from "../library/firebase"
+import { auth, database, googleProvider } from "../library/firebase"
 import { toast } from "react-hot-toast"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, 
   updateProfile, GoogleAuthProvider , signInWithPopup } from "firebase/auth";

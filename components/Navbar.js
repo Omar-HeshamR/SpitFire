@@ -30,10 +30,17 @@ const Navbar = () => {
           <Logo><Image src={SpitFireLogo} alt="Logo"/></Logo>
           <LogoText>SpitFire</LogoText>
         </LogoContainer>
+
+        {currentUser ? 
+        <></>
+        : 
         <ButtonContainer>
-          <Button1 onClick={openLogInModal}>Log In</Button1>
-          <Button2 onClick={openSignUpModal}>Sign Up</Button2>
+        <LogInButton onClick={openLogInModal}>Log In</LogInButton>
+        <SignUpButton onClick={openSignUpModal}>Sign Up</SignUpButton>
         </ButtonContainer>
+        }
+
+
       </Container>
 
       <Login showModal={showLogInModal} setShowModal={setShowLogInModal}/>
@@ -79,7 +86,7 @@ const ButtonContainer = styled.div`
 display: flex;
 align-items: center;
 `
-const Button1 = styled.button`
+const LogInButton = styled.button`
 height: 3vw;
 width: 8vw;
 background-color: #FE5F55;
@@ -96,7 +103,7 @@ box-shadow: 0.1vw 0.1vw 0.5vw gainsboro;
   box-shadow: none;
 }
 `
-const Button2 = styled.button`
+const SignUpButton = styled.button`
 height: 3vw;
 width: 8vw;
 background-color: #5B618A;
