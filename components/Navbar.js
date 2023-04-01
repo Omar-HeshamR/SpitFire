@@ -1,12 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
 import SpitFireLogo from '../public/SpitFireLogo.png'
 import { useStateContext } from '../context/StateContext'
+import Login from './Login'
+import Signup from './Signup'
 
 const Navbar = () => {
 
   const { currentUser } = useStateContext();
+
+  //LOG IN
+  const [showLogInModal, setShowLogInModal] = useState(false);
+  const openLogInModal = () => {
+    setShowLogInModal(prev => !prev)
+  }
+
+  //SIGN UP
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
+  const openSignUpModal = () => {
+    setShowSignUpModal(prev => !prev)
+  }
+
 
   return (
     <Section>
@@ -15,12 +30,21 @@ const Navbar = () => {
           <Logo><Image src={SpitFireLogo} alt="Logo"/></Logo>
           <LogoText>SpitFire</LogoText>
         </LogoContainer>
+
+        {currentUser ? 
+        <></>
+        : 
         <ButtonContainer>
-          <Button1>Log In</Button1>
-          <Button2>Sign Up</Button2>
+        <LogInButton onClick={openLogInModal}>Log In</LogInButton>
+        <SignUpButton onClick={openSignUpModal}>Sign Up</SignUpButton>
         </ButtonContainer>
+        }
+
 
       </Container>
+
+      <Login showModal={showLogInModal} setShowModal={setShowLogInModal}/>
+      <Signup showModal={showSignUpModal} setShowModal={setShowSignUpModal}/>
 
     </Section>
   )
@@ -62,7 +86,7 @@ const ButtonContainer = styled.div`
 display: flex;
 align-items: center;
 `
-const Button1 = styled.button`
+const LogInButton = styled.button`
 height: 3vw;
 width: 8vw;
 background-color: #FE5F55;
@@ -79,7 +103,7 @@ box-shadow: 0.1vw 0.1vw 0.5vw gainsboro;
   box-shadow: none;
 }
 `
-const Button2 = styled.button`
+const SignUpButton = styled.button`
 height: 3vw;
 width: 8vw;
 background-color: #5B618A;
