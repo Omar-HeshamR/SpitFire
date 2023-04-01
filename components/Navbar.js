@@ -26,7 +26,6 @@ const Navbar = () => {
 
   const truncateString = (str) => (str.length > 25 ? str.slice(0, 25) + "..." : str);
 
-
   return (
     <Section>
       <Container>

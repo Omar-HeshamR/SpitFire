@@ -13,9 +13,9 @@ export const StateContext = ({ children }) => {
   // AUTH FUNCTIONALTIES
   async function register(name, email, password) {
     let WillLogIn = false;
+    let userCreds;
     await createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      setCurrentUser(userCredential.user) 
       WillLogIn = true;
     })
     .catch((error) => {
@@ -29,6 +29,7 @@ export const StateContext = ({ children }) => {
     }).catch((error) => {
       // console.log(error)
     });
+
     if(WillLogIn){
       await login(email, password)
     }
