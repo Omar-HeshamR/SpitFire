@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
 import { useStateContext } from '../context/StateContext';
 import { useRouter } from 'next/router'
+import Image from 'next/image';
+import SpitFireLogo from '../public/SpitFireLogo.png'
 
 const Signup = ({ showModal, setShowModal }) => {
 
@@ -50,14 +52,18 @@ const Signup = ({ showModal, setShowModal }) => {
       <Background onClick={closeModal} ref={modalRef}>
           <ModalWrapper showModal={showModal}>
             <ModalContent>
-              <MainTitle> SIGN UP </MainTitle>
+            <MainTitle> 
+                <Image src={SpitFireLogo} alt="SpitFire Logo"/>
+                Create the sickest raps
+                <Image src={SpitFireLogo} alt="SpitFire Logo"/>
+              </MainTitle>
               <InputTitle> Enter Your Full Name:</InputTitle>
               <FieldInput type={"text"} ref={nameRef}/>
               <InputTitle> Enter Email Address:</InputTitle>
               <FieldInput type={"email"} ref={emailRef}/>
               <InputTitle> Enter Password:</InputTitle>
               <FieldInput type={"password"} ref={passwordRef}/>
-              <LogInButton onClick={handleRegister}>SIGN Up</LogInButton>
+              <LogInButton onClick={handleRegister}>Sign Up</LogInButton>
             </ModalContent>
             <CloseModalButton
               aria-label='Close modal'
@@ -85,11 +91,12 @@ const Background = styled.div`
   z-index:10;
 `;
 
-const ModalWrapper = styled.div`
-  width: 50%;
-  height: 75%;
+const ModalWrapper = styled.div` //edited
+  // width: 100%;
+  // height: 75%;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
-  background: #fff;
+  // background: #fff;
+  background: linear-gradient(to bottom, #FFFFFF, #B5B8CF);
   color: #000;
   display: grid;
   grid-template-columns: 1fr;
@@ -102,6 +109,8 @@ const ModalWrapper = styled.div`
 `;
 
 const ModalContent = styled.div`
+  margin: 4vw 2vw;
+  width: 40vw;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -126,59 +135,107 @@ const CloseModalButton = styled(MdClose)`
   z-index: 10;
 `;
 
-const MainTitle = styled.h1`
+const MainTitle = styled.div` // edited
 font-size: 2.75vw;
 margin-top: 1vw;
+margin-bottom: 2vw;
+justify-content: space-between;
+align-items: center;
+width: 90%;
+display: flex;
+font-weight: 900;
 @media (max-width: 480px){
   font-size: 4.75vw;
 }
+img{
+
+  width: 2vw;
+  height: 2vw;
+}
 `
-const InputTitle = styled.div`
-font-size: 1.75vw;
-width: 92%;
-color: dark_grey;
+const InputTitle = styled.div` // edited
+font-size: 1vw;
+margin-left: 0.5vw;
+width: 90%;
+color: #0A0A0A;
 display: flex;
 margin-top: 1vw;
+margin-bottom: 0.25vw;
 @media (max-width: 480px){
   font-size: 3.75vw;
 }
 `
-const FieldInput = styled.input`
+const FieldInput = styled.input` // edited
 width: 90%;
-height: 2vw;
+height: 2.5vw;
 font-size: 1vw;
-font-weight: 600;
-border: 2px solid #404040;
+font-weight: 100;
+border: 0;
 type: text;
+border-radius: 0.5vw;
+color: #0A0A0A;
+text-indent: 0.5vw;
+
+&:focus,
+&:active {
+  outline: none;
+}
+&::placeholder {
+  color: grey;
+}
 `
-const LogInButton = styled.button`
+const LogInButton = styled.button` //edited
 width: 90%;
 display: inline-block;
 cursor: pointer;
 margin-top: 1.5vw;
-background-color: black;
+background-color: #FE5F55;
 color: white;
 font-weight: 600;
-font-size: 1vw;
-padding: 1vw 2vw;
+font-size: 2vw;
+height: 4vw;
 transition: all 0.5s ease;
+border: 0;
+border-radius: 0.5vw;
+filter: opacity(0.8);
 &:hover{
-  transform: scale(0.7);
+  filter: opacity(1);
+  transform: scale(0.975);
+  transition: ease 1s;
 }
-&::after{
-  content: " ";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%) scale(0);
-  border: 0.5vw solid black;
-  width: 100%;
-  height: 100%;
+`
+const BlackLine = styled.div`
+width: 90%;
+margin: 1vw;
+background-color: black;
+height: 1%;
+`
+const EndItemsContainer = styled.div`
+flex-direction: row;
+display: flex;
+justify-content: space-between;
+width: 90%;
+`
+const EndItem = styled.div`
+color: blue;
+cursor: pointer;
+margin-bottom: 1vw;
+&:hover{
+  text-decoration: underline;
 }
-&:hover::after{
-  transform: translate(-50%,-50%) scale(1);
-  padding: 0.5vw;
+@media (max-width: 1024px){
+    font-size: 1.5vw;
 }
+@media (max-width: 480px){
+  font-size: 2.75vw;
+}
+`
+const ErrorContainer = styled.div`
+background-color: coral;
+color: black;
+border-radius: 10px;
+padding: 0.5vw 0.5vw;
+font-size: 1.5vw;
 `
 
 export default Signup
