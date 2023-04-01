@@ -1,11 +1,11 @@
 
 
-export async function createVerses(rapper1, rapper2){
+export async function createRap(rapper1, rapper2){
     const { Configuration, OpenAIApi } = require("openai");
     const prompt = `Make a unique rap battle between ${rapper1} and ${rapper2} that considers each's personal info. Each of the 8 verses should have 4 lines.`
 
     const configuration = new Configuration({
-        apiKey: "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",
+        apiKey: "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",
       });
     const openai = new OpenAIApi(configuration);
     const completion = await openai.createChatCompletion({
@@ -21,6 +21,32 @@ export async function createVerses(rapper1, rapper2){
         temperature: 0.70
       });
 
-    return completion.data.choices[0].message.content;
+    let rap = completion.data.choices[0].message.content;
+    return seperateIntoVerses(rapper1, rapper2, rap);
 }
 
+
+function seperateIntoVerses(rapper1, rapper2, rap) {
+  const rapper1Info = {};
+  const rapper2Info = {};
+  rapper1Info.name = rapper1;
+  rapper2Info.name = rapper2;
+  const verses = rap.split("\n\n");
+  rapper1Info.verses = [];
+  rapper2Info.verses = [];
+
+  for (let i = 0; i < verses.length; i++) {
+    let verseText = verses[i]
+    const index = verseText.indexOf('\n');
+    if (index >= 0) {
+      verseText = verseText.slice(index+1); // remove text before first newline
+    }
+    verseText = verseText.replace(/\n/g, ' ');
+    if (i % 2 === 0) {
+      rapper1Info.verses.push(verseText);
+    } else {
+      rapper2Info.verses.push(verseText);
+    }
+  }
+  return [rapper1Info, rapper2Info];
+}
