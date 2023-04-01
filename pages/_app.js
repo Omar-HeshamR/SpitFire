@@ -1,11 +1,12 @@
 import Head from 'next/head'
 import { createGlobalStyle } from 'styled-components'
 import { StateContext } from "../context/StateContext"
+import "@fontsource/inter-tight"
 
 export const GlobalStyle = createGlobalStyle`
-  * 
-    {
-    font-family: "Public Sans", sans-serif;
+* 
+  {
+    font-family: "Inter Tight", sans-serif;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
