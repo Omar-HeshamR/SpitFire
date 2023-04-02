@@ -95,6 +95,7 @@ return(
       login,
       createPost, 
       Posts,
+      getPosts,
 
     }}
     >

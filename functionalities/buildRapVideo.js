@@ -59,8 +59,18 @@ function base64ToMp4Blob(base64) {
 }
 
 export async function buildRapBattle(rapper1, rapper2, topics){
-  const rapperInformation = await createRap(rapper1, rapper2, topics)
-  const verseBase64 = await createBlobArray(rapperInformation)
-  const response = await sendVideo(rapper1, rapper2, verseBase64)
-  return base64ToMp4Blob(response.data)
-}
+    const rapperInformation = await createRap(rapper1, rapper2, topics)
+    let verseBase64 = await createBlobArray(rapperInformation)
+    verseBase64 = verseBase64.filter(function(element) {
+      return element !== undefined;
+    });
+    return verseBase64
+  }
+
+// export async function buildRapBattle(rapper1, rapper2, topics){
+//   const rapperInformation = await createRap(rapper1, rapper2, topics)
+//   const verseBase64 = await createBlobArray(rapperInformation)
+//   const response = await sendVideo(rapper1, rapper2, verseBase64)
+//   return base64ToMp4Blob(response.data)
+// }
+

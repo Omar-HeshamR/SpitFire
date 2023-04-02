@@ -8,12 +8,15 @@ import Image from 'next/image';
 import RapperDropDown from "../../utilities/rapperDropDown"
 import {getRapperImage} from '@/functionalities/getRapperImage';
 import { buildRapBattle } from "@/functionalities/buildRapVideo"
+import {useRouter} from 'next/router';
 
 const crypto = require('crypto');
 
 const CreateModal = ({ showModal, setShowModal }) => {
 
-  const { currentUser, createPost } = useStateContext();
+  const { currentUser, createPost, getPosts } = useStateContext();
+  const router = useRouter();
+
   const [ loading, setLoading ] = useState(false);
 
   const [rapper1, setRapper1] = useState("");
@@ -44,8 +47,7 @@ const CreateModal = ({ showModal, setShowModal }) => {
     setLoading("Creating Video...")
     const postID = hashString(currentUser.displayName);
     const makeVideo = await buildRapBattle(rapper1, rapper2, topicRef);
-    // const getVideoLink =
-
+    console.log(makeVideo)
     const PostObject = {
       postId: postID,
       creator: currentUser.displayName,
@@ -53,7 +55,7 @@ const CreateModal = ({ showModal, setShowModal }) => {
       rapper1_name: rapper1,
       rapper2_image: getRapperImage(rapper2),
       rapper2_name: rapper2,
-      video_link: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      video_link: makeVideo,
       topic: topicRef,
       isBettingEnabled: enableBetting,
       view_count: 0,
@@ -64,8 +66,9 @@ const CreateModal = ({ showModal, setShowModal }) => {
 
     createPost(postID, PostObject);
     toast.success("Rap Battle Created !")
+    setLoading(false)
     setShowModal(false)
-
+    getPosts()
   }
 
   function hashString(str) {

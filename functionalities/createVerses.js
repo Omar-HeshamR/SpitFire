@@ -3,7 +3,7 @@ export async function createRap(rapper1, rapper2, topics){
   const { Configuration, OpenAIApi } = require("openai");
 
   const configuration = new Configuration({
-    apiKey: "",
+    apiKey: "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",
   });
 
   const openai = new OpenAIApi(configuration);
@@ -31,8 +31,8 @@ export async function createRap(rapper1, rapper2, topics){
 function seperateIntoVerses(rapper1, rapper2, rap) {
 const rapper1Info = {};
 const rapper2Info = {};
-rapper1Info.name = rapper1;
-rapper2Info.name = rapper2;
+rapper1Info.name = nameSwap(rapper1);
+rapper2Info.name = nameSwap(rapper2);
 const verses = rap.split("\n\n");
 rapper1Info.verses = [];
 rapper2Info.verses = [];
@@ -52,4 +52,26 @@ for (let i = 0; i < verses.length; i++) {
   }
 }
 return [rapper1Info, rapper2Info];
+}
+
+function nameSwap(rapperName){
+  const namePairs = {
+    "Donald Trump": "Trump",
+    "Optimus Prime": "Optimus Prime",
+    "Joseph Biden": "Joe Biden",
+    "Barack Obama": "Obama",
+    "Lebron James": "LeBron James",
+    "Morgan Freeman": "Morgan Freeman",
+    "Andrew Tate": "Andrew Tate",
+    "Taylor Swift": "Taylor Swift",
+    "Kanye West": "Kanye",
+    "Drake": "Drake",
+    "Spongebob": "Spongebob",
+    "Squidward": "Squidward",
+    "Eminem": "Eminem",
+    "Mark Zuckerberg": "Mark Zuccerburg",
+    "Ben Shapiro": "Ben Shapiro",
+    "Cardi B": "Cardi B"
+  };
+  return namePairs[rapperName]
 }

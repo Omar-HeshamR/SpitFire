@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
-import Trump from '../public/Trump.png'
-import ElonMusk from '../public/ElonMusk.png'
 import BetsModal from "./BetsModal"
+import { findFileAndGetDownloadURL } from "../functionalities/getGif"
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { BiDownvote } from "react-icons/bi";
@@ -51,6 +50,45 @@ const PostObject = ({PostObject}) => {
       update(postRef, updatedPost);
     }
   }
+  
+  function playBase64Mpegs(mpegs) {
+    const audioPlayer = document.getElementById('audio-player');
+    let currentIndex = 0;
+  
+    function playNextMpeg() {
+      if (currentIndex >= mpegs.length) {
+        // If we've played all the files, stop the audio player
+        audioPlayer.pause();
+        return;
+      }
+  
+      const currentMpeg = mpegs[currentIndex];
+      const blob = base64ToBlob(currentMpeg, 'audio/mpeg');
+  
+      audioPlayer.src = URL.createObjectURL(blob);
+      audioPlayer.play();
+  
+      currentIndex++;
+  
+      audioPlayer.addEventListener('ended', playNextMpeg);
+    }
+  
+    playNextMpeg();
+  }
+  
+  function base64ToBlob(base64String, contentType) {
+    const byteCharacters = atob(base64String);
+    const byteNumbers = new Array(byteCharacters.length);
+  
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+  
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], {type: contentType});
+  
+    return blob;
+  }
 
   return (
     <>
@@ -67,11 +105,14 @@ const PostObject = ({PostObject}) => {
         </Header>
 
         <VideoDiv>
-          <iframe width="100%" height="100%" src={"https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/swift_tate.mp4?alt=media&token=e24034a0-2d5a-459a-a7f2-3ca131fa2b96"} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          <audio id="audio-player"></audio>
+          <iframe src={findFileAndGetDownloadURL(PostObject.rapper1_name)} width="300" height="200"></iframe>
+          <iframe src={findFileAndGetDownloadURL(PostObject.rapper2_name)} width="300" height="200"></iframe> 
         </VideoDiv>
 
         <BottomBar>
           <BottomLeft>Creator: {PostObject.creator}</BottomLeft>
+          <PlayButton onClick={() => playBase64Mpegs(PostObject.video_link)}>Play</PlayButton>
           <VotingButton onClick={() => setShowBetsModal(true)}><VoteIcon/></VotingButton>
           <BottomRight>
             <Upvote onClick={handleUpVote}/>
@@ -128,8 +169,8 @@ align-items: center;
 font-size: 2vw;
 font-weight: 900;
 img{
-  width: 2vw;
-  height: 2vw;
+  width: 3vw;
+  height: 3vw;
   margin-right: 0.5vw;
   border-radius: 2vw;
 }
@@ -144,15 +185,21 @@ align-items: center;
 font-size: 2vw;
 font-weight: 900;
 img{
-  width: 2vw;
-  height: 2vw;
+  width: 3vw;
+  height: 3vw;
   margin-right: 0.5vw;
   border-radius: 2vw;
 }
 `
 const VideoDiv = styled.div`
-height: 34vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  height: 20vw; /* change height to 50vw to evenly split the two sections */
+  background-color: gainsboro;
 `
+
 const BottomBar = styled.div`
 display: flex;
 height: 4vw;
@@ -259,6 +306,25 @@ cursor: pointer;
 `
 const VoteIcon = styled(MdOutlineHowToVote)`
   color: #FE5F55;
+`
+
+const PlayButton = styled.button`
+  height: 2vw;
+  width: 15vw;
+  background-color: #FE5F55;
+  border: none;
+  border-radius: 0.5vw;
+  color: white;
+  font-weight: 600;
+  border-radius: 0.5vw;
+  margin-left: 12vw;
+  opacity: 0.9;
+  box-shadow: 0.1vw 0.1vw 0.5vw gainsboro;
+  &:hover{
+    cursor: pointer;
+    opacity: 1;
+    box-shadow: none;
+  }
 `
 
 export default PostObject
