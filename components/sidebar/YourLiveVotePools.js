@@ -26,13 +26,12 @@ const YourLiveVotePools = () => {
             </Header>
 
             {currentUser ? <>
-              {liveVotesDemo.map((liveVote) => (
-              <ALiveVote firstOption={liveVote.first} secondOption={liveVote.seconed} creator={liveVote.creator} remainingTime={liveVote.timeLeft} />
+              {liveVotesDemo.map((key, liveVote) => (
+              <ALiveVote key={key} firstOption={liveVote.first} secondOption={liveVote.seconed} creator={liveVote.creator} remainingTime={liveVote.timeLeft} />
             ))}        
             </> :
             <NeedAuth>Log In or Sign up to start cashin !</NeedAuth>
             }
-
 
 
         </Container>
@@ -83,7 +82,7 @@ const Header = styled.div`
   align-items: center;
   width: 100%;
   font-size: 0.9vw;
-  font-weight: 600;
+  font-weight: 900;
 `
 const Group = styled.div`
   display: flex;
@@ -115,6 +114,7 @@ justify-content: space-between;
 align-items: center;
 // height: 2vw;
 margin-top: 1vw;
+font-weight: 900;
 `
 const SecondBar = styled.div`
 display: flex;

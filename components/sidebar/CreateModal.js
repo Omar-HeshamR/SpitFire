@@ -44,10 +44,9 @@ const CreateModal = ({ showModal, setShowModal }) => {
 
   async function createRapBattle(){
 
-    setLoading("Creating Video...")
+    setLoading("Creating Battle...")
     const postID = hashString(currentUser.displayName);
-    const makeVideo = await buildRapBattle(rapper1, rapper2, topicRef);
-    console.log(makeVideo)
+    // const makeAudio = await buildRapBattle(rapper1, rapper2, topicRef);
     const PostObject = {
       postId: postID,
       creator: currentUser.displayName,
@@ -55,7 +54,8 @@ const CreateModal = ({ showModal, setShowModal }) => {
       rapper1_name: rapper1,
       rapper2_image: getRapperImage(rapper2),
       rapper2_name: rapper2,
-      video_link: makeVideo,
+      audio_link: "",
+      video_link: "https://www.youtube.com/embed/xQUEfH59Sdk",
       topic: topicRef,
       isBettingEnabled: enableBetting,
       view_count: 0,

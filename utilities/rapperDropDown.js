@@ -25,6 +25,7 @@ const DropdownSelect = ({ onChange }) => {
         <option value="Drake">Drake</option>
         <option value="Spongebob">Spongebob</option>
         <option value="Squidward">Squidward</option>
+        <option value="Elon Musk">Elon Musk</option>
         <option value="Eminem">Eminem</option>
         <option value="Mark Zuckerberg">Mark Zuckerberg</option>
         <option value="Ben Shapiro">Ben Shapiro</option>

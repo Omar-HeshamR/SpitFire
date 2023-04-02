@@ -13,6 +13,7 @@ import MrKrabs from '../public/RapperImages/Mr Krabs.jpg'
 import OptimusPrime from '../public/RapperImages/Optimus Prime.jpeg'
 import SaddamHussein from '../public/RapperImages/Saddam Hussein A.jpg'
 import Spongebob from '../public/RapperImages/Spongebob.jpg'
+import ElonMusk from "../public/RapperImages/ElonMusk.png"
 import TaylorSwift from '../public/RapperImages/Taylor Swift.jpg'
 import Trump from '../public/RapperImages/Trump A.jpg'
 import Drake from '../public/RapperImages/Drake.jpg'
@@ -73,6 +74,9 @@ export function getRapperImage(rapperName){
             break;
           case 'Cardi B':
             imageSrc = CardiB;
+            break;
+          case 'Elon Musk':
+            imageSrc = ElonMusk;
             break;
           default:
             imageSrc = null;

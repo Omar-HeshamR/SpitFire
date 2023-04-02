@@ -3,7 +3,7 @@ export async function createRap(rapper1, rapper2, topics){
   const { Configuration, OpenAIApi } = require("openai");
 
   const configuration = new Configuration({
-    apiKey: "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",
+    apiKey: "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",
   });
 
   const openai = new OpenAIApi(configuration);

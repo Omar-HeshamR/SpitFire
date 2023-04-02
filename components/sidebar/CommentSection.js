@@ -27,7 +27,7 @@ const CommentSlider = ({showComments, setShowComments}) => {
 
                 <CommentDiv>
                     <Poster>Ryan Joi Hokimi</Poster>
-                    <Comment>That was an insane freestyle, I can't believe he just came up with that on the spot!</Comment>
+                    <Comment>That was an insane freestyle, I can&apos;t believe he just came up with that on the spot!</Comment>
                     <BottomRow>2 hours ago<HeartIcon/></BottomRow>
                 </CommentDiv>
 

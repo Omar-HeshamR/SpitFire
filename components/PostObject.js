@@ -20,11 +20,7 @@ const PostObject = ({PostObject}) => {
   const [ showBetsModal, setShowBetsModal ] = useState()
   const [ showComments, setShowComments] = useState()
   const [ Rapper1Gif, setRapper1Gif ] = useState()
-  const [ Rapper2Gif, setRapper2Gif ] = useState()
-
-  useEffect(() => {
-    setGifs()
-  }, [])
+  const [ Rapper2Gif, setRapper2Gif ] = useState()  
 
   async function handleUpVote(){
     if(currentUser == undefined){
@@ -96,14 +92,6 @@ const PostObject = ({PostObject}) => {
     return blob;
   }
 
-  async function setGifs(){
-    const first_gif = await findFileAndGetDownloadURL(PostObject.rapper1_name)
-    const seconed_gif = await findFileAndGetDownloadURL(PostObject.rapper2_name)
-    setRapper1Gif(first_gif)
-    setRapper2Gif(seconed_gif)
-    console.log(first_gif)
-  }
-
   return (
     <>
     <Section>
@@ -118,15 +106,23 @@ const PostObject = ({PostObject}) => {
           </RapperNameRight>
         </Header>
 
-        <VideoDiv onClick={setGifs}>
           <audio id="audio-player"></audio>
-          {/* <iframe src={findFileAndGetDownloadURL(PostObject.rapper2_name)} width="300" height="200"></iframe>
-          <iframe src={findFileAndGetDownloadURL(PostObject.rapper2_name)} width="300" height="200"></iframe>  */}
-        </VideoDiv>
+          { PostObject.video_link ? <>
+            <OneVideoDiv>
+              <iframe width="100%" height="100%" src={PostObject.video_link} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </OneVideoDiv>
+          </> : <>
+          <VideoDiv>
+            <iframe src={getGifLink(PostObject.rapper1_name)} width="300" height="200" loop controls={false} autoplay></iframe>
+            <iframe src={getGifLink(PostObject.rapper2_name)} width="300" height="200" loop controls={false} autoplay></iframe>
+          </VideoDiv>
+          </>}
 
         <BottomBar>
           <BottomLeft>Creator: {PostObject.creator}</BottomLeft>
-          <PlayButton onClick={() => playBase64Mpegs(PostObject.video_link)}>Play</PlayButton>
+
+          {PostObject.audio_link && <PlayButton onClick={() => playBase64Mpegs(PostObject.audio_link)}>Play</PlayButton>}
+          
           <VotingButton onClick={() => setShowBetsModal(true)}><VoteIcon/></VotingButton>
           <BottomRight>
             <Upvote onClick={handleUpVote}/>
@@ -212,6 +208,10 @@ const VideoDiv = styled.div`
   align-items: center;
   height: 20vw; /* change height to 50vw to evenly split the two sections */
   background-color: gainsboro;
+`
+
+const OneVideoDiv = styled.div`
+height: 30vw;
 `
 
 const BottomBar = styled.div`
@@ -358,3 +358,25 @@ const PostObject = {
    comments = "",
 }
 */
+
+function getGifLink(rapperName){
+  const rapperGifs = {
+    "Donald Trump": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Trump%20A%20Video.mp4?alt=media&token=ac06b9d0-c072-4e25-b191-b9c1170fe658",
+    "Optimus Prime": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Optimus%20Prime%20A%20Video.mp4?alt=media&token=998c6f23-297f-4408-a268-3111398236b9",
+    "Joseph Biden": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Joe%20Biden%20A%20Video.mp4?alt=media&token=fc3c0ba0-d4ec-4281-a997-6f03274ad5aa",
+    "Barack Obama": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Obama%20A%20Video.mp4?alt=media&token=35f18854-08cf-4589-b8c5-d1ae5bc30ff7",
+    "Lebron James": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/LeBron%20James%20A%20Video.mp4?alt=media&token=df1f07c1-cba1-4f0b-9f60-315281942505",
+    "Morgan Freeman": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Morgan%20Freeman%20A%20Video.mp4?alt=media&token=45477fab-9f18-41b6-94e4-0f752cb3416e",
+    "Andrew Tate": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Andrew%20Tate%20A%20Video.mp4?alt=media&token=7698a284-f00b-4de5-bf53-01cafeae2f09",
+    "Taylor Swift": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Taylor%20Swift%20A%20Video.mp4?alt=media&token=2a3372ca-7110-4484-b55c-024ce2f689ef",
+    "Kanye West": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Kanye%20A%20Video.mp4?alt=media&token=61d1ce32-97b6-411f-8dd6-cd7bb67ed3f1",
+    "Drake": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Drake%20A%20Video.mp4?alt=media&token=f72ec38a-2675-4057-bcc0-bdd96b2f90a1",
+    "Spongebob": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Spongebob%20A%20Video.mp4?alt=media&token=b2a171da-4ca3-4b31-81ec-65986f78f652",
+    "Squidward": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Squidward%20A%20Video.mp4?alt=media&token=3136ca8c-8c25-4e68-a945-ef91cae05901",
+    "Eminem": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Eminem%20A%20Video.mp4?alt=media&token=d13d15df-43ac-449f-9cfb-a85ac0006785",
+    "Mark Zuckerberg": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Mark%20Zuccerberg%20A%20Video.mp4?alt=media&token=9e3faf8f-1df2-4dd5-8cc0-b15478453027",
+    "Ben Shapiro": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Ben%20Shapiro%20A%20Video.mp4?alt=media&token=4a5c4cc0-0357-4935-bf82-f6ca73b827d7",
+    "Cardi B": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Cardi%20B%20A%20Video.mp4?alt=media&token=d9269eb0-6ea6-431e-a70f-c44e92211373"
+  };
+  return rapperGifs[rapperName]
+}
