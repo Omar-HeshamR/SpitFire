@@ -138,10 +138,19 @@ const ThreeDots = styled(BsThreeDotsVertical)`
   font-size: 1.5vw;
   margin-left: 2vw;
   margin-right: 0.5vw;
-
   &:hover{
-    transform: scale(1.01);
     cursor: pointer;
+    transform: scale(1.15);
+    animation: spin 0.1s linear;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(180deg);
+    }
   }
 `
 const Comment = styled(TfiCommentAlt)`
@@ -149,7 +158,7 @@ font-size: 1.5vw;
 margin-left: 2vw;
 
 &:hover{
-  transform: scale(1.01);
+  color: #5B618A;
   cursor: pointer;
 }
 `
@@ -183,20 +192,22 @@ background-color: #EBEBEB;
 display: flex;
 height: 2.5vw;
 width: 2.5vw;
+font-size: 1.5vw;
 justify-content: center;
 align-items: center;
 margin-left: auto;
 margin-right: 0.5vw;
 border-radius: 0.5vw;
 filter: opacity(0.9);
+cursor: pointer;
 &:hover{
+  font-size: 1.75vw;
   filter: opacity(1);
+  border: 0.25vw double #5B618A;
 }
 `
 const VoteIcon = styled(MdOutlineHowToVote)`
-color: #FE5F55;
-font-size: 1.5vw;
-
+  color: #FE5F55;
 `
 
 export default PostObject

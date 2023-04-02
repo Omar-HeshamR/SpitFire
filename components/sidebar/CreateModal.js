@@ -9,7 +9,7 @@ const crypto = require('crypto');
 
 const CreateModal = ({ showModal, setShowModal }) => {
 
-  const { currentUser, createPost, getPosts } = useStateContext();
+  const { currentUser, createPost } = useStateContext();
 
   const [rapper1, setRapper1] = useState("");
   const handleSelectRapper1 = (newValue) => {

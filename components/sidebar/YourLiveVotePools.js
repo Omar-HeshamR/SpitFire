@@ -5,7 +5,7 @@ import { AiOutlineLineChart } from "react-icons/ai";
 
 const YourLiveVotePools = () => {
 
-  const { currentUser, Posts } = useStateContext();
+  const { currentUser } = useStateContext();
 
   const liveVotesDemo = [
     {first: "Elon Musk", seconed:"Hillary Clinton", creator:"Patrick Elissi", timeLeft: "1"},
