@@ -67,7 +67,7 @@ const PostObject = ({PostObject}) => {
         </Header>
 
         <VideoDiv>
-          <iframe width="100%" height="100%" src={PostObject.video_link} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          <iframe width="100%" height="100%" src={"https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/swift_tate.mp4?alt=media&token=e24034a0-2d5a-459a-a7f2-3ca131fa2b96"} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </VideoDiv>
 
         <BottomBar>
