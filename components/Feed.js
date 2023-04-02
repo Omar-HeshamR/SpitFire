@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
 import SearchIcon from '../public/SearchIcon.png'
+import PostObject from './PostObject'
 
 const Feed = () => {
   return (
@@ -14,14 +15,16 @@ const Feed = () => {
           </SearchBar>
         </FeedHeader>
 
+       <PostObject/>
+
       </Container>
     </Section>
   )
 }
 
 const Section = styled.section`
-width: 77.5vw;
-height: 40vw;
+width: 67.5vw;
+height: 100%;
 // background-color: khaki;
 display: flex;
 justfiy-content: center;
@@ -34,6 +37,8 @@ margin-right: 1vw;
 // background-color: deepskyblue;
 display: flex;
 flex-direction: column;
+justfiy-content: center;
+align-items: center;
 `
 const FeedHeader = styled.div`
 width: 100%;
@@ -94,5 +99,7 @@ img{
 }
 
 `
+
+
 
 export default Feed

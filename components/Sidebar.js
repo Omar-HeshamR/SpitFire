@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Image from 'next/image'
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import LatestNews from './sidebar/LatestNews';
+import VoteEarnings from './sidebar/VoteEarnings';
 import CreateModal from "./sidebar/CreateModal"
 import { useStateContext } from '../context/StateContext';
 
@@ -29,6 +30,7 @@ const Sidebar = () => {
         }
 
         <LatestNews />
+        <VoteEarnings />
 
       </Container>
     </Section>
@@ -38,11 +40,13 @@ const Sidebar = () => {
 
 const Section = styled.section`
 display: flex;
-width: 17.5vw;
+width: 27.5vw;
 height: 50vw;
 // background-color: navajowhite;
-border-left: 0.1vw solid gainsboro;
+// border-left: 0.1vw solid gainsboro;
 
+position: fixed;
+left: 70vw;
 `
 const Container = styled.div`
 display: flex;
@@ -54,7 +58,7 @@ flex-direction: column;
 `
 const CreateButton = styled.button`
   display: flex;
-  width: 16.5vw;
+  width: 26.5vw;
   height: 5vw;
   margin-left: 1vw;
   background-color: white;
@@ -77,7 +81,7 @@ const CreateText = styled.div`
 const LockedCreateButton = styled.button`
   display: flex;
   flex-direction: column;
-  width: 16.5vw;
+  width: 26.5vw;
   height: 5vw;
   margin-left: 1vw;
   background-color: white;

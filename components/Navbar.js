@@ -7,6 +7,8 @@ import Login from './Login'
 import Signup from './Signup'
 import { VscAccount } from "react-icons/vsc";
 import { SlSettings, SlLogout } from "react-icons/sl";
+import { IoWalletOutline } from "react-icons/io5";
+
 
 const Navbar = () => {
 
@@ -40,6 +42,7 @@ const Navbar = () => {
             <ProfileIcon />
             <NameDisplay>{truncateString(currentUser.displayName)}</NameDisplay>
           </NameAndProfile>
+          <BettingHistoryIcon />
           <SettingsIcon />
           <LogOutIcon onClick={() => setCurrentUser(undefined)}/>
         </ProfileItemsContainer>
@@ -64,6 +67,10 @@ height: 5vw;
 justify-content: center;
 align-items: center;
 box-shadow: 0vw 0.1vw 0.1vw gainsboro;
+position: sticky;
+  top: 0;
+background-color: white;
+z-index: 100;
 `
 const Container = styled.div`
 display: flex;
@@ -96,7 +103,7 @@ align-items: center;
 `
 const LogInButton = styled.button`
 height: 3vw;
-width: 8vw;
+width: 13vw;
 background-color: #FE5F55;
 border: none;
 border-radius: 0;
@@ -113,7 +120,7 @@ box-shadow: 0.1vw 0.1vw 0.5vw gainsboro;
 `
 const SignUpButton = styled.button`
 height: 3vw;
-width: 8vw;
+width: 13vw;
 background-color: #5B618A;
 border: none;
 border-radius: 0;
@@ -144,6 +151,8 @@ const NameAndProfile = styled.div`
   border-radius: 1vw;
   padding: 0.35vw 1vw;
   cursor: pointer;
+  color: #5B618A;
+
   &:hover{
     border: 0.1vw solid black;
     background-color: white;
@@ -157,18 +166,28 @@ const NameDisplay = styled.div`
 const ProfileIcon = styled(VscAccount)`
   margin-right: 0.75vw;
   font-size: 2vw;
+  color: #5B618A;
+
 `
 
 const SettingsIcon = styled(SlSettings)`
-  margin-right: 2vw;
+  margin-right: 2.1vw;
   font-size: 2vw;
   cursor: pointer;
+  color: #5B618A;
 `
 
 const LogOutIcon = styled(SlLogout)`
   font-size: 2vw;
   transform: rotate(-180deg);
   cursor: pointer;
+  color: #5B618A;
+`
+const BettingHistoryIcon = styled(IoWalletOutline)`
+  font-size: 2.25vw;
+  cursor: pointer;
+  color: #5B618A;
+  margin-right: 2.1vw;
 `
 
 export default Navbar

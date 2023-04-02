@@ -1,7 +1,7 @@
 import React from 'react'
 import { BiNews } from "react-icons/bi";
 import styled from 'styled-components';
-import { TbPointFilled } from "react-icons/tb";
+import { AiOutlineLineChart } from "react-icons/ai";
 
 const LatestNews = () => {
   return (
@@ -14,6 +14,8 @@ const LatestNews = () => {
             <NewsParagraph><p>➤ Recently, Joe Biden versus Donald Trump has been highly trending, pulling over 17 Billion Views.</p></NewsParagraph>
             <NewsParagraph><p>➤ The best preforming rapper of the week has been awarded to Shrek, winning over 5 thousand rap battles.</p></NewsParagraph>
             <NewsParagraph><p>➤ The biggest earner of last week won 19,000 rap tokens, with majority of his votes for Saddam Hussien.</p></NewsParagraph>
+            <NewsParagraph><p>➤ Barack Obama is the slow-rising MC! While not as popular, he has been gaining trackion due to recent victories.</p></NewsParagraph>
+
         </Container>
     </Section>
   )
