@@ -201,38 +201,5 @@ filter: opacity(0.8);
   transition: ease 1s;
 }
 `
-const BlackLine = styled.div`
-width: 90%;
-margin: 1vw;
-background-color: black;
-height: 1%;
-`
-const EndItemsContainer = styled.div`
-flex-direction: row;
-display: flex;
-justify-content: space-between;
-width: 90%;
-`
-const EndItem = styled.div`
-color: blue;
-cursor: pointer;
-margin-bottom: 1vw;
-&:hover{
-  text-decoration: underline;
-}
-@media (max-width: 1024px){
-    font-size: 1.5vw;
-}
-@media (max-width: 480px){
-  font-size: 2.75vw;
-}
-`
-const ErrorContainer = styled.div`
-background-color: coral;
-color: black;
-border-radius: 10px;
-padding: 0.5vw 0.5vw;
-font-size: 1.5vw;
-`
 
 export default Login
