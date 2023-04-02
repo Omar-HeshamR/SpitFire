@@ -13,14 +13,24 @@ const DropdownSelect = ({ onChange }) => {
   return (
     <SelectContatiner value={selectedValue} onChange={handleChange}>
       {!selectedValue && <option>Select Rapper</option>}
-      <option value="Donald Trump">Donald Trump</option>
-      <option value="Joseph Biden">Joseph Biden</option>
-      <option value="Barack Obama">Barack Obama</option>
-      <option value="Morgan Freeman">Morgan Freeman</option>
-      <option value="Andrew Tate">Andrew Tate</option>
-      <option value="Eminem">Eminem</option>
-      <option value="Mr. Krabs">Mr. Krabs</option>
-      <option value="Squidward">Squidward</option>
+        <option value="Donald Trump">Donald Trump</option>
+        <option value="Optimus Prime">Optimus Prime</option>
+        <option value="Joseph Biden">Joseph Biden</option>
+        <option value="Barack Obama">Barack Obama</option>
+        <option value="Lebron James">Lebron James</option>
+        <option value="Morgan Freeman">Morgan Freeman</option>
+        <option value="Andrew Tate">Andrew Tate</option>
+        <option value="Darth Vader">Darth Vader</option>
+        <option value="Taylor Swift">Taylor Swift</option>
+        <option value="Kanye West">Kanye West</option>
+        <option value="Drake">Drake</option>
+        <option value="Spongebob">Spongebob</option>
+        <option value="Squidward">Squidward</option>
+        <option value="Mr. Krabs">Mr. Krabs</option>
+        <option value="Eminem">Eminem</option>
+        <option value="Mark Zuckerberg">Mark Zuckerberg</option>
+        <option value="Ben Shapiro">Ben Shapiro</option>
+        <option value="Cardi B">Cardi B</option>
     </SelectContatiner>
   );
 };

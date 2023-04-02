@@ -83,7 +83,7 @@ const Header = styled.div`
   align-items: center;
   width: 100%;
   font-size: 0.9vw;
-  
+  font-weight: 600;
 `
 const Group = styled.div`
   display: flex;
@@ -115,7 +115,6 @@ justify-content: space-between;
 align-items: center;
 // height: 2vw;
 margin-top: 1vw;
-font-weight: 900;
 `
 const SecondBar = styled.div`
 display: flex;

@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
+import { toast } from 'react-hot-toast';
 import { useStateContext } from '../../context/StateContext';
 import SpitFireLogo from '../../public/SpitFireLogo.png'
 import Image from 'next/image';
@@ -52,6 +53,8 @@ const CreateModal = ({ showModal, setShowModal }) => {
       comments: [],
     }
     createPost(postID, PostObject);
+    toast.success("Rap Battle Created !")
+    setShowModal(false)
   }
 
   function hashString(str) {

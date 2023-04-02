@@ -3,21 +3,58 @@ import styled from 'styled-components'
 import Image from 'next/image'
 import Trump from '../public/Trump.png'
 import ElonMusk from '../public/ElonMusk.png'
-import { FaPlay } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { BiDownvote } from "react-icons/bi";
 import { BiUpvote } from "react-icons/bi";
 import { MdOutlineHowToVote } from "react-icons/md";
+import { database } from "../library/firebase"
+import { toast } from 'react-hot-toast'
+import { ref, get, update } from "firebase/database";
+import { useStateContext } from '../context/StateContext';
 
 const PostObject = ({PostObject}) => {
+
+  const { currentUser } = useStateContext();
+
+  async function handleUpVote(){
+    if(currentUser == undefined){
+      toast.error("Log in to Interact !")
+      return;
+    }
+    const postRef = ref(database, 'posts/' + PostObject.postId);
+    console.log("postRef", postRef)
+    const postSnapshot = await get(postRef);
+    console.log("postSnapshot", postSnapshot)
+    if (postSnapshot.exists()) {
+      const post = postSnapshot.val();
+      console.log("post", post)
+      const updatedPost = { ...post, upvotes: post.upvotes + 1 };
+      update(postRef, updatedPost); // pass only the updated properties
+    }
+  }
+
+  async function handleDownVote(){
+    if(currentUser == undefined){
+      toast.error("Log in to Interact !")
+      return;
+    }
+    const postRef = ref(database, 'posts/' + PostObject.postId );
+    const postSnapshot = await get(postRef);
+    if (postSnapshot.exists()) {
+      const post = postSnapshot.val();
+      const updatedPost = { ...post, downvotes: post.downvotes + 1 };
+      update(postRef, updatedPost);
+    }
+  }
+
   return (
     <>
     <Section>
       <Container>
         <Header>
           <RapperNameLeft>
-            <Image src={Trump} alt="Donald J. Trump" /> {PostObject.rapper1_name}
+            <Image src={Trump} alt="Donald Trump" /> {PostObject.rapper1_name}
           </RapperNameLeft>
           VS
           <RapperNameRight>
@@ -33,10 +70,10 @@ const PostObject = ({PostObject}) => {
           <BottomLeft>Creator: {PostObject.creator}</BottomLeft>
           <VotingButton><VoteIcon/></VotingButton>
           <BottomRight>
-            <Upvote />
-            <VoteCount>{PostObject.upvotes}</VoteCount>
-            <Downvote />
-            <VoteCount>{PostObject.downvotes}</VoteCount>
+            <Upvote onClick={handleUpVote}/>
+            <VoteCount >{PostObject.upvotes}</VoteCount>
+            <Downvote onClick={handleDownVote}/>
+            <VoteCount >{PostObject.downvotes}</VoteCount>
             <Comment />
             <ThreeDots />
           </BottomRight>
@@ -125,6 +162,12 @@ height: 2.5vw;
 padding-left: 1vw;
 padding-right: 1vw;
 border-radius: 0.5vw;
+&:hover{
+  cursor: pointer;
+  color: white;
+  font-weight: 900;
+  background-color: #ABABAB;
+}
 `
 const BottomRight = styled.div`
 display: flex;

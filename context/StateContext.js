@@ -78,7 +78,7 @@ export const StateContext = ({ children }) => {
 
   function sortPosts(obj) {
     const arr = Object.values(obj);
-    arr.sort((a, b) => a.upvotes - b.upvotes);
+    arr.sort((a, b) => b.upvotes - a.upvotes);
     console.log("FINAL ARRAY", arr)
     return arr;
   }
