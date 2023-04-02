@@ -1,8 +1,6 @@
-
-
-export async function createRap(rapper1, rapper2){
+export async function createRap(rapper1, rapper2, topics){
     const { Configuration, OpenAIApi } = require("openai");
-    const prompt = `Make a unique rap battle between ${rapper1} and ${rapper2} that considers each's personal info. Each of the 8 verses should have 4 lines.`
+    const prompt = `Make a unique rap battle between ${rapper1} and ${rapper2} that considers each's personal info. Each of the 8 verses should have 4 lines. Align the topics of the rap battles with this information: ${topics}`
 
     const configuration = new Configuration({
         apiKey: "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",
