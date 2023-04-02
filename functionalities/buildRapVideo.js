@@ -32,6 +32,7 @@ import { createRap } from './createVerses';
   }  
 
 async function sendVideo(rapper1, rapper2, versesAudio){
+  const axios = require('axios');
   const response = await axios({
     method: 'post',
     url: 'whatever the URL ends up being',

@@ -14,6 +14,7 @@ const crypto = require('crypto');
 const CreateModal = ({ showModal, setShowModal }) => {
 
   const { currentUser, createPost } = useStateContext();
+  const [ loading, setLoading ] = useState(false);
 
   const [rapper1, setRapper1] = useState("");
   const handleSelectRapper1 = (newValue) => {
@@ -40,6 +41,7 @@ const CreateModal = ({ showModal, setShowModal }) => {
 
   async function createRapBattle(){
 
+    setLoading("Creating Video...")
     const postID = hashString(currentUser.displayName);
     const makeVideo = await buildRapBattle(rapper1, rapper2, topicRef);
     // const getVideoLink =
@@ -133,7 +135,12 @@ const CreateModal = ({ showModal, setShowModal }) => {
                 <Checkbox type="checkbox" checked={enableBetting} onChange={handleEnableBetting}/>
               </Row>
 
+              {loading ? <>
+                {loading}...
+              </>:
+              <>
               <CreatePostButton onClick={createRapBattle}>Create Rap Battle !</CreatePostButton>
+              </>}
 
             </ModalContent>
 
