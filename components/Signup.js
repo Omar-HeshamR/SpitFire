@@ -58,9 +58,9 @@ const Signup = ({ showModal, setShowModal }) => {
                 <Image src={SpitFireLogo} alt="SpitFire Logo"/>
               </MainTitle>
               <InputTitle> Enter Your Full Name:</InputTitle>
-              <FieldInput type={"text"} ref={nameRef}/>
+              <FieldInput type="fname" name="fname" ref={nameRef}/>
               <InputTitle> Enter Email Address:</InputTitle>
-              <FieldInput type={"email"} ref={emailRef}/>
+              <FieldInput type="email" name="email" ref={emailRef}/>
               <InputTitle> Enter Password:</InputTitle>
               <FieldInput type={"password"} ref={passwordRef}/>
               <LogInButton onClick={handleRegister}>Sign Up</LogInButton>
