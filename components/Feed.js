@@ -19,9 +19,15 @@ const Feed = () => {
           </SearchBar>
         </FeedHeader>
 
-        {Posts.map((post) => (
-        <PostObject key={post.id} PostObject={post}/>
-      ))}
+        {Posts ? <>
+          {Posts.map((post) => (
+           <PostObject key={post.id} PostObject={post}/>
+        ))}
+        </>: 
+        <>
+        loading...
+        </>
+        }
 
       </Container>
     </Section>

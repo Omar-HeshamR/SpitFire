@@ -118,6 +118,7 @@ box-shadow: 0.1vw 0.1vw 0.5vw gainsboro;
   box-shadow: none;
 }
 `
+
 const SignUpButton = styled.button`
 height: 3vw;
 width: 13vw;
