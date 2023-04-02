@@ -8,6 +8,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { BiDownvote } from "react-icons/bi";
 import { BiUpvote } from "react-icons/bi";
+import { MdOutlineHowToVote } from "react-icons/md";
 
 const PostObject = ({PostObject}) => {
   return (
@@ -30,6 +31,7 @@ const PostObject = ({PostObject}) => {
 
         <BottomBar>
           <BottomLeft>Creator: {PostObject.creator}</BottomLeft>
+          <VotingButton><VoteIcon/></VotingButton>
           <BottomRight>
             <Upvote />
             <VoteCount>{PostObject.upvotes}</VoteCount>
@@ -176,6 +178,27 @@ const VoteCount = styled.div`
 font-size: 1vw;
 margin-left: 0.25vw;
 `
+const VotingButton = styled.div`
+background-color: #EBEBEB;
+display: flex;
+height: 2.5vw;
+width: 2.5vw;
+justify-content: center;
+align-items: center;
+margin-left: auto;
+margin-right: 0.5vw;
+border-radius: 0.5vw;
+filter: opacity(0.9);
+&:hover{
+  filter: opacity(1);
+}
+`
+const VoteIcon = styled(MdOutlineHowToVote)`
+color: #FE5F55;
+font-size: 1.5vw;
+
+`
+
 export default PostObject
 
 /* 
