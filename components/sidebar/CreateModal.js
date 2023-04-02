@@ -7,6 +7,8 @@ import SpitFireLogo from '../../public/SpitFireLogo.png'
 import Image from 'next/image';
 import RapperDropDown from "../../utilities/rapperDropDown"
 import {getRapperImage} from '@/functionalities/getRapperImage';
+import { buildRapBattle } from "@/functionalities/buildRapVideo"
+
 const crypto = require('crypto');
 
 const CreateModal = ({ showModal, setShowModal }) => {
@@ -37,7 +39,11 @@ const CreateModal = ({ showModal, setShowModal }) => {
   const modalRef = useRef();  
 
   async function createRapBattle(){
+
     const postID = hashString(currentUser.displayName);
+    const makeVideo = await buildRapBattle(rapper1, rapper2, topicRef);
+    // const getVideoLink =
+
     const PostObject = {
       postId: postID,
       creator: currentUser.displayName,
@@ -53,9 +59,11 @@ const CreateModal = ({ showModal, setShowModal }) => {
       downvotes: 0,
       comments: [],
     }
+
     createPost(postID, PostObject);
     toast.success("Rap Battle Created !")
     setShowModal(false)
+
   }
 
   function hashString(str) {

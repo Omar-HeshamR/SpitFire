@@ -105,20 +105,20 @@ box-shadow: 0.2vw 0.2vw 0.2vw gainsboro;
 const Container = styled.div`
 `
 const Header =  styled.div`
-display: flex;
-border-radius: 1vw 1vw 0vw 0vw;
-height: 4vw;
-align-items: center;
-justify-content: space-between;
-font-size: 3vw;
-font-weight: 900;
-background-color: #FE5F55;
-filter: opacity(0.9);
-color: white;
-&:hover{
-  filter: opacity(1);
-  transition: ease 1s;
-}
+  display: flex;
+  border-radius: 1vw 1vw 0vw 0vw;
+  height: 4vw;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 3vw;
+  font-weight: 900;
+  background-color: white;
+  filter: opacity(0.9);
+  color: #FE5F55;
+  &:hover{
+    filter: opacity(1);
+    transition: ease 1s;
+  }
 `
 const RapperNameLeft = styled.div`
 display: flex;

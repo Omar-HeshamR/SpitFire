@@ -1,8 +1,8 @@
-import { getVerseBase64 } from './audioCreation';
-import { createRap } from './getVerses';
+import { getVerseBase64 } from './createAudio';
+import { createRap } from './createVerses';
 
   async function createBlobArray(rapperInfo){
-    
+
     const length = rapperInfo[0].verses.length + rapperInfo[1].verses.length;
     let select = true
     let verseCount = 0
@@ -58,7 +58,7 @@ function base64ToMp4Blob(base64) {
 }
 
 export async function buildRapBattle(rapper1, rapper2, topics){
-  const rapper = await createRap(rapper1, rapper2, topics)
+  const rapperInformation = await createRap(rapper1, rapper2, topics)
   const verseBase64 = await createBlobArray(rapperInformation)
   const response = await sendVideo(rapper1, rapper2, verseBase64)
   return base64ToMp4Blob(response.data)
