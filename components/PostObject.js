@@ -113,8 +113,12 @@ const PostObject = ({PostObject}) => {
             </OneVideoDiv>
           </> : <>
           <VideoDiv>
-            <iframe src={getGifLink(PostObject.rapper1_name)} width="300" height="200" loop controls={false} autoplay></iframe>
-            <iframe src={getGifLink(PostObject.rapper2_name)} width="300" height="200" loop controls={false} autoplay></iframe>
+            <ImgContainer>
+              <Image src={PostObject.rapper1_image} alt={PostObject.rapper1_name} />
+            </ImgContainer>
+            <ImgContainer>
+              <Image src={PostObject.rapper2_image} alt={PostObject.rapper2_name} />
+            </ImgContainer>
           </VideoDiv>
           </>}
 
@@ -155,6 +159,17 @@ box-shadow: 0.2vw 0.2vw 0.2vw gainsboro;
 `
 const Container = styled.div`
 `
+
+const ImgContainer = styled.div`
+position: relative;
+
+  img{
+    width: 20vw;
+    height: 20vw; 
+    border-radius: 1vw;
+  }
+`
+
 const Header =  styled.div`
   display: flex;
   border-radius: 1vw 1vw 0vw 0vw;
@@ -370,7 +385,7 @@ function getGifLink(rapperName){
     "Andrew Tate": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Andrew%20Tate%20A%20Video.mp4?alt=media&token=7698a284-f00b-4de5-bf53-01cafeae2f09",
     "Taylor Swift": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Taylor%20Swift%20A%20Video.mp4?alt=media&token=2a3372ca-7110-4484-b55c-024ce2f689ef",
     "Kanye West": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Kanye%20A%20Video.mp4?alt=media&token=61d1ce32-97b6-411f-8dd6-cd7bb67ed3f1",
-    "Drake": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Drake%20A%20Video.mp4?alt=media&token=f72ec38a-2675-4057-bcc0-bdd96b2f90a1",
+    "Drake": "../Gifs/Drake-A-Video.gif",
     "Spongebob": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Spongebob%20A%20Video.mp4?alt=media&token=b2a171da-4ca3-4b31-81ec-65986f78f652",
     "Squidward": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Squidward%20A%20Video.mp4?alt=media&token=3136ca8c-8c25-4e68-a945-ef91cae05901",
     "Eminem": "https://firebasestorage.googleapis.com/v0/b/spitfire-75326.appspot.com/o/Eminem%20A%20Video.mp4?alt=media&token=d13d15df-43ac-449f-9cfb-a85ac0006785",

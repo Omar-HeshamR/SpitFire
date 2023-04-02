@@ -46,7 +46,7 @@ const CreateModal = ({ showModal, setShowModal }) => {
 
     setLoading("Creating Battle...")
     const postID = hashString(currentUser.displayName);
-    // const makeAudio = await buildRapBattle(rapper1, rapper2, topicRef);
+    const makeAudio = await buildRapBattle(rapper1, rapper2, topicRef);
     const PostObject = {
       postId: postID,
       creator: currentUser.displayName,
@@ -54,8 +54,8 @@ const CreateModal = ({ showModal, setShowModal }) => {
       rapper1_name: rapper1,
       rapper2_image: getRapperImage(rapper2),
       rapper2_name: rapper2,
-      audio_link: "",
-      video_link: "https://www.youtube.com/embed/xQUEfH59Sdk",
+      audio_link: makeAudio,
+      video_link: "", // not integrated with the our python server edge API yet.
       topic: topicRef,
       isBettingEnabled: enableBetting,
       view_count: 0,
