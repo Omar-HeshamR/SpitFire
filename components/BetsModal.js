@@ -13,6 +13,10 @@ const BetsModal = ({ showModal, setShowModal, PostObject }) => {
   const { currentUser } = useStateContext();
   const [accounts, setAccounts] = useState([]);
 
+  async function handleBetting(){
+    setShowModal(false)
+  }
+
   const [value, setValue] = useState('');
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -109,7 +113,7 @@ const BetsModal = ({ showModal, setShowModal, PostObject }) => {
                     </ToggleButton>
                 </ToggleContainer>
 
-                <BetToVotePoolButton>Add Vote to Bet Pool</BetToVotePoolButton>
+                <BetToVotePoolButton onClick={handleBetting}>Add Vote to Bet Pool</BetToVotePoolButton>
             </PostDetailsContainer>
             </> :
               <ConnectWalletButton onClick={connectAccount}>
