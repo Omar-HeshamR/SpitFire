@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import Image from 'next/image'
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import LatestNews from './sidebar/LatestNews';
 import VoteEarnings from './sidebar/VoteEarnings';
@@ -11,17 +10,22 @@ const Sidebar = () => {
 
   const { currentUser } = useStateContext();
 
+    //LOG IN
+    const [showCreateModal, setShowCreateModal] = useState(false);
+    const openCreateModal = () => {
+      setShowCreateModal(prev => !prev)
+    }
 
   return (
     <Section>
       <Container>
 
         { currentUser ? // if the user is logged
-              <CreateButton>
+              <CreateButton onClick={openCreateModal}>
                 <StyledAiOutlinePlusCircle/> <CreateText>Create</CreateText>
               </CreateButton>
         : // if the user is not logged
-            <LockedCreateButton>
+            <LockedCreateButton >
               <Row>
                 <StyledAiOutlinePlusCircle/> <CreateText>Create</CreateText>
               </Row>
@@ -31,6 +35,8 @@ const Sidebar = () => {
 
         <LatestNews />
         <VoteEarnings />
+
+        <CreateModal showModal={showCreateModal} setShowModal={setShowCreateModal} />
 
       </Container>
     </Section>
