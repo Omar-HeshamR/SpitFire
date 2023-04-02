@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
 import BetsModal from "./BetsModal"
@@ -19,6 +19,12 @@ const PostObject = ({PostObject}) => {
   const { currentUser } = useStateContext();
   const [ showBetsModal, setShowBetsModal ] = useState()
   const [ showComments, setShowComments] = useState()
+  const [ Rapper1Gif, setRapper1Gif ] = useState()
+  const [ Rapper2Gif, setRapper2Gif ] = useState()
+
+  useEffect(() => {
+    setGifs()
+  }, [])
 
   async function handleUpVote(){
     if(currentUser == undefined){
@@ -90,6 +96,14 @@ const PostObject = ({PostObject}) => {
     return blob;
   }
 
+  async function setGifs(){
+    const first_gif = await findFileAndGetDownloadURL(PostObject.rapper1_name)
+    const seconed_gif = await findFileAndGetDownloadURL(PostObject.rapper2_name)
+    setRapper1Gif(first_gif)
+    setRapper2Gif(seconed_gif)
+    console.log(first_gif)
+  }
+
   return (
     <>
     <Section>
@@ -104,10 +118,10 @@ const PostObject = ({PostObject}) => {
           </RapperNameRight>
         </Header>
 
-        <VideoDiv>
+        <VideoDiv onClick={setGifs}>
           <audio id="audio-player"></audio>
-          <iframe src={findFileAndGetDownloadURL(PostObject.rapper1_name)} width="300" height="200"></iframe>
-          <iframe src={findFileAndGetDownloadURL(PostObject.rapper2_name)} width="300" height="200"></iframe> 
+          {/* <iframe src={findFileAndGetDownloadURL(PostObject.rapper2_name)} width="300" height="200"></iframe>
+          <iframe src={findFileAndGetDownloadURL(PostObject.rapper2_name)} width="300" height="200"></iframe>  */}
         </VideoDiv>
 
         <BottomBar>

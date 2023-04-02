@@ -1,26 +1,24 @@
-
-import { ref, listAll } from "firebase/storage";
+import { ref, listAll, getMetadata, getDownloadURL } from "firebase/storage";
 import { storage } from "../library/firebase"
 
 export async function findFileAndGetDownloadURL(rapperName) {
-    try {
+      let final_url;
       const fileName = `${rapperName} A Video.mp4`
       const directoryRef = ref(storage, 'gs://spitfire-75326.appspot.com');
       const fileList = await listAll(directoryRef);
       // console.log(fileList)
       for (const itemRef of fileList.items) {
         if (itemRef._location.path_ === fileName) {
-          console.log(itemRef)
-          const downloadURL = await itemRef.getDownloadURL();
-          console.log("Download URL:", downloadURL);
-          return downloadURL;
+          final_url = await getDownloadURL(itemRef)
+          .then((url) => {
+            console.log(url)
+            return url
+          })
+          .catch((error) => {
+          });
         }
       }
-      // console.log("File not found");
-      return null;
-    } catch (error) {
-      console.log("Error listing files:", error);
-      return null;
-    }
+
+    return final_url
   }
   
