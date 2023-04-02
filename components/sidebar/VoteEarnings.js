@@ -8,11 +8,47 @@ const VoteEarnings = () => {
     <Section>
         <Container>
             <Header>
+                <Group>
                 <Chart />
-                <LatestNewsText>Vote Earnings</LatestNewsText>
+                <VoteEarningsText>Vote Earnings</VoteEarningsText>
+                </Group>
+
+                <ViewFullHistory> View Full History</ViewFullHistory>
+            
             </Header>
 
+            <FirstBar>
+                <span>Donald Trump</span>
+                VS
+                <span>Elon Musk</span>
+            </FirstBar>
+
+            <SecondBar>
+                <span>Creator: Ryan Hokimi</span>
+                <Green>+500.00</Green>
+            </SecondBar>
+
+            <FirstBar>
+                <span>Squidward</span>
+                VS
+                <span>Cardi B</span>
+            </FirstBar>
+
+            <SecondBar>
+                <span>Creator: Stephen Leshko</span>
+                <Red>-120.00</Red>
+            </SecondBar>
           
+            <FirstBar>
+                <span>Barack Obama</span>
+                VS
+                <span>Taylor Swift</span>
+            </FirstBar>
+
+            <SecondBar>
+                <span>Creator: John Smith</span>
+                <Green>+270.00</Green>
+            </SecondBar>
 
 
         </Container>
@@ -27,6 +63,7 @@ const Section = styled.section`
   margin-left: 1vw;
   justify-content: center;
   border: 0.1vw solid #5B618A;
+  color: #5B618A;
 `
 const Container = styled.div`
   display: flex;
@@ -36,10 +73,23 @@ const Container = styled.div`
 `
 const Header = styled.div`
   display: flex;
-  align-items: center;
+//   align-items: center;
   height: 2vw;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: 0.9vw;
+  
 `
-const LatestNewsText = styled.div`
+const Group = styled.div`
+  display: flex;
+`
+const ViewFullHistory = styled.div`
+  display: flex;
+  border-bottom: 0.05vw solid #5B618A;
+`
+
+const VoteEarningsText = styled.div`
   color: #5B618A;
   font-size: 1.5vw;
 `
@@ -49,5 +99,32 @@ const Chart = styled(AiOutlineLineChart)`
   font-size: 2.25vw;
   margin-right: 0.5vw;
 `
+
+const FirstBar = styled.div`
+display: flex;
+// background-color: orange;
+justify-content: space-between;
+align-items: center;
+// height: 2vw;
+margin-top: 1vw;
+font-weight: 900;
+`
+const SecondBar = styled.div`
+display: flex;
+// background-color: khaki;
+justify-content: space-between;
+align-items: center;
+// height: 2vw;
+font-size: 1vw;
+`
+const Green = styled.div`
+color: green;
+font-weight: 900;
+`
+const Red = styled.div`
+color: firebrick;
+font-weight: 900;
+`
+
 
 export default VoteEarnings
