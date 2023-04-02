@@ -57,9 +57,9 @@ const Login = ({ showModal, setShowModal }) => {
                 <Image src={SpitFireLogo} alt="SpitFire Logo"/>
               </MainTitle>
               <InputTitle> Enter your email address:</InputTitle>
-              <FieldInput type={"email"} ref={logInemailRef}/>
+              <FieldInput type="email" name="email" ref={logInemailRef} />
               <InputTitle> Enter your password:</InputTitle>
-              <FieldInput type={"password"} ref={logInpasswordRef}/>
+              <FieldInput type={"password"} ref={logInpasswordRef} />
               <LogInButton onClick={handleLogin}>Login</LogInButton>
             </ModalContent>
             <CloseModalButton
