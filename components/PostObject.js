@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
 import Trump from '../public/Trump.png'
 import ElonMusk from '../public/ElonMusk.png'
+import BetsModal from "./BetsModal"
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { BiDownvote } from "react-icons/bi";
@@ -16,6 +17,7 @@ import { useStateContext } from '../context/StateContext';
 const PostObject = ({PostObject}) => {
 
   const { currentUser } = useStateContext();
+  const [ showBetsModal, setShowBetsModal ] = useState()
 
   async function handleUpVote(){
     if(currentUser == undefined){
@@ -68,7 +70,7 @@ const PostObject = ({PostObject}) => {
 
         <BottomBar>
           <BottomLeft>Creator: {PostObject.creator}</BottomLeft>
-          <VotingButton><VoteIcon/></VotingButton>
+          <VotingButton onClick={() => setShowBetsModal(true)}><VoteIcon/></VotingButton>
           <BottomRight>
             <Upvote onClick={handleUpVote}/>
             <VoteCount >{PostObject.upvotes}</VoteCount>
@@ -80,6 +82,8 @@ const PostObject = ({PostObject}) => {
         </BottomBar>
 
       </Container>
+
+      {showBetsModal && <BetsModal showModal={showBetsModal} setShowModal={setShowBetsModal} PostObject={PostObject}/>}
     </Section>
   </>
   )
