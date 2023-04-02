@@ -1,5 +1,6 @@
 import { storage } from "../library/firebase"
 import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { buildRapBattle } from './buildRapVideo'
 
 // STORAGE FUNCTIONALITIES
 export async function uploadVideo(filename, file){
