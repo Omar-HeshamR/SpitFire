@@ -12,6 +12,7 @@ import { database } from "../library/firebase"
 import { toast } from 'react-hot-toast'
 import { ref, get, update } from "firebase/database";
 import { useStateContext } from '../context/StateContext';
+import getRapperImage from '@/functionalities/getRapperImage'
 
 const PostObject = ({PostObject}) => {
 
@@ -54,11 +55,11 @@ const PostObject = ({PostObject}) => {
       <Container>
         <Header>
           <RapperNameLeft>
-            <Image src={Trump} alt="Donald Trump" /> {PostObject.rapper1_name}
+            <Image src={PostObject.rapper1_image} alt="{PostObject.rapper1_name}" /> {PostObject.rapper1_name}
           </RapperNameLeft>
           VS
           <RapperNameRight>
-            <Image src={ElonMusk} alt="Elon Musk" /> {PostObject.rapper2_name}
+            <Image src={PostObject.rapper2_image} alt="{PostObject.rapper2_name}" /> {PostObject.rapper2_name}
           </RapperNameRight>
         </Header>
 
