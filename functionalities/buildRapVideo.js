@@ -1,8 +1,8 @@
 import { getVerseBase64 } from './audioCreation';
 import { createRap } from './getVerses';
 
-
   async function createBlobArray(rapperInfo){
+    
     const length = rapperInfo[0].verses.length + rapperInfo[1].verses.length;
     let select = true
     let verseCount = 0

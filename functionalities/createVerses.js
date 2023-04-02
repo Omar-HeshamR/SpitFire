@@ -1,12 +1,15 @@
 export async function createRap(rapper1, rapper2, topics){
-  const { Configuration, OpenAIApi } = require("openai");
-  const prompt = `Make a unique rap battle between ${rapper1} and ${rapper2} that considers each's personal info. Each of the 8 verses should have 4 lines. End each line with a period, and don't include too many commas. Align the topics of the rap battles with this information: ${topics}`
 
+  const { Configuration, OpenAIApi } = require("openai");
 
   const configuration = new Configuration({
-      apiKey: "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",
-    });
+    apiKey: "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",
+  });
+
   const openai = new OpenAIApi(configuration);
+
+  const prompt = `Make a unique rap battle between ${rapper1} and ${rapper2} that considers each's personal info. Each of the 8 verses should have 4 lines. End each line with a period, and don't include too many commas. Align the topics of the rap battles with this information: ${topics}`
+
   const completion = await openai.createChatCompletion({
       model: "gpt-4",
       messages: [
