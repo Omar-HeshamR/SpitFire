@@ -131,6 +131,7 @@ img{
   width: 2vw;
   height: 2vw;
   margin-right: 0.5vw;
+  border-radius: 2vw;
 }
 `
 const RapperNameRight = styled.div`
@@ -146,6 +147,7 @@ img{
   width: 2vw;
   height: 2vw;
   margin-right: 0.5vw;
+  border-radius: 2vw;
 }
 `
 const VideoDiv = styled.div`
