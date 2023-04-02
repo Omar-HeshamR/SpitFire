@@ -5,10 +5,11 @@ import { useStateContext } from '../../context/StateContext';
 import SpitFireLogo from '../../public/SpitFireLogo.png'
 import Image from 'next/image';
 import RapperDropDown from "../../utilities/rapperDropDown"
+const crypto = require('crypto');
 
 const CreateModal = ({ showModal, setShowModal }) => {
 
-  const { currentUser } = useStateContext();
+  const { currentUser, createPost, getPosts } = useStateContext();
 
   const [rapper1, setRapper1] = useState("");
   const handleSelectRapper1 = (newValue) => {
@@ -33,7 +34,40 @@ const CreateModal = ({ showModal, setShowModal }) => {
 
   const modalRef = useRef();  
 
-  async function createRapBattle(){/*To Be Compeleted*/}
+  async function createRapBattle(){
+    const postID = hashString(currentUser.displayName);
+    const PostObject = {
+      postId: postID,
+      creator: currentUser.displayName,
+      rapper1_image: "",
+      rapper1_name: rapper1,
+      rapper2_image: "",
+      rapper2_name: rapper2,
+      video_link: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      topic: topicRef,
+      isBettingEnabled: enableBetting,
+      view_count: 0,
+      upvotes: 0,
+      downvotes: 0,
+      comments: [],
+    }
+    createPost(postID, PostObject);
+  }
+
+  function hashString(str) {
+    // Generate a random number between 1 and 10 billion
+    const randomNum = Math.floor(Math.random() * 10000000000) + 1;
+    
+    // Combine the string and random number
+    const strWithNum = str + randomNum.toString();
+    
+    // Hash the combined string using sha256
+    const hashedString = crypto.createHash('sha256').update(strWithNum).digest('hex');
+    
+    // Return the hashed string
+    return hashedString;
+  }
+  
 
   const closeModal = e => {
     if (modalRef.current === e.target) {
@@ -87,7 +121,7 @@ const CreateModal = ({ showModal, setShowModal }) => {
                 <Checkbox type="checkbox" checked={enableBetting} onChange={handleEnableBetting}/>
               </Row>
 
-              <CreatePostButton>Create Rap Battle !</CreatePostButton>
+              <CreatePostButton onClick={createRapBattle}>Create Rap Battle !</CreatePostButton>
 
             </ModalContent>
 
