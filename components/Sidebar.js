@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import LatestNews from './sidebar/LatestNews';
-import VoteEarnings from './sidebar/VoteEarnings';
+import YourLiveVotePools from './sidebar/YourLiveVotePools';
 import CreateModal from "./sidebar/CreateModal"
 import { useStateContext } from '../context/StateContext';
 
@@ -34,7 +34,7 @@ const Sidebar = () => {
         }
 
         <LatestNews />
-        <VoteEarnings />
+        <YourLiveVotePools />
 
         <CreateModal showModal={showCreateModal} setShowModal={setShowCreateModal} />
 

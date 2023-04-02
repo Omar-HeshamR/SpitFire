@@ -13,7 +13,7 @@ const Feed = () => {
     <Section>
       <Container>
         <FeedHeader>
-          <SearchBar onClick={() => console.log(Posts)}>
+          <SearchBar>
             <Input placeholder= "Search a particular rap battle..."/>
             <SearchButton><Image src={SearchIcon} alt="Search Icon"/></SearchButton>
           </SearchBar>
