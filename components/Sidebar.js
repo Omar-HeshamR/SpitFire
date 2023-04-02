@@ -24,7 +24,7 @@ const Sidebar = () => {
                 <StyledAiOutlinePlusCircle/> <CreateText>Create</CreateText>
               </CreateButton>
         : // if the user is not logged
-            <LockedCreateButton  onClick={openCreateModal}>
+            <LockedCreateButton >
               <Row>
                 <StyledAiOutlinePlusCircle/> <CreateText>Create</CreateText>
               </Row>
