@@ -6,6 +6,7 @@ import { useStateContext } from '../../context/StateContext';
 import SpitFireLogo from '../../public/SpitFireLogo.png'
 import Image from 'next/image';
 import RapperDropDown from "../../utilities/rapperDropDown"
+import {getRapperImage} from '@/functionalities/getRapperImage';
 const crypto = require('crypto');
 
 const CreateModal = ({ showModal, setShowModal }) => {
@@ -40,9 +41,9 @@ const CreateModal = ({ showModal, setShowModal }) => {
     const PostObject = {
       postId: postID,
       creator: currentUser.displayName,
-      rapper1_image: "",
+      rapper1_image: getRapperImage(rapper1),
       rapper1_name: rapper1,
-      rapper2_image: "",
+      rapper2_image: getRapperImage(rapper2),
       rapper2_name: rapper2,
       video_link: "https://www.youtube.com/embed/dQw4w9WgXcQ",
       topic: topicRef,
