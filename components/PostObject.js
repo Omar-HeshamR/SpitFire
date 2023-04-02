@@ -13,12 +13,13 @@ import { database } from "../library/firebase"
 import { toast } from 'react-hot-toast'
 import { ref, get, update } from "firebase/database";
 import { useStateContext } from '../context/StateContext';
-import getRapperImage from '@/functionalities/getRapperImage'
+import CommentSlider from './sidebar/CommentSection'
 
 const PostObject = ({PostObject}) => {
 
   const { currentUser } = useStateContext();
   const [ showBetsModal, setShowBetsModal ] = useState()
+  const [ showComments, setShowComments] = useState()
 
   async function handleUpVote(){
     if(currentUser == undefined){
@@ -77,13 +78,13 @@ const PostObject = ({PostObject}) => {
             <VoteCount >{PostObject.upvotes}</VoteCount>
             <Downvote onClick={handleDownVote}/>
             <VoteCount >{PostObject.downvotes}</VoteCount>
-            <Comment />
+            <Comment onClick={() => setShowComments(true)}/>
             <ThreeDots />
           </BottomRight>
         </BottomBar>
 
       </Container>
-
+      {showComments && <CommentSlider showComments={showComments} setShowComments={setShowComments}/>}
       {showBetsModal && <BetsModal showModal={showBetsModal} setShowModal={setShowBetsModal} PostObject={PostObject}/>}
     </Section>
   </>
