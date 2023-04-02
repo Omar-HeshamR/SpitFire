@@ -10,32 +10,31 @@ import { BiDownvote } from "react-icons/bi";
 import { BiUpvote } from "react-icons/bi";
 
 const PostObject = ({PostObject}) => {
-
   return (
     <>
     <Section>
       <Container>
         <Header>
           <RapperNameLeft>
-            <Image src={Trump} alt="Donald J. Trump" /> Donald Trump
+            <Image src={Trump} alt="Donald J. Trump" /> {PostObject.rapper1_name}
           </RapperNameLeft>
           VS
           <RapperNameRight>
-            <Image src={ElonMusk} alt="Elon Musk" /> Elon Musk
+            <Image src={ElonMusk} alt="Elon Musk" /> {PostObject.rapper2_name}
           </RapperNameRight>
         </Header>
 
         <VideoDiv>
-          <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          <iframe width="100%" height="100%" src={PostObject.video_link} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </VideoDiv>
 
         <BottomBar>
-          <BottomLeft>Creator: Ryan Hokimi</BottomLeft>
+          <BottomLeft>Creator: {PostObject.creator}</BottomLeft>
           <BottomRight>
             <Upvote />
-            <VoteCount>15,328</VoteCount>
+            <VoteCount>{PostObject.upvotes}</VoteCount>
             <Downvote />
-            <VoteCount>4,309</VoteCount>
+            <VoteCount>{PostObject.downvotes}</VoteCount>
             <Comment />
             <ThreeDots />
           </BottomRight>
@@ -43,39 +42,7 @@ const PostObject = ({PostObject}) => {
 
       </Container>
     </Section>
-
-<Section>
-<Container>
-  <Header>
-    <RapperNameLeft>
-      <Image src={Trump} alt="Donald J. Trump" /> Donald Trump
-    </RapperNameLeft>
-    VS
-    <RapperNameRight>
-      <Image src={ElonMusk} alt="Elon Musk" /> Elon Musk
-    </RapperNameRight>
-  </Header>
-
-  <VideoDiv>
-  <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-  </VideoDiv>
-
-  <BottomBar>
-    <BottomLeft>Creator: Ryan Hokimi</BottomLeft>
-    <BottomRight>
-      <Upvote />
-      <VoteCount>15,328</VoteCount>
-      <Downvote />
-      <VoteCount>4,309</VoteCount>
-      <Comment />
-      <ThreeDots />
-    </BottomRight>
-  </BottomBar>
-
-</Container>
-</Section>
-</>
+  </>
   )
 
 }

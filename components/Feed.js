@@ -3,19 +3,25 @@ import styled from 'styled-components'
 import Image from 'next/image'
 import SearchIcon from '../public/SearchIcon.png'
 import PostObject from './PostObject'
+import { useStateContext } from '../context/StateContext';
 
 const Feed = () => {
+
+  const { currentUser, Posts } = useStateContext();
+
   return (
     <Section>
       <Container>
         <FeedHeader>
-          <SearchBar>
+          <SearchBar onClick={() => console.log(Posts)}>
             <Input placeholder= "Search a particular rap battle..."/>
             <SearchButton><Image src={SearchIcon} alt="Search Icon"/></SearchButton>
           </SearchBar>
         </FeedHeader>
 
-       <PostObject/>
+        {Posts.map((post) => (
+        <PostObject key={post.id} PostObject={post}/>
+      ))}
 
       </Container>
     </Section>
