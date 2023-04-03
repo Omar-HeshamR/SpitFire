@@ -3,7 +3,7 @@ export async function createRap(rapper1, rapper2, topics){
   const { Configuration, OpenAIApi } = require("openai");
 
   const configuration = new Configuration({
-    apiKey: "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",
+    apiKey: "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",
   });
 
   const openai = new OpenAIApi(configuration);
@@ -11,7 +11,7 @@ export async function createRap(rapper1, rapper2, topics){
   const prompt = `Make a unique rap battle between ${rapper1} and ${rapper2} that considers each's personal info. Each of the 8 verses should have 4 lines. End each line with a period, and don't include too many commas. Align the topics of the rap battles with this information: ${topics}`
 
   const completion = await openai.createChatCompletion({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: [
           {role: "system", content: `You are a rap battle creator. You will be generating 4 verses for each rapper, alternating between them. The first verse of each rapper should be a roast directed towards the other rapper. The next 3 verses of each rapper should be focused on roasting the other rapper, based on their previous verse. Please adhere to the following format for each the text output of the verses:
 

@@ -43,7 +43,8 @@ const CreateModal = ({ showModal, setShowModal }) => {
   const modalRef = useRef();  
 
   async function createRapBattle(){
-
+    
+    try{
     setLoading("Creating Battle...")
     const postID = hashString(currentUser.displayName);
     const makeAudio = await buildRapBattle(rapper1, rapper2, topicRef);
@@ -67,7 +68,11 @@ const CreateModal = ({ showModal, setShowModal }) => {
     createPost(postID, PostObject);
     toast.success("Rap Battle Created !")
     setLoading(false)
-    setShowModal(false)
+    setShowModal(false) }catch(err){
+      toast.error("Failed to Create Battle")
+      setLoading(false)
+      setShowModal(false) 
+    }
     getPosts()
   }
 
