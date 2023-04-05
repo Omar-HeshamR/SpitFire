@@ -96,7 +96,7 @@ const PostObject = ({PostObject}) => {
     <>
     <Section>
       <Container>
-        <Header>
+        <Header onClick={() => console.log(PostObject.postId)}>
           <RapperNameLeft>
             <Image src={PostObject.rapper1_image} alt="{PostObject.rapper1_name}" /> {PostObject.rapper1_name}
           </RapperNameLeft>
@@ -105,6 +105,10 @@ const PostObject = ({PostObject}) => {
             <Image src={PostObject.rapper2_image} alt="{PostObject.rapper2_name}" /> {PostObject.rapper2_name}
           </RapperNameRight>
         </Header>
+
+        <PromptContainer>
+          <PromptText>Prompt: </PromptText> {PostObject.topic ? PostObject.topic : "None"}
+        </PromptContainer>
 
           <audio id="audio-player"></audio>
           { PostObject.video_link ? <>
@@ -148,13 +152,13 @@ const PostObject = ({PostObject}) => {
 }
 
 const Section = styled.section`
-margin: 1vw 0;
+margin: 1.75vw 0;
 width: 100%;
-border-radius: 1vw;
-border: 0.1vw solid gainsboro;
-box-shadow: 0.2vw 0.2vw 0.2vw gainsboro;
+border-radius: 0.5vw;
+border: 0.75vw double grey;
+box-shadow: 0px 0px 5px #5B618A;
 &:hover{
-  box-shadow: 0.1vw 0.1vw 0.1vw gainsboro;
+  // box-shadow: 0.1vw 0.1vw 0.1vw gainsboro;
 }
 `
 const Container = styled.div`
@@ -164,8 +168,8 @@ const ImgContainer = styled.div`
 position: relative;
 
   img{
-    width: 20vw;
-    height: 20vw; 
+    width: 18vw;
+    height: 18vw; 
     border-radius: 1vw;
   }
 `
@@ -181,6 +185,7 @@ const Header =  styled.div`
   background-color: white;
   filter: opacity(0.9);
   color: #FE5F55;
+  box-shadow: inset 0px -4px 4px -4px #5B618A;
   &:hover{
     filter: opacity(1);
     transition: ease 1s;
@@ -216,13 +221,23 @@ img{
   border-radius: 2vw;
 }
 `
+const PromptContainer = styled.div`
+  display: flex;
+  padding: 1vw;
+`
+const PromptText = styled.div`
+  font-weight: 600;
+  margin-right: 1vw;
+`
+
 const VideoDiv = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-items: center;
   align-items: center;
   height: 20vw; /* change height to 50vw to evenly split the two sections */
-  background-color: gainsboro;
+  box-shadow: inset 0px -4px 4px -4px #5B618A;
+  // background-color: gainsboro;
 `
 
 const OneVideoDiv = styled.div`

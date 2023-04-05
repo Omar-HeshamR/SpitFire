@@ -37,7 +37,7 @@ const Feed = () => {
 const Section = styled.section`
 width: 67.5vw;
 height: 100%;
-// background-color: khaki;
+// background-color: #ECECEC;
 display: flex;
 justfiy-content: center;
 align-items: center;
