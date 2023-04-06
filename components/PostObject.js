@@ -12,15 +12,13 @@ import { toast } from 'react-hot-toast'
 import { ref, get, update } from "firebase/database";
 import { useStateContext } from '../context/StateContext';
 import CommentSlider from './sidebar/CommentSection'
-import { uploadAudioToFirebaseStorage, getAudio } from "../functionalities/storageInteractions"
+import { getAudio } from "../functionalities/storageInteractions"
 
 const PostObject = ({PostObject}) => {
 
   const { currentUser } = useStateContext();
   const [ showBetsModal, setShowBetsModal ] = useState()
   const [ showComments, setShowComments] = useState()
-  const [ Rapper1Gif, setRapper1Gif ] = useState()
-  const [ Rapper2Gif, setRapper2Gif ] = useState()  
 
   async function handleUpVote(){
     if(currentUser == undefined){
