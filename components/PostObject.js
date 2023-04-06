@@ -2,7 +2,6 @@ import React, { useState , useEffect } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
 import BetsModal from "./BetsModal"
-import { findFileAndGetDownloadURL } from "../functionalities/getGif"
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { BiDownvote } from "react-icons/bi";
@@ -13,6 +12,7 @@ import { toast } from 'react-hot-toast'
 import { ref, get, update } from "firebase/database";
 import { useStateContext } from '../context/StateContext';
 import CommentSlider from './sidebar/CommentSection'
+import { uploadAudioToFirebaseStorage, getAudio } from "../functionalities/storageInteractions"
 
 const PostObject = ({PostObject}) => {
 
@@ -92,11 +92,17 @@ const PostObject = ({PostObject}) => {
     return blob;
   }
 
+  async function playAudio(filename){
+        const URL_to_be_played = await getAudio(filename)
+        const audio = new Audio(URL_to_be_played);
+        audio.play();
+  }
+
   return (
     <>
     <Section>
       <Container>
-        <Header onClick={() => console.log(PostObject.postId)}>
+        <Header>
           <RapperNameLeft>
             <Image src={PostObject.rapper1_image} alt="{PostObject.rapper1_name}" /> {PostObject.rapper1_name}
           </RapperNameLeft>
@@ -129,7 +135,7 @@ const PostObject = ({PostObject}) => {
         <BottomBar>
           <BottomLeft>Creator: {PostObject.creator}</BottomLeft>
 
-          {PostObject.audio_link && <PlayButton onClick={() => playBase64Mpegs(PostObject.audio_link)}>Play</PlayButton>}
+          {PostObject.audio_link && <PlayButton onClick={() => playAudio(PostObject.audio_link)}>Play</PlayButton>}
           
           <VotingButton onClick={() => setShowBetsModal(true)}><VoteIcon/></VotingButton>
           <BottomRight>

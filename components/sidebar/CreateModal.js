@@ -47,7 +47,7 @@ const CreateModal = ({ showModal, setShowModal }) => {
     try{
     setLoading("Creating Battle...")
     const postID = hashString(currentUser.displayName);
-    const makeAudio = await buildRapBattle(rapper1, rapper2, topicRef);
+    const makeAudio = await buildRapBattle(postID, rapper1, rapper2, topicRef);
     const PostObject = {
       postId: postID,
       creator: currentUser.displayName,
@@ -131,7 +131,7 @@ const CreateModal = ({ showModal, setShowModal }) => {
                 <RapperDropDown onChange={handleSelectRapper2} />
               </Row>
 
-              <TopicText>Enter Rap Topics (optional)</TopicText>
+              <TopicText>Enter Rap Prompt:</TopicText>
               <TextArea
               placeholder="You can add short topics like Economy, Sports, and Homework, or you long description like 'Biden won't flush the toilet'"
               value={topicRef}

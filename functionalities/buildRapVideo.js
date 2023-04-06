@@ -1,7 +1,8 @@
 import { getVerseBase64 } from './createAudio';
 import { createRap } from './createVerses';
+import { uploadAudioToFirebaseStorage } from "./storageInteractions"
 
-  async function createBlobArray(rapperInfo){
+async function createBlobArray(rapperInfo){
 
     const length = rapperInfo[0].verses.length + rapperInfo[1].verses.length;
     let select = true
@@ -58,13 +59,14 @@ function base64ToMp4Blob(base64) {
   return new Blob([byteArray], { type: 'video/mp4' });
 }
 
-export async function buildRapBattle(rapper1, rapper2, topics){
+export async function buildRapBattle(postID, rapper1, rapper2, topics){
     const rapperInformation = await createRap(rapper1, rapper2, topics)
     let verseBase64 = await createBlobArray(rapperInformation)
     verseBase64 = verseBase64.filter(function(element) {
       return element !== undefined;
     });
-    return verseBase64
+    const stored_audio_refrenece = await uploadAudioToFirebaseStorage(postID, verseBase64)
+    return stored_audio_refrenece
   }
 
 // export async function buildRapBattle(rapper1, rapper2, topics){

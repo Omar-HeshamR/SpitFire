@@ -17,10 +17,11 @@ export default function Home() {
 }
 
 const Container = styled.section`
-margin: auto auto;
-display: flex;
-width: 95%;
-height: 100%;
-// background-color: coral;
+  margin: auto auto;
+  display: flex;
+  width: 95%;
+  height: 100%;
+  // box-shadow: inset 0px 0px 10px #5B618A;
+  // background-color: coral;
 `
 
