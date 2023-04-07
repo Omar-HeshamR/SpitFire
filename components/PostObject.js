@@ -183,7 +183,6 @@ position: relative;
     width: 18vw;
     height: 18vw; 
     border-radius: 1vw;
-    filter: grayscale(100%);
   }
 `
 
