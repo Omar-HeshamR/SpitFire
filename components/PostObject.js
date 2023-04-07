@@ -93,7 +93,15 @@ const PostObject = ({PostObject}) => {
   async function playAudio(filename){
         const URL_to_be_played = await getAudio(filename)
         const audio = new Audio(URL_to_be_played);
+        const beatURL = await getAudio('https://firebasestorage.googleapis.com/v0/b/spitfire-83653.appspot.com/o/music1.mp3?alt=media&token=49990c28-57b9-4790-9d80-98a5ed572d38')
+        const beat = new Audio(beatURL)
+        beat.volume = 0.15
         audio.play();
+        beat.play()
+        audio.addEventListener('ended', () => {
+          beat.pause()
+        });
+
   }
 
   return (
@@ -175,6 +183,7 @@ position: relative;
     width: 18vw;
     height: 18vw; 
     border-radius: 1vw;
+    filter: grayscale(100%);
   }
 `
 
