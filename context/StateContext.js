@@ -10,6 +10,8 @@ export const StateContext = ({ children }) => {
 
   const [currentUser, setCurrentUser] = useState(undefined);
   const [ Posts, setPosts ] = useState([])
+  const [ currentRapAudio, setCurrentRapAudio ]  = useState(null)
+  const [ currentBeatAudio, setCurrentBeatAudio ]  = useState(null)
 
   useEffect(() => {
     getPosts()
@@ -64,6 +66,7 @@ export const StateContext = ({ children }) => {
       if (snapshot.exists()) {
         // console.log(snapshot.val());
         const final = sortPosts(snapshot.val());
+        console.log(final)
         setPosts(final)
         return final;
       } else {
@@ -82,6 +85,14 @@ export const StateContext = ({ children }) => {
     console.log("FINAL ARRAY", arr)
     return arr;
   }
+
+  // AUDIO FUNCTIONS
+  function stopCurrentRap(){
+    if(currentRapAudio != null && currentBeatAudio != null){
+      currentRapAudio.pause()
+      currentBeatAudio.pause()
+    }
+  }
   
 
 return(
@@ -96,6 +107,11 @@ return(
       createPost, 
       Posts,
       getPosts,
+
+      // Audio functionalities
+      stopCurrentRap,
+      setCurrentBeatAudio,
+      setCurrentRapAudio
 
     }}
     >

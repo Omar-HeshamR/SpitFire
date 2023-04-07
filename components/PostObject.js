@@ -16,7 +16,7 @@ import { getAudio } from "../functionalities/storageInteractions"
 
 const PostObject = ({PostObject}) => {
 
-  const { currentUser } = useStateContext();
+  const { currentUser, stopCurrentRap, setCurrentBeatAudio, setCurrentRapAudio } = useStateContext();
   const [ showBetsModal, setShowBetsModal ] = useState()
   const [ showComments, setShowComments] = useState()
 
@@ -91,17 +91,19 @@ const PostObject = ({PostObject}) => {
   }
 
   async function playAudio(filename){
+        stopCurrentRap()
         const URL_to_be_played = await getAudio(filename)
         const audio = new Audio(URL_to_be_played);
-        const beatURL = await getAudio('https://firebasestorage.googleapis.com/v0/b/spitfire-83653.appspot.com/o/music1.mp3?alt=media&token=49990c28-57b9-4790-9d80-98a5ed572d38')
+        const beatURL = await getAudio('music1.mp3')
         const beat = new Audio(beatURL)
         beat.volume = 0.15
+        setCurrentBeatAudio(beat)
+        setCurrentRapAudio(audio)
         audio.play();
-        beat.play()
+        beat.play();
         audio.addEventListener('ended', () => {
           beat.pause()
         });
-
   }
 
   return (
