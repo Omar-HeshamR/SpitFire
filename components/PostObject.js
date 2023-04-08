@@ -12,13 +12,15 @@ import { toast } from 'react-hot-toast'
 import { ref, get, update } from "firebase/database";
 import { useStateContext } from '../context/StateContext';
 import CommentSlider from './sidebar/CommentSection'
-import { getAudio } from "../functionalities/storageInteractions"
+import { getAudio, getDurations } from "../functionalities/storageInteractions"
 
 const PostObject = ({PostObject}) => {
 
   const { currentUser, stopCurrentRap, setCurrentBeatAudio, setCurrentRapAudio } = useStateContext();
   const [ showBetsModal, setShowBetsModal ] = useState()
   const [ showComments, setShowComments] = useState()
+  const [ rapping, setRapping ] = useState(false)
+  const [ toggle, setToggle ] = useState(true)
 
   async function handleUpVote(){
     if(currentUser == undefined){
@@ -91,19 +93,43 @@ const PostObject = ({PostObject}) => {
   }
 
   async function playAudio(filename){
-        stopCurrentRap()
-        const URL_to_be_played = await getAudio(filename)
-        const audio = new Audio(URL_to_be_played);
-        const beatURL = await getAudio('music1.mp3')
-        const beat = new Audio(beatURL)
-        beat.volume = 0.15
-        setCurrentBeatAudio(beat)
-        setCurrentRapAudio(audio)
-        audio.play();
-        beat.play();
-        audio.addEventListener('ended', () => {
-          beat.pause()
-        });
+    stopCurrentRap()
+    const URL_to_be_played = await getAudio(filename)
+    let durations = null
+    try {
+      durations = await getDurations(filename)
+    } catch (error) {
+      console.log('no durations found')
+    }
+    const audio = new Audio(URL_to_be_played);
+    const beatURL = await getAudio('music1.mp3')
+    const beat = new Audio(beatURL)
+    beat.volume = 0.15
+    setCurrentBeatAudio(beat)
+    setCurrentRapAudio(audio)
+    if(durations != null){
+      setRapping(true)
+      toggleRap(durations)
+    }
+    audio.play();
+    beat.play();
+    audio.addEventListener('ended', () => {
+      beat.pause()
+    });
+  }
+  function toggleRap(durations) {
+    let index = 0;
+    setToggle(false);
+    const toggleFunction = () => {
+      setToggle(toggle => !toggle);
+      index++;
+      if (index < durations.length) {
+        setTimeout(toggleFunction, durations[index]);
+      }else{
+        setRapping(false)
+      }
+    };
+    setTimeout(toggleFunction, durations[index]);
   }
 
   return (
@@ -132,10 +158,10 @@ const PostObject = ({PostObject}) => {
           </> : <>
           <VideoDiv>
             <ImgContainer>
-              <Image src={PostObject.rapper1_image} alt={PostObject.rapper1_name} />
+              <ImgLeft rapping={rapping} toggle={toggle}><Image src={PostObject.rapper1_image} alt={PostObject.rapper1_name} /></ImgLeft>
             </ImgContainer>
             <ImgContainer>
-              <Image src={PostObject.rapper2_image} alt={PostObject.rapper2_name} />
+              <ImgRight rapping={rapping} toggle={toggle}><Image src={PostObject.rapper2_image} alt={PostObject.rapper2_name} /></ImgRight>
             </ImgContainer>
           </VideoDiv>
           </>}
@@ -186,6 +212,13 @@ position: relative;
     height: 18vw; 
     border-radius: 1vw;
   }
+`
+
+const ImgLeft = styled.div`
+  filter: ${({ rapping, toggle }) => ((rapping && toggle) ? 'grayscale(100%)' : 'none')};
+`
+const ImgRight = styled.div`
+  filter: ${({ rapping, toggle }) => ((rapping && !toggle) ? 'grayscale(100%)' : 'none')};
 `
 
 const Header =  styled.div`
