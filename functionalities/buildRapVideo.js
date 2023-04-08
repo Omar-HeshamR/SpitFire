@@ -60,7 +60,17 @@ function base64ToMp4Blob(base64) {
 }
 
 export async function buildRapBattle(postID, rapper1, rapper2, topics){
-    const rapperInformation = await createRap(rapper1, rapper2, topics)
+    // const rapperInformation = await createRap(rapper1, rapper2, topics)
+    const response = await fetch('/api/getRapInfo', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({rapper1: rapper1, rapper2: rapper2, topics: topics})
+    })
+    const json = await response.json()
+    const rapperInformation = json.rapperInformation
+    console.log('Rap info', rapperInformation)
     let verseBase64 = await createBlobArray(rapperInformation)
     verseBase64 = verseBase64.filter(function(element) {
       return element !== undefined;
