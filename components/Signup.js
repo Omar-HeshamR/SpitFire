@@ -10,6 +10,7 @@ const Signup = ({ showModal, setShowModal }) => {
 
   const { register, currentUser } = useStateContext();
   const emailRef = useRef();
+  const usernameRef = useRef();
   const passwordRef = useRef()
   const nameRef = useRef()
   const modalRef = useRef();  
@@ -17,7 +18,7 @@ const Signup = ({ showModal, setShowModal }) => {
 
   async function handleRegister(){
     try{
-        await register(nameRef.current.value, emailRef.current.value, passwordRef.current.value)
+        await register(nameRef.current.value, emailRef.current.value, passwordRef.current.value, usernameRef.current.value)
         setShowModal(false)
     }catch(err){
         console.log(err)
@@ -59,6 +60,8 @@ const Signup = ({ showModal, setShowModal }) => {
               </MainTitle>
               <InputTitle> Enter Your Full Name:</InputTitle>
               <FieldInput type="fname" name="fname" ref={nameRef}/>
+              <InputTitle> Enter a username:</InputTitle>
+              <FieldInput type="text" name="username" ref={usernameRef}/>
               <InputTitle> Enter Email Address:</InputTitle>
               <FieldInput type="email" name="email" ref={emailRef}/>
               <InputTitle> Enter Password:</InputTitle>

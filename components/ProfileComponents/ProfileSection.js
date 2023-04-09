@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
 import FollowersModal from '@/components/ProfileComponents/FollowersModal'
@@ -7,35 +7,35 @@ import { useStateContext } from '../../context/StateContext';
 import TestProfilePic from '../../public/TestProfilePic.png'
 
 const ProfileSection = () => {
-    const { currentUser, Posts } = useStateContext()
+
+    const { currentUser, Posts, userProfileInfo } = useStateContext()
     const [ selectedTool, setSelectedTool ] = useState("My Posts")
+
     function ToggleMyPosts(){
         setSelectedTool("My Posts")
     }
     function ToggleSaved(){
         setSelectedTool("Saved")
     }
-    function ToggleFollowers(){
-        setSelectedTool("Followers")
-        setShowFollowersModal(true)
-    }
-    function ToggleFollowing(){
-        setSelectedTool("Following")
-        setShowFollowingModal(true)
-    }
+
+    useEffect(() =>{
+        
+    }, [])
+
     const [ showFollowersModal, setShowFollowersModal] = useState()
     const [ showFollowingModal, setShowFollowingModal] = useState()
+
   return (
     <LeftHandSide>
         <MainProfileDiv>
             <ProfileIcon><Image src={TestProfilePic} alt="TestProfilePic"/></ProfileIcon>
             <ProfileVitals>
-                <UserName>@alkande2003</UserName>
-                <Name>Omer Kandemir</Name>
+                <UserName>@{userProfileInfo.username}</UserName>
+                <Name>{userProfileInfo.full_name}</Name>
                 <FollowersRow>
-                <Count onClick={ToggleFollowers} >411 Followers</Count>
+                <Count onClick={() => setShowFollowersModal(!showFollowersModal)} >  Followers</Count>
                 {showFollowersModal && <FollowersModal showFollowersModal={showFollowersModal} setShowFollowersModal={setShowFollowersModal}/>}
-                <Count onClick={ToggleFollowing}>567 Following</Count>
+                <Count onClick={() => setShowFollowingModal(!showFollowingModal)}>567 Following</Count>
                 {showFollowingModal && <FollowingModal showFollowingModal={showFollowingModal} setShowFollowingModal={setShowFollowingModal}/>}
                 </FollowersRow>
             </ProfileVitals>

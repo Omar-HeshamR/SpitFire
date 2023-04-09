@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import ProfileNavbar from '../../components/ProfileComponents/ProfileNavbar'
+import Navbar from '../../components/Navbar'
 import SearchIcon from '../../public/SearchIcon.png'
 import Image from 'next/image'
 import PostObject from '../../components/PostObject'
@@ -31,7 +31,7 @@ const UserProfile = () => {
     const [ showFollowingModal, setShowFollowingModal] = useState()
   return (
     <>
-    <ProfileNavbar />
+    <Navbar />
     <Section>
         <LeftColumn>
             <ProfileSection />

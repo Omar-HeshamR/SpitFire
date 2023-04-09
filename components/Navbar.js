@@ -5,6 +5,7 @@ import SpitFireLogo from '../public/SpitFireLogo.png'
 import { useStateContext } from '../context/StateContext'
 import Login from './Login'
 import Signup from './Signup'
+import { useRouter } from 'next/router'
 import { VscAccount } from "react-icons/vsc";
 import { SlSettings, SlLogout } from "react-icons/sl";
 import { IoWalletOutline } from "react-icons/io5";
@@ -12,7 +13,8 @@ import { IoWalletOutline } from "react-icons/io5";
 
 const Navbar = () => {
 
-  const { currentUser, setCurrentUser } = useStateContext();
+  const { currentUser, setCurrentUser, userProfileInfo } = useStateContext();
+  const router = useRouter()
 
   //LOG IN
   const [showLogInModal, setShowLogInModal] = useState(false);
@@ -29,7 +31,7 @@ const Navbar = () => {
   const truncateString = (str) => (str.length > 25 ? str.slice(0, 25) + "..." : str);
 
   return (
-    <Section>
+    <Section >
       <Container>
         <LogoContainer>
           <Logo><Image src={SpitFireLogo} alt="Logo"/></Logo>
@@ -38,9 +40,10 @@ const Navbar = () => {
 
         {currentUser ? 
         <ProfileItemsContainer>
-          <NameAndProfile>
+          <NameAndProfile onClick={() => router.push(`/profile/${userProfileInfo.username}`)}>
             <ProfileIcon />
-            <NameDisplay>{truncateString(currentUser.displayName)}</NameDisplay>
+            {userProfileInfo &&
+            <NameDisplay>{truncateString(userProfileInfo.username)}</NameDisplay> }
           </NameAndProfile>
           <BettingHistoryIcon />
           <SettingsIcon />
