@@ -1,40 +1,28 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import Navbar from '../../components/Navbar'
 import SearchIcon from '../../public/SearchIcon.png'
 import Image from 'next/image'
 import PostObject from '../../components/PostObject'
+import { useRouter } from 'next/router'
+import { database } from "../../library/firebase"
+import { ref, set, get, child, onValue } from "firebase/database";
 import { useStateContext } from '../../context/StateContext';
 import ProfileSection from '../../components/ProfileComponents/ProfileSection'
 import ProfileSidebar from '../../components/ProfileComponents/ProfileSidebar'
 
-const UserProfile = () => {
+const UserProfile = ({ userProfileInfo }) => {
 
     const { currentUser, Posts } = useStateContext();
-    const [ selectedTool, setSelectedTool ] = useState("My Posts");
+    const isCurrentUser = Boolean(currentUser && (currentUser.displayName == userProfileInfo.username) );
+    const router = useRouter();
 
-    function ToggleMyPosts(){
-        setSelectedTool("My Posts")
-    }
-    function ToggleSaved(){
-        setSelectedTool("Saved")
-    }
-    function ToggleFollowers(){
-        setSelectedTool("Followers")
-        setShowFollowersModal(true)
-    }
-    function ToggleFollowing(){
-        setSelectedTool("Following")
-        setShowFollowingModal(true)
-    }
-    const [ showFollowersModal, setShowFollowersModal] = useState()
-    const [ showFollowingModal, setShowFollowingModal] = useState()
   return (
     <>
     <Navbar />
     <Section>
         <LeftColumn>
-            <ProfileSection />
+            <ProfileSection userProfileInfo={userProfileInfo} isCurrentUser={isCurrentUser}/>
                 <SearchBar>
                     <Input placeholder= "Search a particular rap battle..."/>
                     <SearchButton><Image src={SearchIcon} alt="Search Icon"/></SearchButton>
@@ -51,11 +39,36 @@ const UserProfile = () => {
                 }
             </PostColumn>
         </LeftColumn>          
-        <ProfileSidebar/>
+        <ProfileSidebar />
     </Section>
     </>
   )
 }
+
+async function getUserProfileInfo(username){
+  const dbRef = ref(database);
+  const response = await get(child(dbRef, `users/${username}`)).then((snapshot) => {
+    if (snapshot.exists()) {
+      return snapshot.val();
+    } 
+  }).catch((error) => {
+    console.error(error);
+  });
+  return response
+}
+
+export async function getServerSideProps(context) {
+  const { index } = context.query;
+  const userProfileInfo = await getUserProfileInfo(index);
+
+  return {
+    props: {
+      userProfileInfo
+    }
+  }
+}
+
+
 const Section = styled.section`
 display: flex;
 `

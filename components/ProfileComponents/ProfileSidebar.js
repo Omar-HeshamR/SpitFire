@@ -15,7 +15,7 @@ const ProfileSidebar = () => {
         </CreateButton>
             <StatsDiv>
                 <StatColumn>
-                    <MyStats>My Stats</MyStats>
+                    <MyStats>Profile Stats</MyStats>
                     <Divider/>
                     <StatsRow><StatLeft>Top Rapper</StatLeft><StatRight>Mark Zuckerberg</StatRight></StatsRow>
                     <StatsRow><StatLeft>Posts:</StatLeft><StatRight>5</StatRight></StatsRow>

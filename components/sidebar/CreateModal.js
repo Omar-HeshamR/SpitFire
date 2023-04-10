@@ -63,6 +63,7 @@ const CreateModal = ({ showModal, setShowModal }) => {
       upvotes: 0,
       downvotes: 0,
       comments: [],
+      timeStamp: Math.floor(Date.now() / 1000),
     }
 
     createPost(postID, PostObject);

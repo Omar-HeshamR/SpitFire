@@ -6,9 +6,9 @@ export function createUserObject(_email, _username, _full_name){
         username: `${_username}`,
         full_name: `${_full_name}`,
         profile_image: "",
-        following: [],
-        followers: [],
-        saved_posts: [],
+        following: [""],
+        followers: [""],
+        saved_posts: [""],
     
         // stats
         top_posted_rapper: "None",

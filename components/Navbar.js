@@ -7,6 +7,7 @@ import Login from './Login'
 import Signup from './Signup'
 import { useRouter } from 'next/router'
 import { VscAccount } from "react-icons/vsc";
+import { CgFeed } from "react-icons/cg";
 import { SlSettings, SlLogout } from "react-icons/sl";
 import { IoWalletOutline } from "react-icons/io5";
 
@@ -28,24 +29,28 @@ const Navbar = () => {
     setShowSignUpModal(prev => !prev)
   }
 
+  // Routing
+  function goToFeed(){
+    router.push("/")
+  }
+
   const truncateString = (str) => (str.length > 25 ? str.slice(0, 25) + "..." : str);
 
   return (
     <Section >
       <Container>
-        <LogoContainer>
+        <LogoContainer onClick={() => router.push("/")}>
           <Logo><Image src={SpitFireLogo} alt="Logo"/></Logo>
           <LogoText>SpitFire</LogoText>
         </LogoContainer>
 
         {currentUser ? 
         <ProfileItemsContainer>
-          <NameAndProfile onClick={() => router.push(`/profile/${userProfileInfo.username}`)}>
+          <NameAndProfile onClick={() => router.push(`/profile/${currentUser.displayName}`)}>
             <ProfileIcon />
-            {userProfileInfo &&
-            <NameDisplay>{truncateString(userProfileInfo.username)}</NameDisplay> }
+            <NameDisplay>{truncateString(currentUser.displayName)}</NameDisplay> 
           </NameAndProfile>
-          <BettingHistoryIcon />
+          <FeedIcon onClick={goToFeed}/>
           <SettingsIcon />
           <LogOutIcon onClick={() => setCurrentUser(undefined)}/>
         </ProfileItemsContainer>
@@ -83,6 +88,10 @@ justify-content: space-between;
 `
 const LogoContainer = styled.div`
 display: flex;
+&:hover{
+  cursor: pointer;
+  transform: scale(1.05);
+}
 `
 const Logo = styled.div`
 display: flex;
@@ -187,7 +196,7 @@ const LogOutIcon = styled(SlLogout)`
   cursor: pointer;
   color: #5B618A;
 `
-const BettingHistoryIcon = styled(IoWalletOutline)`
+const FeedIcon = styled(CgFeed)`
   font-size: 2.25vw;
   cursor: pointer;
   color: #5B618A;

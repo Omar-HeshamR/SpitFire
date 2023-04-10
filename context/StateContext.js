@@ -3,6 +3,7 @@ import { auth, database, storage } from "../library/firebase"
 import { toast } from "react-hot-toast"
 import { createUserObject } from "../functionalities/userFunctions"
 import { ref, set, get, child, onValue } from "firebase/database";
+import { useRouter } from 'next/router';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 const Context = createContext();
@@ -10,10 +11,10 @@ const Context = createContext();
 export const StateContext = ({ children }) => {
 
   const [ currentUser, setCurrentUser ] = useState(undefined);
-  const [ userProfileInfo, setUserProfileInfo ] = useState();
   const [ Posts, setPosts ] = useState([])
   const [ currentRapAudio, setCurrentRapAudio ]  = useState(null)
   const [ currentBeatAudio, setCurrentBeatAudio ]  = useState(null)
+  const router = useRouter()
 
   useEffect(() => {
     getPosts()
@@ -51,8 +52,7 @@ export const StateContext = ({ children }) => {
     await signInWithEmailAndPassword(auth, email, password)
     .then( async (userCredential) => {
       setCurrentUser(userCredential.user);
-      const profileInfo = await getUserProfileInfo(userCredential.user.displayName);
-      setUserProfileInfo(profileInfo)
+      router.push("/")
       // console.log("STATE CONTEXT", profileInfo)
     })
     .catch((error) => {
@@ -132,7 +132,7 @@ return(
       createPost, 
       Posts,
       getPosts,
-      userProfileInfo,
+      getUserProfileInfo,
 
       // Audio functionalities
       stopCurrentRap,

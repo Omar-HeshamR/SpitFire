@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
+import { useRouter } from 'next/router';
 import FollowersModal from '@/components/ProfileComponents/FollowersModal'
 import FollowingModal from '@/components/ProfileComponents/FollowingModal'
 import { useStateContext } from '../../context/StateContext';
 import TestProfilePic from '../../public/TestProfilePic.png'
 
-const ProfileSection = () => {
+const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
 
-    const { currentUser, Posts, userProfileInfo } = useStateContext()
     const [ selectedTool, setSelectedTool ] = useState("My Posts")
+    const [ showFollowersModal, setShowFollowersModal] = useState()
+    const [ showFollowingModal, setShowFollowingModal] = useState()
 
     function ToggleMyPosts(){
         setSelectedTool("My Posts")
@@ -18,41 +20,43 @@ const ProfileSection = () => {
         setSelectedTool("Saved")
     }
 
-    useEffect(() =>{
-        
-    }, [])
-
-    const [ showFollowersModal, setShowFollowersModal] = useState()
-    const [ showFollowingModal, setShowFollowingModal] = useState()
 
   return (
-    <LeftHandSide>
+    <LeftHandSide onClick={() => console.log(userProfileInfo)}>
+            { userProfileInfo &&
         <MainProfileDiv>
             <ProfileIcon><Image src={TestProfilePic} alt="TestProfilePic"/></ProfileIcon>
             <ProfileVitals>
                 <UserName>@{userProfileInfo.username}</UserName>
                 <Name>{userProfileInfo.full_name}</Name>
                 <FollowersRow>
-                <Count onClick={() => setShowFollowersModal(!showFollowersModal)} >  Followers</Count>
+                <Count onClick={() => setShowFollowersModal(!showFollowersModal)} >{userProfileInfo.followers.length- 1}  Followers</Count>
                 {showFollowersModal && <FollowersModal showFollowersModal={showFollowersModal} setShowFollowersModal={setShowFollowersModal}/>}
-                <Count onClick={() => setShowFollowingModal(!showFollowingModal)}>567 Following</Count>
+                <Count onClick={() => setShowFollowingModal(!showFollowingModal)}>{userProfileInfo.following.length- 1} Following</Count>
                 {showFollowingModal && <FollowingModal showFollowingModal={showFollowingModal} setShowFollowingModal={setShowFollowingModal}/>}
                 </FollowersRow>
             </ProfileVitals>
-                <ButtonText1 onClick={ToggleMyPosts} selectedTool={selectedTool}>My Posts</ButtonText1>
-                <ButtonText2 onClick={ToggleSaved} selectedTool={selectedTool}>Saved</ButtonText2>                
+                {isCurrentUser &&
+                    <>
+                        <ButtonText1 onClick={ToggleMyPosts} selectedTool={selectedTool}>My Posts</ButtonText1>
+                        <ButtonText2 onClick={ToggleSaved} selectedTool={selectedTool}>Saved</ButtonText2>    
+                    </>
+                }
+            
         </MainProfileDiv>
+            }
         <Line></Line>        
     </LeftHandSide>
   )
 }
+
 const LeftHandSide = styled.div`
 display: flex;
 position: sticky;
 padding-top: 2vw;
 top: 5vw;
 flex-direction: column;
-z-index: 5000;
+z-index: 1;
 background-color: white;
 border-top: 0.1vw solid gainsboro;
 box-shadow: inset 0 0.1vw 0.1vw -0.1vw gainsboro,
