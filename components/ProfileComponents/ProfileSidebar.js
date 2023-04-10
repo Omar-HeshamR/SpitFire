@@ -7,22 +7,24 @@ import RandomUser2 from '../../public/RandomUser2.jpg'
 import RandomUser3 from '../../public/RandomUser3.jpg'
 import RandomUser4 from '../../public/RandomUser4.jpg'
 
-const ProfileSidebar = () => {
+const ProfileSidebar = ({userProfileInfo}) => {
   return (
     <RightHandSide>
         <CreateButton>
             <StyledAiOutlinePlusCircle/> <CreateText>Create</CreateText>
         </CreateButton>
+
             <StatsDiv>
                 <StatColumn>
                     <MyStats>Profile Stats</MyStats>
                     <Divider/>
-                    <StatsRow><StatLeft>Top Rapper</StatLeft><StatRight>Mark Zuckerberg</StatRight></StatsRow>
-                    <StatsRow><StatLeft>Posts:</StatLeft><StatRight>5</StatRight></StatsRow>
-                    <StatsRow><StatLeft>Post likes:</StatLeft><StatRight>2750</StatRight></StatsRow>
-                    <StatsRow><StatLeft>Post downvotes:</StatLeft><StatRight>260</StatRight></StatsRow>
+                    <StatsRow><StatLeft>Top Rapper</StatLeft><StatRight>{userProfileInfo.top_posted_rapper}</StatRight></StatsRow>
+                    <StatsRow><StatLeft>Posts:</StatLeft><StatRight>{userProfileInfo.post_numbers}</StatRight></StatsRow>
+                    <StatsRow><StatLeft>Total upvotes:</StatLeft><StatRight>{userProfileInfo.total_upvotes}</StatRight></StatsRow>
+                    <StatsRow><StatLeft>Total downvotes:</StatLeft><StatRight>{userProfileInfo.total_downvotes}</StatRight></StatsRow>
                 </StatColumn>
             </StatsDiv>
+
         <YouMightLikeBox>
             <YouMightLike>You Might Like</YouMightLike>
             <Divider/>
@@ -108,7 +110,8 @@ const ProfileSidebar = () => {
                         <FollowButton>Follow</FollowButton>
                     </AccountDiv> 
                 </AccountColumn>      
-        </YouMightLikeBox>           
+        </YouMightLikeBox>    
+               
     </RightHandSide>
   )
 }

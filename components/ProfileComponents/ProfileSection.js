@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
-import { useRouter } from 'next/router';
 import FollowersModal from '@/components/ProfileComponents/FollowersModal'
 import FollowingModal from '@/components/ProfileComponents/FollowingModal'
-import { useStateContext } from '../../context/StateContext';
 import TestProfilePic from '../../public/TestProfilePic.png'
 
 const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
