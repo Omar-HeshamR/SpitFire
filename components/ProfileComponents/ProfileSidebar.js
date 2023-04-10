@@ -18,7 +18,7 @@ const ProfileSidebar = ({userProfileInfo}) => {
                 <StatColumn>
                     <MyStats>Profile Stats</MyStats>
                     <Divider/>
-                    <StatsRow><StatLeft>Top Rapper</StatLeft><StatRight>{userProfileInfo.top_posted_rapper}</StatRight></StatsRow>
+                    {/* <StatsRow><StatLeft>Top Rapper</StatLeft><StatRight>{userProfileInfo.top_posted_rapper}</StatRight></StatsRow> */}
                     <StatsRow><StatLeft>Posts:</StatLeft><StatRight>{userProfileInfo.post_numbers}</StatRight></StatsRow>
                     <StatsRow><StatLeft>Total upvotes:</StatLeft><StatRight>{userProfileInfo.total_upvotes}</StatRight></StatsRow>
                     <StatsRow><StatLeft>Total downvotes:</StatLeft><StatRight>{userProfileInfo.total_downvotes}</StatRight></StatsRow>

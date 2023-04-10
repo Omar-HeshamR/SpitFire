@@ -76,9 +76,9 @@ justify-content: center;
 align-items: center;
 box-shadow: 0vw 0.1vw 0.1vw gainsboro;
 position: sticky;
-  top: 0;
+top: 0;
 background-color: white;
-z-index: 100;
+z-index: 1;
 `
 const Container = styled.div`
 display: flex;
