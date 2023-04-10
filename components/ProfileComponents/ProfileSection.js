@@ -4,6 +4,7 @@ import Image from 'next/image'
 import FollowersModal from '@/components/ProfileComponents/FollowersModal'
 import FollowingModal from '@/components/ProfileComponents/FollowingModal'
 import TestProfilePic from '../../public/TestProfilePic.png'
+import CreateModal from '../sidebar/CreateModal'
 
 const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
 
@@ -20,7 +21,8 @@ const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
 
 
   return (
-    <LeftHandSide onClick={() => console.log(userProfileInfo)}>
+    <>
+        <LeftHandSide onClick={() => console.log(userProfileInfo)}>
             { userProfileInfo &&
         <MainProfileDiv>
             <ProfileIcon><Image src={TestProfilePic} alt="TestProfilePic"/></ProfileIcon>
@@ -29,9 +31,7 @@ const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
                 <Name>{userProfileInfo.full_name}</Name>
                 <FollowersRow>
                 <Count onClick={() => setShowFollowersModal(!showFollowersModal)} >{userProfileInfo.followers.length- 1}  Followers</Count>
-                {showFollowersModal && <FollowersModal showFollowersModal={showFollowersModal} setShowFollowersModal={setShowFollowersModal}/>}
                 <Count onClick={() => setShowFollowingModal(!showFollowingModal)}>{userProfileInfo.following.length- 1} Following</Count>
-                {showFollowingModal && <FollowingModal showFollowingModal={showFollowingModal} setShowFollowingModal={setShowFollowingModal}/>}
                 </FollowersRow>
             </ProfileVitals>
                 {isCurrentUser &&
@@ -45,16 +45,19 @@ const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
             }
         <Line></Line>        
     </LeftHandSide>
+
+    {showFollowersModal && <FollowersModal showFollowersModal={showFollowersModal} setShowFollowersModal={setShowFollowersModal}/>}
+    {showFollowingModal && <FollowingModal showFollowingModal={showFollowingModal} setShowFollowingModal={setShowFollowingModal}/>}
+    </>
   )
 }
 
 const LeftHandSide = styled.div`
 display: flex;
-position: sticky;
 padding-top: 2vw;
 top: 5vw;
 flex-direction: column;
-z-index: 1;
+// z-index: 1;
 background-color: white;
 border-top: 0.1vw solid gainsboro;
 box-shadow: inset 0 0.1vw 0.1vw -0.1vw gainsboro,
@@ -66,6 +69,7 @@ align-items: center;
 background-color: white;
 padding-left: 2.5vw;
 width: 70vw;
+
 `
 const ProfileIcon = styled.div`
 width: 5vw;

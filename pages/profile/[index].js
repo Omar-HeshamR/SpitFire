@@ -24,6 +24,7 @@ const UserProfile = ({ userProfileInfo }) => {
     <Section>
 
         <LeftColumn>
+
             <ProfileSection userProfileInfo={userProfileInfo} isCurrentUser={isCurrentUser}/>
 
               <PostColumn>
@@ -67,6 +68,7 @@ const Section = styled.section`
 display: flex;
 `
 const LeftColumn = styled.div`
+// background-color: orange;
 `
 const PostColumn = styled.div`
 margin-left: 2.5vw;

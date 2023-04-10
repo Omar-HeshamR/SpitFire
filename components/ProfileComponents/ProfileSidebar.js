@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import Image from 'next/image';
@@ -9,6 +9,16 @@ import RandomUser3 from '../../public/RandomUser3.jpg'
 import RandomUser4 from '../../public/RandomUser4.jpg'
 
 const ProfileSidebar = ({userProfileInfo}) => {
+
+    const [ selectedTool, setSelectedTool ] = useState()
+
+    function ToggleProfile(){
+        setSelectedTool("Profile")
+    }
+    function ToggleButton(){
+        setSelectedTool("Button")
+    }
+
   return (
     <RightHandSide>
 
@@ -29,7 +39,7 @@ const ProfileSidebar = ({userProfileInfo}) => {
             <YouMightLike>You Might Like</YouMightLike>
             <Divider/>
             <AccountColumn>
-            <AccountDiv>
+            <AccountDiv onMouseEnter={ToggleProfile} selectedTool={selectedTool}  onMouseLeave={() => setSelectedTool(false)}>
                         <ProfilePic><Image src={RandomUser1} alt="Random User 1" /></ProfilePic>
                         <SideColumn>
                             <TopRow>
@@ -37,78 +47,8 @@ const ProfileSidebar = ({userProfileInfo}) => {
                             </TopRow>
                             <Name>Jonathan Anderson FSU 2025 </Name>
                         </SideColumn>
-                        <FollowButton>Follow</FollowButton>
+                        <FollowButton onMouseEnter={ToggleButton} selectedTool={selectedTool}  onMouseLeave={() => setSelectedTool("Profile")}>Follow</FollowButton>
                     </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser2} alt="Random User 2" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>Marie_smith1923.1</UserName>
-                            </TopRow>
-                            <Name>Marie Smith</Name>
-                        </SideColumn>
-                        <FollowButton>Follow</FollowButton>
-                    </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser3} alt="Random User 3" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>Michael.Frederick</UserName>
-                            </TopRow>
-                            <Name>Michael George Frederick</Name>
-                        </SideColumn>
-                        <FollowButton>Follow</FollowButton>
-                    </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser4} alt="Random User 4" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>Xavier Eduardo Lopez</UserName>
-                            </TopRow>
-                            <Name>Xavier Eduardo Lopez</Name>
-                        </SideColumn>
-                        <FollowButton>Follow</FollowButton>
-                    </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser1} alt="Random User 1" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>jonnyand_usa</UserName>
-                            </TopRow>
-                            <Name>Jonathan Anderson FSU 2025</Name>
-                        </SideColumn>
-                        <FollowButton>Follow</FollowButton>
-                    </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser2} alt="Random User 2" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>Marie_smith1923.1</UserName>
-                            </TopRow>
-                            <Name>Marie Smith</Name>
-                        </SideColumn>
-                        <FollowButton>Follow</FollowButton>
-                    </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser3} alt="Random User 3" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>Michael.Frederick</UserName>
-                            </TopRow>
-                            <Name>Michael George Frederick</Name>
-                        </SideColumn>
-                        <FollowButton>Follow</FollowButton>
-                    </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser4} alt="Random User 4" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>Xavier Eduardo Lopez </UserName>
-                            </TopRow>
-                            <Name>Xavier Eduardo Lopez</Name>
-                        </SideColumn>
-                        <FollowButton>Follow</FollowButton>
-                    </AccountDiv> 
                 </AccountColumn>      
         </YouMightLikeBox>    
 
@@ -172,7 +112,7 @@ height: 0.1vw;
 
 const AccountColumn = styled.div`
 flex-direction: column;
-height: 13.5vw;
+max-height: 13.5vw;
 overflow: scroll;
 `
 const AccountDiv = styled.div`
@@ -181,11 +121,15 @@ padding: 0.5vw 0.5vw;
 width: 100%;
 align-items: center;
 
-&:hover{
-    background-color: aliceblue;
-    transform: scale(0.99);
-    cursor: pointer;
-}
+background-color: ${({selectedTool}) => 
+selectedTool === 'Profile' ? 'aliceblue' : 'transparent' 
+};
+transform: ${({selectedTool}) => 
+selectedTool === 'Profile' ? 'scale(0.99)' : 'scale(1)' 
+};
+cursor: ${({selectedTool}) => 
+selectedTool === 'Profile' ? 'pointer' : 'auto' 
+};
 `
 const ProfilePic = styled.div`
 display: flex;
@@ -221,9 +165,17 @@ background-color: #5B618A;
 color: white;
 border: none;
 border-radius: 0.5vw;
+
 &:hover{
     cursor: pointer;
 }
+
+filter: ${({selectedTool}) => 
+selectedTool === 'Button' ? 'opacity(1)' : 'opacity(0.8)' 
+};
+transform: ${({selectedTool}) => 
+selectedTool === 'Button' ? 'scale(0.95)' : 'scale(1)' 
+};
 `
 
 export default ProfileSidebar

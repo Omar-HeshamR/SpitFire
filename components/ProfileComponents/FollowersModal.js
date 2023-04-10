@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import RandomUser1 from '../../public/RandomUser1.jpg'
@@ -12,88 +12,34 @@ const FollowersModal = ({showFollowersModal, setShowFollowersModal}) => {
     const handleClose = () => {
         setShowFollowersModal(false);
     }
+
+    const [ selectedTool, setSelectedTool ] = useState()
+
+    function ToggleProfile(){
+        setSelectedTool("Profile")
+    }
+    function ToggleButton(){
+        setSelectedTool("Button")
+    }
+
   return (
     <Background onClick={handleClose}>
             <ModalContent>
                     <Title>Followers <CloseIcon onClick={handleClose}/></Title>
                 <Line></Line>
                 <AccountsContainer>
-                    <AccountDiv>
+                    <AccountDiv onMouseEnter={ToggleProfile} selectedTool={selectedTool}  onMouseLeave={() => setSelectedTool(false)}>
                         <ProfilePic><Image src={RandomUser1} alt="Random User 1" /></ProfilePic>
                         <SideColumn>
                             <TopRow>
                                 <UserName>jonnyand_usa</UserName>
-                                <FollowOption>Follow</FollowOption>
+                                <FollowOption onMouseEnter={ToggleButton} selectedTool={selectedTool}  onMouseLeave={() => setSelectedTool("Profile")}>Follow</FollowOption>
                             </TopRow>
                             <Name>Jonathan Anderson FSU 2025</Name>
                         </SideColumn>
                     </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser2} alt="Random User 2" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>Marie_smith1923.1</UserName>
-                            </TopRow>
-                            <Name>Marie Smith</Name>
-                        </SideColumn>
-                    </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser3} alt="Random User 3" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>Michael.Frederick</UserName>
-                                <FollowOption>Follow</FollowOption>
-                            </TopRow>
-                            <Name>Michael George Frederick</Name>
-                        </SideColumn>
-                    </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser4} alt="Random User 4" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>Xavier Eduardo Lopez</UserName>
-                            </TopRow>
-                            <Name>Xavier Eduardo Lopez</Name>
-                        </SideColumn>
-                    </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser1} alt="Random User 1" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>jonnyand_usa</UserName>
-                                <FollowOption>Follow</FollowOption>
-                            </TopRow>
-                            <Name>Jonathan Anderson FSU 2025</Name>
-                        </SideColumn>
-                    </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser2} alt="Random User 2" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>Marie_smith1923.1 </UserName>
-                                <FollowOption>Follow</FollowOption>
-                            </TopRow>
-                            <Name>Marie Smith </Name>
-                        </SideColumn>
-                    </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser3} alt="Random User 3" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>Michael.Frederick</UserName>
-                            </TopRow>
-                            <Name>Michael George Frederick</Name>
-                        </SideColumn>
-                    </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser4} alt="Random User 4" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>Xavier Eduardo Lopez </UserName>
-                            </TopRow>
-                            <Name>Xavier Eduardo Lopez </Name>
-                        </SideColumn>
-                    </AccountDiv>               
+                    
+                           
                 </AccountsContainer>         
             </ModalContent>
       </Background>
@@ -136,18 +82,22 @@ margin-top: 0.3125vw;
 const AccountsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 22.5vw;
+  max-height: 22.5vw;
   overflow: auto;
 `
 const AccountDiv = styled.div`
 display: flex;
 padding: 0.625vw 1.25vw;
 align-items: center;
-&:hover{
-    background-color: aliceblue;
-    transform: scale(0.99);
-    cursor: pointer;
-}
+background-color: ${({selectedTool}) => 
+selectedTool === 'Profile' ? 'aliceblue' : 'transparent' 
+};
+transform: ${({selectedTool}) => 
+selectedTool === 'Profile' ? 'scale(0.99)' : 'scale(1)' 
+};
+cursor: ${({selectedTool}) => 
+selectedTool === 'Profile' ? 'pointer' : 'auto' 
+};
 `
 const ProfilePic = styled.div`
 display: flex;
@@ -189,8 +139,16 @@ color:  blue;
 margin-left: 0.625vw;
 &:hover{
     cursor: pointer;
-    color: black;
 }
+filter: ${({selectedTool}) => 
+selectedTool === 'Button' ? 'opacity(1)' : 'opacity(0.8)' 
+};
+color: ${({selectedTool}) => 
+selectedTool === 'Button' ? 'black' : 'blue' 
+};
+text-decoration: ${({selectedTool}) => 
+selectedTool === 'Button' ? 'underline' : 'none' 
+};
 `
 const CloseIcon = styled(MdClose)`
 margin-left: auto;

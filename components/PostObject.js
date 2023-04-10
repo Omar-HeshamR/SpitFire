@@ -137,7 +137,6 @@ const PostObject = ({PostObject}) => {
   return (
     <>
     <Section>
-      <Container>
         <Header>
           <RapperNameLeft>
             <Image src={PostObject.rapper1_image} alt="{PostObject.rapper1_name}" /> {PostObject.rapper1_name}
@@ -184,7 +183,6 @@ const PostObject = ({PostObject}) => {
           </BottomRight>
         </BottomBar>
 
-      </Container>
       {showComments && <CommentSlider showComments={showComments} setShowComments={setShowComments}/>}
       {showBetsModal && <BetsModal showModal={showBetsModal} setShowModal={setShowBetsModal} PostObject={PostObject}/>}
     </Section>
@@ -202,8 +200,6 @@ box-shadow: 0px 0px 5px #5B618A;
 &:hover{
   // box-shadow: 0.1vw 0.1vw 0.1vw gainsboro;
 }
-`
-const Container = styled.div`
 `
 
 const ImgContainer = styled.div`
@@ -379,6 +375,7 @@ font-size: 1vw;
 margin-left: 0.25vw;
 `
 const VotingButton = styled.div`
+display: flex;
 background-color: #EBEBEB;
 display: flex;
 height: 2.5vw;

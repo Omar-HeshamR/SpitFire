@@ -116,7 +116,7 @@ const CreateModal = ({ showModal, setShowModal }) => {
   return (
     <>
     { showModal ? (
-      <Background onClick={closeModal} ref={modalRef}>
+      <Background onClick={closeModal} ref={modalRef} >
           <ModalWrapper showModal={showModal}>
 
             <ModalContent>
@@ -189,6 +189,7 @@ const ModalWrapper = styled.div`
   // z-index: 100;
   border-radius: 10px;
   background: linear-gradient(to bottom, #FFFFFF, #B5B8CF);
+  // z-index: 100;
   @media (max-width: 480px){
     width: 60vw;
   }
@@ -197,6 +198,7 @@ const ModalWrapper = styled.div`
 const ModalContent = styled.div`
   margin: 4vw 2vw;
   width: 40vw;
+
   display: flex;
   flex-direction: column;
   text-align: center;

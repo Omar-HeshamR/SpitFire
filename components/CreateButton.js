@@ -16,7 +16,7 @@ const CreateButton = () => {
 
 
   return (
-    <>
+    <> 
         { currentUser ? // if the user is logged
             <MainButton onClick={openCreateModal}>
             <StyledAiOutlinePlusCircle/> <CreateText>Create</CreateText>
@@ -36,6 +36,7 @@ const CreateButton = () => {
     </>
   )
 }
+
 
 const MainButton = styled.button`
   display: flex;

@@ -12,13 +12,22 @@ const FollowingModal = ({showFollowingModal, setShowFollowingModal}) => {
     const handleClose = () => {
         setShowFollowingModal(false);
     }
+
+    const [ selectedTool, setSelectedTool ] = useState()
+
+    function ToggleProfile(){
+        setSelectedTool("Profile")
+    }
+    function ToggleButton(){
+        setSelectedTool("Button")
+    }
   return (
     <Background onClick={handleClose}> 
             <ModalContent>
                     <Title>Following <CloseIcon onClick={handleClose}/></Title>
                 <Line></Line>
                 <AccountsContainer>
-                    <AccountDiv>
+                    <AccountDiv onMouseEnter={ToggleProfile} selectedTool={selectedTool}  onMouseLeave={() => setSelectedTool(false)}>
                         <ProfilePic><Image src={RandomUser1} alt="Random User 1" /></ProfilePic>
                         <SideColumn>
                             <TopRow>
@@ -26,78 +35,10 @@ const FollowingModal = ({showFollowingModal, setShowFollowingModal}) => {
                             </TopRow>
                             <Name>Jonathan Anderson FSU 2025</Name>
                         </SideColumn>
-                        <RemoveButton>Unfollow</RemoveButton>
+                        <RemoveButton onMouseEnter={ToggleButton} selectedTool={selectedTool}  onMouseLeave={() => setSelectedTool("Profile")}>Unfollow</RemoveButton>
                     </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser2} alt="Random User 2" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>Marie_smith1923.1</UserName>
-                            </TopRow>
-                            <Name>Marie Smith</Name>
-                        </SideColumn>
-                        <RemoveButton>Unfollow</RemoveButton>
-                    </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser3} alt="Random User 3" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>Michael.Frederick</UserName>
-                            </TopRow>
-                            <Name>Michael George Frederick</Name>
-                        </SideColumn>
-                        <RemoveButton>Unfollow</RemoveButton>
-                    </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser4} alt="Random User 4" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>Xavier Eduardo Lopez</UserName>
-                            </TopRow>
-                            <Name>Xavier Eduardo Lopez</Name>
-                        </SideColumn>
-                        <RemoveButton>Unfollow</RemoveButton>
-                    </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser1} alt="Random User 1" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>jonnyand_usa</UserName>
-                            </TopRow>
-                            <Name>Jonathan Anderson FSU 2025</Name>
-                        </SideColumn>
-                        <RemoveButton>Unfollow</RemoveButton>
-                    </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser2} alt="Random User 2" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>Marie_smith1923.1</UserName>
-                            </TopRow>
-                            <Name>Marie Smith</Name>
-                        </SideColumn>
-                        <RemoveButton>Unfollow</RemoveButton>
-                    </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser3} alt="Random User 3" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>Michael.Frederick</UserName>
-                            </TopRow>
-                            <Name>Michael George Frederick</Name>
-                        </SideColumn>
-                        <RemoveButton>Unfollow</RemoveButton>
-                    </AccountDiv>
-                    <AccountDiv>
-                        <ProfilePic><Image src={RandomUser4} alt="Random User 4" /></ProfilePic>
-                        <SideColumn>
-                            <TopRow>
-                                <UserName>Xavier Eduardo Lopez</UserName>
-                            </TopRow>
-                            <Name>Xavier Eduardo Lopez</Name>
-                        </SideColumn>
-                        <RemoveButton>Unfollow</RemoveButton>
-                    </AccountDiv>               
+                    
+                                 
                 </AccountsContainer>         
             </ModalContent>
       </Background>
@@ -121,6 +62,7 @@ const ModalContent = styled.div`
   padding: 0.625vw 0vw;
   background-color: white;
   border-radius: 0.625vw;
+
 `
 const Title = styled.text`
 display: flex;
@@ -140,7 +82,7 @@ margin-top: 0.3125vw;
 const AccountsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 22.5vw;
+  max-height: 22.5vw;
   overflow: auto;
 `
 const AccountDiv = styled.div`
@@ -148,10 +90,17 @@ display: flex;
 padding: 0.625vw 1.25vw;
 align-items: center;
 &:hover{
-    background-color: aliceblue;
-    transform: scale(0.99);
     cursor: pointer;
 }
+background-color: ${({selectedTool}) => 
+selectedTool === 'Profile' ? 'aliceblue' : 'transparent' 
+};
+transform: ${({selectedTool}) => 
+selectedTool === 'Profile' ? 'scale(0.99)' : 'scale(1)' 
+};
+cursor: ${({selectedTool}) => 
+selectedTool === 'Profile' ? 'pointer' : 'auto' 
+};
 `
 const ProfilePic = styled.div`
 display: flex;
@@ -183,12 +132,19 @@ const RemoveButton = styled.button`
 padding: 0.625vw 0.625vw;
 font-size: 1.25vw;
 background-color: #FE5F55;
-color: black;
+color: white;
 border: none;
 border-radius: 0.625vw;
+
 &:hover{
     cursor: pointer;
 }
+filter: ${({selectedTool}) => 
+selectedTool === 'Button' ? 'opacity(1)' : 'opacity(0.8)' 
+};
+transform: ${({selectedTool}) => 
+selectedTool === 'Button' ? 'scale(0.95)' : 'scale(1)' 
+};
 `
 const CloseIcon = styled(MdClose)`
 margin-left: auto;
