@@ -2,6 +2,7 @@ import React, { useState , useEffect } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
 import BetsModal from "./BetsModal"
+import { useRouter } from 'next/router'
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { BiDownvote } from "react-icons/bi";
@@ -21,6 +22,7 @@ const PostObject = ({PostObject}) => {
   const [ showComments, setShowComments] = useState()
   const [ rapping, setRapping ] = useState(false)
   const [ toggle, setToggle ] = useState(true)
+  const rotuer = useRouter()
 
   async function handleUpVote(){
     if(currentUser == undefined){
@@ -167,7 +169,7 @@ const PostObject = ({PostObject}) => {
           </>}
 
         <BottomBar>
-          <BottomLeft>Creator: {PostObject.creator}</BottomLeft>
+          <BottomLeft onClick={() => rotuer.push(`/profile/${PostObject.creator}`)}>Creator: {PostObject.creator}</BottomLeft>
 
           {PostObject.audio_link && <PlayButton onClick={() => playAudio(PostObject.audio_link)}>Play</PlayButton>}
           

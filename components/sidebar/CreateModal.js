@@ -177,7 +177,7 @@ const Background = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index:10;
+  z-index: 10;
 `;
 
 const ModalWrapper = styled.div`
@@ -186,7 +186,7 @@ const ModalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  z-index: 10;
+  // z-index: 100;
   border-radius: 10px;
   background: linear-gradient(to bottom, #FFFFFF, #B5B8CF);
   @media (max-width: 480px){

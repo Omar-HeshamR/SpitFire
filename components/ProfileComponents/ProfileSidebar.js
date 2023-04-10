@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import Image from 'next/image';
+import CreateButton from '../CreateButton';
 import RandomUser1 from '../../public/RandomUser1.jpg'
 import RandomUser2 from '../../public/RandomUser2.jpg'
 import RandomUser3 from '../../public/RandomUser3.jpg'
@@ -10,9 +11,8 @@ import RandomUser4 from '../../public/RandomUser4.jpg'
 const ProfileSidebar = ({userProfileInfo}) => {
   return (
     <RightHandSide>
-        <CreateButton>
-            <StyledAiOutlinePlusCircle/> <CreateText>Create</CreateText>
-        </CreateButton>
+
+        <CreateButton />
 
             <StatsDiv>
                 <StatColumn>
@@ -111,7 +111,7 @@ const ProfileSidebar = ({userProfileInfo}) => {
                     </AccountDiv> 
                 </AccountColumn>      
         </YouMightLikeBox>    
-               
+
     </RightHandSide>
   )
 }
@@ -169,31 +169,7 @@ width: 100%;
 margin: 1vw 0;
 height: 0.1vw;
 `
-const CreateButton = styled.button`
-  display: flex;
-  width: 26.5vw;
-  height: 5vw;
-  background-color: white;
-  border: 0.25vw solid #5B618A;
-  border-radius: 0.5vw;
-  justify-content: center;
-  align-items: center;
-  &:hover{
-    cursor: pointer;
-    transform: scale(0.975);
-  }
-`
-const CreateText = styled.div`
-  color: #FE5F55;
-  font-size: 2vw;
-  font-weight: 600;
-  letter-spacing: 0.1vw;
-`
-const StyledAiOutlinePlusCircle = styled(AiOutlinePlusCircle)`
-  color: #FE5F55;
-  font-size: 3vw;
-  margin-right: 0.5vw;
-`
+
 const AccountColumn = styled.div`
 flex-direction: column;
 height: 13.5vw;
