@@ -56,6 +56,7 @@ const RightHandSide = styled.div`
 left: 71vw;
 width: 26.5vw;
 position: fixed;
+height: 100%;
 flex-direction: column;
 padding-top: 2vw;
 `
