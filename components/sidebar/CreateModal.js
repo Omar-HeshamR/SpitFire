@@ -5,6 +5,7 @@ import { toast } from 'react-hot-toast';
 import { useStateContext } from '../../context/StateContext';
 import SpitFireLogo from '../../public/SpitFireLogo.png'
 import Image from 'next/image';
+import { addPostsNumber } from '@/functionalities/userFunctions';
 import RapperDropDown from "../../utilities/rapperDropDown"
 import {getRapperImage} from '@/functionalities/getRapperImage';
 import { buildRapBattle } from "@/functionalities/buildRapVideo"
@@ -45,9 +46,16 @@ const CreateModal = ({ showModal, setShowModal }) => {
   async function createRapBattle(){
     
     try{
+
+    setShowModal(false)
     setLoading("Creating Battle...")
     const postID = hashString(currentUser.displayName);
-    const makeAudio = await buildRapBattle(postID, rapper1, rapper2, topicRef);
+    const makeAudio = buildRapBattle(postID, rapper1, rapper2, topicRef);
+    await toast.promise(makeAudio, {
+      loading: 'Creating Battle...',
+      success: 'Rap Battle Created!',
+      error: 'Failed to Create Battle',
+    });
     const PostObject = {
       postId: postID,
       creator: currentUser.displayName,
@@ -66,15 +74,16 @@ const CreateModal = ({ showModal, setShowModal }) => {
       timeStamp: Math.floor(Date.now() / 1000),
     }
 
-    createPost(postID, PostObject);
-    toast.success("Rap Battle Created !")
+    createPost(postID, PostObject)
+    addPostsNumber(currentUser.displayName)
+    getPosts();
     setLoading(false)
-    setShowModal(false) }catch(err){
+  }
+    catch(err){
       toast.error("Failed to Create Battle")
       setLoading(false)
       setShowModal(false) 
     }
-    getPosts()
   }
 
   function hashString(str) {

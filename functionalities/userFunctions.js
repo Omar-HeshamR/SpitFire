@@ -23,7 +23,7 @@ export function createUserObject(_email, _username, _full_name){
     return userObject;
 }
 
-async function getUserProfileInfo(username){
+export async function getUserProfileInfo(username){
     const dbRef = ref(database);
     const response = await get(child(dbRef, `users/${username}`)).then((snapshot) => {
       if (snapshot.exists()) {
@@ -33,7 +33,19 @@ async function getUserProfileInfo(username){
       console.error(error);
     });
     return response
-  }
+}
+
+// USER STATS
+export async function addPostsNumber(username) {
+    const dbRef = ref(database, 'users/' + username );
+    const userSnapshot = await get(dbRef);
+
+    if (userSnapshot.exists()) {
+        const userObject = userSnapshot.val();
+        userObject.post_numbers += 1;
+        update(dbRef, userObject);
+      }
+}
 
 // FOLLOW FUNCTIONALITIES
 
