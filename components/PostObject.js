@@ -172,7 +172,7 @@ const PostObject = ({PostObject}) => {
 
           {PostObject.audio_link && <PlayButton onClick={() => playAudio(PostObject.audio_link)}>Play</PlayButton>}
           
-          <VotingButton onClick={() => setShowBetsModal(true)}><VoteIcon/></VotingButton>
+          {/* <VotingButton onClick={() => setShowBetsModal(true)}><VoteIcon/></VotingButton> */}
           <BottomRight>
             <Upvote onClick={handleUpVote}/>
             <VoteCount >{PostObject.upvotes}</VoteCount>
