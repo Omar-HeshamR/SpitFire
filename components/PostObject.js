@@ -134,6 +134,8 @@ const PostObject = ({PostObject}) => {
     setTimeout(toggleFunction, durations[index]);
   }
 
+  const truncateString = (str) => (str.length > 25 ? str.slice(0, 25) + "..." : str);
+
   return (
     <>
     <Section onClick={() => console.log(PostObject.postId)}>
@@ -168,7 +170,7 @@ const PostObject = ({PostObject}) => {
           </>}
 
         <BottomBar>
-          <BottomLeft onClick={() => rotuer.push(`/profile/${PostObject.creator}`)}>Creator: @{PostObject.creator}</BottomLeft>
+          <BottomLeft onClick={() => rotuer.push(`/profile/${PostObject.creator}`)}>Creator: @{truncateString(PostObject.creator)}</BottomLeft>
 
           {PostObject.audio_link && <PlayButton onClick={() => playAudio(PostObject.audio_link)}>Play</PlayButton>}
           
@@ -181,6 +183,7 @@ const PostObject = ({PostObject}) => {
             <Comment onClick={() => setShowComments(true)}/>
             <ThreeDots />
           </BottomRight>
+
         </BottomBar>
 
       {showComments && <CommentSlider showComments={showComments} setShowComments={setShowComments}/>}
@@ -195,9 +198,10 @@ const Section = styled.section`
 margin: 1.75vw 0;
 width: 100%;
 border-radius: 0.5vw;
-border: 0.75vw double grey;
+border: 0.5vw outset #F8F8F8;
 box-shadow: 0px 0px 5px #5B618A;
 &:hover{
+  // border: 0.1vw dashed #F8F8F8;
   // box-shadow: 0.1vw 0.1vw 0.1vw gainsboro;
 }
 `
@@ -290,10 +294,10 @@ height: 30vw;
 `
 
 const BottomBar = styled.div`
-display: flex;
-height: 4vw;
-align-items: center;
-justify-content: space-between;
+  display: flex;
+  height: 4vw;
+  align-items: center;
+  justify-content: space-between;
 `
 const BottomLeft = styled.div`
 display: flex;
@@ -407,7 +411,7 @@ const PlayButton = styled.button`
   color: white;
   font-weight: 600;
   border-radius: 0.5vw;
-  margin-left: 12vw;
+  // margin-left: 12vw;
   opacity: 0.9;
   box-shadow: 0.1vw 0.1vw 0.5vw gainsboro;
   &:hover{
