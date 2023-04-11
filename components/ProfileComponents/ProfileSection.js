@@ -87,6 +87,7 @@ const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
                     </>
                     :
                     <>
+                        <SelectedButton>@{userProfileInfo.username} Posts</SelectedButton>
                         {currentUser && 
                         <>
                          { isFollower ? 
@@ -213,6 +214,20 @@ selectedTool === 'Saved' ? '900' : '100'
     cursor: pointer;
 }
 `
+const SelectedButton = styled.text`
+margin-right: 2vw;
+font-size: 1vw;
+text-decoration: underline;
+text-underline-offset: 0.5vw;
+text-decoration-thickness: 0.05vw;
+text-decoration-color: dodgerblue;
+text-decoration-thickness: 0.05vw;
+font-weight: 600;
+&:hover{
+    cursor: pointer;
+}
+`
+
 const Line = styled.div`
 height: 0.05vw;
 background-color: gainsboro;
