@@ -25,13 +25,15 @@ const YourLiveVotePools = () => {
                 {currentUser && <ViewFullHistory> View Full History</ViewFullHistory>}
             </Header>
 
-            {currentUser ? <>
+            <NeedAuth>Coming Soon !</NeedAuth>
+
+            {/* {currentUser ? <>
               {liveVotesDemo.map((liveVote, id) => (
               <ALiveVote key={id} firstOption={liveVote.first} secondOption={liveVote.seconed} creator={liveVote.creator} remainingTime={liveVote.timeLeft} />
             ))}        
             </> :
             <NeedAuth>Log In or Sign up to start cashin !</NeedAuth>
-            }
+            } */}
 
 
         </Container>

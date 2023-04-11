@@ -27,7 +27,7 @@ const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
             }
             asyncfunc()
         }
-    }, [currentUser])
+    }, [currentUser, userProfileInfo])
 
     useEffect(() => {
         setFollowerCount(userProfileInfo.followers.length - 1)
