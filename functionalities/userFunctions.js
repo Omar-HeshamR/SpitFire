@@ -141,10 +141,4 @@ export async function addFollowing(username, newFollower) {
       }
 }
 
-/*
-    Follow/Follower Object:
-    {
-        username: ``,
-        profile_image: ``,
-    }
-*/ 
+// Post Interactions

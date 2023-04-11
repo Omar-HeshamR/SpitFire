@@ -119,6 +119,7 @@ const PostObject = ({PostObject}) => {
       beat.pause()
     });
   }
+  
   function toggleRap(durations) {
     let index = 0;
     setToggle(false);
