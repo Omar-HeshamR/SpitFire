@@ -1,13 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import Navbar from '../../components/Navbar'
-import SearchIcon from '../../public/SearchIcon.png'
-import Image from 'next/image'
 import Feed from "../../components/Feed"
-import PostObject from '../../components/PostObject'
 import { useRouter } from 'next/router'
 import { database } from "../../library/firebase"
-import { ref, set, get, child, onValue } from "firebase/database";
+import { ref, get, child } from "firebase/database";
 import { useStateContext } from '../../context/StateContext';
 import ProfileSection from '../../components/ProfileComponents/ProfileSection'
 import ProfileSidebar from '../../components/ProfileComponents/ProfileSidebar'

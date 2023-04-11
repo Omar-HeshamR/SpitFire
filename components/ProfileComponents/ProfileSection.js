@@ -1,15 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
+import { useStateContext } from '@/context/StateContext'
+import { addFollower, removeFollower, checkIfUserIsAfollower, removeFollowing, addFollowing } from '@/functionalities/userFunctions'
 import FollowersModal from '@/components/ProfileComponents/FollowersModal'
 import FollowingModal from '@/components/ProfileComponents/FollowingModal'
 import TestProfilePic from '../../public/TestProfilePic.png'
 
 const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
 
+    const { currentUser } = useStateContext()
     const [ selectedTool, setSelectedTool ] = useState("My Posts")
     const [ showFollowersModal, setShowFollowersModal] = useState()
     const [ showFollowingModal, setShowFollowingModal] = useState()
+    const [ followerCount, setFollowerCount ] = useState(userProfileInfo.followers.length - 1)
+    const [ isFollower, setIsFollower] = useState(false);
+
+    useEffect(() => {
+        if(currentUser){
+            const asyncfunc = async () =>{
+                const status = await checkIfUserIsAfollower(currentUser.displayName, userProfileInfo.username)
+                setIsFollower(status)
+            }
+            asyncfunc()
+        }
+    }, [])
+
+    useEffect(() => {
+        setFollowerCount(userProfileInfo.followers.length - 1)
+    }, [userProfileInfo])
 
     function ToggleMyPosts(){
         setSelectedTool("My Posts")
@@ -18,10 +37,23 @@ const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
         setSelectedTool("Saved")
     }
 
+    const handleFollowClick = async () => {
+        await addFollower(userProfileInfo.username, currentUser.displayName);
+        await addFollowing(currentUser.displayName, userProfileInfo.username);
+        setFollowerCount( followerCount + 1)
+        setIsFollower(true);
+      };
+    
+      const handleUnfollowClick = async () => {
+        await removeFollower(userProfileInfo.username, currentUser.displayName);
+        await removeFollowing(currentUser.displayName, userProfileInfo.username);
+        setFollowerCount( followerCount - 1)
+        setIsFollower(false);
+      };
 
   return (
     <>
-        <LeftHandSide onClick={() => console.log(userProfileInfo)}>
+        <LeftHandSide>
             { userProfileInfo &&
         <MainProfileDiv>
             <ProfileIcon><Image src={TestProfilePic} alt="TestProfilePic"/></ProfileIcon>
@@ -29,7 +61,7 @@ const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
                 <UserName>@{userProfileInfo.username}</UserName>
                 <Name>{userProfileInfo.full_name}</Name>
                 <FollowersRow>
-                <Count onClick={() => setShowFollowersModal(!showFollowersModal)} >{userProfileInfo.followers.length- 1}  Followers</Count>
+                <Count onClick={() => setShowFollowersModal(!showFollowersModal)} >{followerCount}  Followers</Count>
                 <Count onClick={() => setShowFollowingModal(!showFollowingModal)}>{userProfileInfo.following.length- 1} Following</Count>
                 </FollowersRow>
             </ProfileVitals>
@@ -40,7 +72,21 @@ const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
                     </>
                     :
                     <>
-                        <FollowOrUnFollowButton>Follow</FollowOrUnFollowButton>
+                        {currentUser && 
+                        <>
+                         { isFollower ? 
+                        <FollowOrUnFollowButton 
+                        style={{ backgroundColor: '#5B618A' }}
+                        onClick={handleUnfollowClick}>
+                            Unfollow
+                        </FollowOrUnFollowButton> 
+                         :
+                         <FollowOrUnFollowButton onClick={handleFollowClick}>
+                            Follow
+                        </FollowOrUnFollowButton> 
+                         }
+                        </>
+                        }
                     </>
                 }
             
@@ -169,6 +215,7 @@ border: none;
 border-radius: 0.625vw;
 
 &:hover{
+    transform: scale(1.02);
     cursor: pointer;
 }
 `
