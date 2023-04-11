@@ -2,24 +2,19 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import RandomUser1 from '../../public/RandomUser1.jpg'
-import RandomUser2 from '../../public/RandomUser2.jpg'
-import RandomUser3 from '../../public/RandomUser3.jpg'
-import RandomUser4 from '../../public/RandomUser4.jpg'
+import { useRouter } from 'next/router';
 import { MdClose } from 'react-icons/md';
 
-const FollowersModal = ({showFollowersModal, setShowFollowersModal}) => {
+const FollowersModal = ({followers, setShowFollowersModal}) => {
+
+    const router = useRouter()
 
     const handleClose = () => {
         setShowFollowersModal(false);
     }
 
-    const [ selectedTool, setSelectedTool ] = useState()
-
-    function ToggleProfile(){
-        setSelectedTool("Profile")
-    }
-    function ToggleButton(){
-        setSelectedTool("Button")
+    function goToProfile(username){
+        router.push(`/profile/${username}`)
     }
 
   return (
@@ -28,17 +23,25 @@ const FollowersModal = ({showFollowersModal, setShowFollowersModal}) => {
                     <Title>Followers <CloseIcon onClick={handleClose}/></Title>
                 <Line></Line>
                 <AccountsContainer>
-                    <AccountDiv onMouseEnter={ToggleProfile} selectedTool={selectedTool}  onMouseLeave={() => setSelectedTool(false)}>
+
+                    { followers.length > 0 ? 
+                    <>
+                     {followers.map((follower, id) => (
+                        <AccountDiv 
+                        key={id} 
+                        onClick={() => goToProfile(follower.username)} >
                         <ProfilePic><Image src={RandomUser1} alt="Random User 1" /></ProfilePic>
                         <SideColumn>
                             <TopRow>
-                                <UserName>jonnyand_usa</UserName>
-                                <FollowOption onMouseEnter={ToggleButton} selectedTool={selectedTool}  onMouseLeave={() => setSelectedTool("Profile")}>Follow</FollowOption>
+                                <UserName>@{follower.username}</UserName>
+                                {/* <FollowOption>Follow</FollowOption> */}
                             </TopRow>
-                            <Name>Jonathan Anderson FSU 2025</Name>
+                            <Name>{follower.full_name}</Name>
                         </SideColumn>
-                    </AccountDiv>
-                    
+                        </AccountDiv>
+                        ))}
+                    </>
+                    : <>None...</>}
                            
                 </AccountsContainer>         
             </ModalContent>
@@ -89,15 +92,10 @@ const AccountDiv = styled.div`
 display: flex;
 padding: 0.625vw 1.25vw;
 align-items: center;
-background-color: ${({selectedTool}) => 
-selectedTool === 'Profile' ? 'aliceblue' : 'transparent' 
-};
-transform: ${({selectedTool}) => 
-selectedTool === 'Profile' ? 'scale(0.99)' : 'scale(1)' 
-};
-cursor: ${({selectedTool}) => 
-selectedTool === 'Profile' ? 'pointer' : 'auto' 
-};
+cursor: pointer;
+&:hover{
+    background-color: aliceblue;
+}
 `
 const ProfilePic = styled.div`
 display: flex;
@@ -140,15 +138,6 @@ margin-left: 0.625vw;
 &:hover{
     cursor: pointer;
 }
-filter: ${({selectedTool}) => 
-selectedTool === 'Button' ? 'opacity(1)' : 'opacity(0.8)' 
-};
-color: ${({selectedTool}) => 
-selectedTool === 'Button' ? 'black' : 'blue' 
-};
-text-decoration: ${({selectedTool}) => 
-selectedTool === 'Button' ? 'underline' : 'none' 
-};
 `
 const CloseIcon = styled(MdClose)`
 margin-left: auto;

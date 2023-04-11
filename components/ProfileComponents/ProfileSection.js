@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
 import { useStateContext } from '@/context/StateContext'
-import { addFollower, removeFollower, checkIfUserIsAfollower, removeFollowing, addFollowing } from '@/functionalities/userFunctions'
+import { getFollowers, getFollowings, addFollower, removeFollower, 
+    checkIfUserIsAfollower, removeFollowing, addFollowing } from '@/functionalities/userFunctions'
 import FollowersModal from '@/components/ProfileComponents/FollowersModal'
 import FollowingModal from '@/components/ProfileComponents/FollowingModal'
 import TestProfilePic from '../../public/TestProfilePic.png'
@@ -14,6 +15,8 @@ const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
     const [ showFollowersModal, setShowFollowersModal] = useState()
     const [ showFollowingModal, setShowFollowingModal] = useState()
     const [ followerCount, setFollowerCount ] = useState(userProfileInfo.followers.length - 1)
+    const [ followersOfProtofolio, setFollowersOfPortofolio ] = useState()
+    const [ followingsOfProtofolio, setFollowingsOfPortofolio ] = useState()
     const [ isFollower, setIsFollower] = useState(false);
 
     useEffect(() => {
@@ -24,11 +27,23 @@ const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
             }
             asyncfunc()
         }
-    }, [])
+    }, [currentUser])
 
     useEffect(() => {
         setFollowerCount(userProfileInfo.followers.length - 1)
     }, [userProfileInfo])
+
+    useEffect(() => {
+        const asyncfunc = async () =>{
+            const status1 = await getFollowers(userProfileInfo.username)
+            const status2 = await getFollowings(userProfileInfo.username)
+            setFollowersOfPortofolio(status1)
+            setFollowingsOfPortofolio(status2)
+        }
+        asyncfunc()
+
+    }, [showFollowersModal, userProfileInfo])
+
 
     function ToggleMyPosts(){
         setSelectedTool("My Posts")
@@ -53,7 +68,7 @@ const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
 
   return (
     <>
-        <LeftHandSide>
+        <LeftHandSide onClick={() => console.log("gi")}>
             { userProfileInfo &&
         <MainProfileDiv>
             <ProfileIcon><Image src={TestProfilePic} alt="TestProfilePic"/></ProfileIcon>
@@ -95,8 +110,8 @@ const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
         <Line></Line>        
     </LeftHandSide>
 
-    {showFollowersModal && <FollowersModal showFollowersModal={showFollowersModal} setShowFollowersModal={setShowFollowersModal}/>}
-    {showFollowingModal && <FollowingModal showFollowingModal={showFollowingModal} setShowFollowingModal={setShowFollowingModal}/>}
+    {showFollowersModal && <FollowersModal followers={followersOfProtofolio} showFollowersModal={showFollowersModal} setShowFollowersModal={setShowFollowersModal}/>}
+    {showFollowingModal && <FollowingModal followings={followingsOfProtofolio} showFollowingModal={showFollowingModal} setShowFollowingModal={setShowFollowingModal}/>}
     </>
   )
 }

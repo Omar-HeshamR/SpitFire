@@ -35,7 +35,7 @@ const ProfileSidebar = ({userProfileInfo}) => {
                 </StatColumn>
             </StatsDiv>
 
-        <YouMightLikeBox>
+        {/* <YouMightLikeBox>
             <YouMightLike>You Might Like</YouMightLike>
             <Divider/>
             <AccountColumn>
@@ -50,7 +50,7 @@ const ProfileSidebar = ({userProfileInfo}) => {
                         <FollowButton onMouseEnter={ToggleButton} selectedTool={selectedTool}  onMouseLeave={() => setSelectedTool("Profile")}>Follow</FollowButton>
                     </AccountDiv>
                 </AccountColumn>      
-        </YouMightLikeBox>    
+        </YouMightLikeBox>     */}
 
     </RightHandSide>
   )
@@ -58,6 +58,7 @@ const ProfileSidebar = ({userProfileInfo}) => {
 
 const RightHandSide = styled.div`
 left: 71vw;
+width: 26.5vw;
 position: fixed;
 flex-direction: column;
 padding-top: 2vw;
