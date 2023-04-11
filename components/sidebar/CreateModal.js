@@ -55,6 +55,7 @@ const CreateModal = ({ showModal, setShowModal }) => {
       loading: 'Creating Battle...',
       success: 'Rap Battle Created!',
       error: 'Failed to Create Battle',
+      duration: 6000,
     });
     const PostObject = {
       postId: postID,

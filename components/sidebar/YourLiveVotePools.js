@@ -66,8 +66,10 @@ const Section = styled.section`
   justify-content: center;
   border: 0.1vw solid #5B618A;
   color: #5B618A;
-  opacity: ${props => props.currentUser ? '1' : '0.5'};
-  cursor: ${props => props.currentUser ? 'defualt' : 'not-allowed'};
+  opacity: ${props => props.currentUser ? '0.5' : '0.5'};
+  cursor: ${props => props.currentUser ? 'not-allowed' : 'not-allowed'};
+  // opacity: ${props => props.currentUser ? '1' : '0.5'};
+  // cursor: ${props => props.currentUser ? 'defualt' : 'not-allowed'};
 `;
 
 const Container = styled.div`
@@ -92,7 +94,7 @@ const Group = styled.div`
 const ViewFullHistory = styled.div`
   display: flex;
   border-bottom: 0.05vw solid #5B618A;
-  cursor: pointer;
+  // cursor: pointer;
 `
 
 const VoteEarningsText = styled.div`
