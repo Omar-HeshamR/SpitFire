@@ -12,7 +12,8 @@ export function createUserObject(_email, _username, _full_name){
         following: [""],
         followers: [""],
         saved_posts: [""],
-    
+        up_voted_posts: [""],
+        down_voted_posts: [""],
         // stats
         top_posted_rapper: "None",
         post_numbers: 0,

@@ -6,7 +6,7 @@ import { getFollowers, getFollowings, addFollower, removeFollower,
     checkIfUserIsAfollower, removeFollowing, addFollowing } from '@/functionalities/userFunctions'
 import FollowersModal from '@/components/ProfileComponents/FollowersModal'
 import FollowingModal from '@/components/ProfileComponents/FollowingModal'
-import TestProfilePic from '../../public/TestProfilePic.png'
+import TestProfilePic from '../../public/defualt_profile_image.png'
 
 const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
 
@@ -68,10 +68,10 @@ const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
 
   return (
     <>
-        <LeftHandSide onClick={() => console.log("gi")}>
+        <LeftHandSide>
             { userProfileInfo &&
         <MainProfileDiv>
-            <ProfileIcon><Image src={TestProfilePic} alt="TestProfilePic"/></ProfileIcon>
+            <ProfileIcon><Image src={TestProfilePic} alt={`${userProfileInfo.username}`} /></ProfileIcon>
             <ProfileVitals>
                 <UserName>@{userProfileInfo.username}</UserName>
                 <Name>{userProfileInfo.full_name}</Name>
@@ -138,14 +138,15 @@ width: 70vw;
 const ProfileIcon = styled.div`
 width: 5vw;
 height: 100%;
-background-color: gainsboro;
+background-color: #F8F8F8;
+border: 0.1vw solid gainsboro;
 border-radius: 100%;
 justify-content: center;
 align-items: center;
 display: flex;
 img{
-    width: 3vw;
-    height: 3.94vw;
+    width: 4vw;
+    height: 4vw;
 }
 `
 const ProfileVitals = styled.div`

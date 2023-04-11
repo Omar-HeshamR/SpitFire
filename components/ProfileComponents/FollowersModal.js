@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
-import RandomUser1 from '../../public/RandomUser1.jpg'
+import TestProfilePic from '../../public/defualt_profile_image.png'
 import { useRouter } from 'next/router';
 import { MdClose } from 'react-icons/md';
 
@@ -30,7 +30,7 @@ const FollowersModal = ({followers, setShowFollowersModal}) => {
                         <AccountDiv 
                         key={id} 
                         onClick={() => goToProfile(follower.username)} >
-                        <ProfilePic><Image src={RandomUser1} alt="Random User 1" /></ProfilePic>
+                        <ProfilePic><Image src={TestProfilePic} alt={`${follower.username}`}  /></ProfilePic>
                         <SideColumn>
                             <TopRow>
                                 <UserName>@{follower.username}</UserName>

@@ -3,10 +3,6 @@ import styled from 'styled-components'
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import Image from 'next/image';
 import CreateButton from '../CreateButton';
-import RandomUser1 from '../../public/RandomUser1.jpg'
-import RandomUser2 from '../../public/RandomUser2.jpg'
-import RandomUser3 from '../../public/RandomUser3.jpg'
-import RandomUser4 from '../../public/RandomUser4.jpg'
 
 const ProfileSidebar = ({userProfileInfo}) => {
 
