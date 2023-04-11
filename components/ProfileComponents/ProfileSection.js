@@ -4,7 +4,6 @@ import Image from 'next/image'
 import FollowersModal from '@/components/ProfileComponents/FollowersModal'
 import FollowingModal from '@/components/ProfileComponents/FollowingModal'
 import TestProfilePic from '../../public/TestProfilePic.png'
-import CreateModal from '../sidebar/CreateModal'
 
 const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
 
@@ -34,10 +33,14 @@ const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
                 <Count onClick={() => setShowFollowingModal(!showFollowingModal)}>{userProfileInfo.following.length- 1} Following</Count>
                 </FollowersRow>
             </ProfileVitals>
-                {isCurrentUser &&
+                {isCurrentUser ?
                     <>
                         <ButtonText1 onClick={ToggleMyPosts} selectedTool={selectedTool}>My Posts</ButtonText1>
                         <ButtonText2 onClick={ToggleSaved} selectedTool={selectedTool}>Saved</ButtonText2>    
+                    </>
+                    :
+                    <>
+                        <FollowOrUnFollowButton>Follow</FollowOrUnFollowButton>
                     </>
                 }
             
@@ -156,4 +159,18 @@ margin-bottom: 1vw;
 margin-left: 2.5vw;
 margin-right: 1vw;
 `
+
+const FollowOrUnFollowButton = styled.button`
+padding: 0.625vw 0.625vw;
+font-size: 1.25vw;
+background-color: #FE5F55;
+color: white;
+border: none;
+border-radius: 0.625vw;
+
+&:hover{
+    cursor: pointer;
+}
+`
+
 export default ProfileSection

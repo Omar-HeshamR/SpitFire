@@ -168,7 +168,7 @@ const PostObject = ({PostObject}) => {
           </>}
 
         <BottomBar>
-          <BottomLeft onClick={() => rotuer.push(`/profile/${PostObject.creator}`)}>Creator: {PostObject.creator}</BottomLeft>
+          <BottomLeft onClick={() => rotuer.push(`/profile/${PostObject.creator}`)}>Creator: @{PostObject.creator}</BottomLeft>
 
           {PostObject.audio_link && <PlayButton onClick={() => playAudio(PostObject.audio_link)}>Play</PlayButton>}
           

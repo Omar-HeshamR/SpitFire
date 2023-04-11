@@ -48,7 +48,7 @@ const Navbar = () => {
         <ProfileItemsContainer>
           <NameAndProfile onClick={() => router.push(`/profile/${currentUser.displayName}`)}>
             <ProfileIcon />
-            <NameDisplay>{truncateString(currentUser.displayName)}</NameDisplay> 
+            <NameDisplay>@{truncateString(currentUser.displayName)}</NameDisplay> 
           </NameAndProfile>
           <FeedIcon onClick={goToFeed}/>
           <SettingsIcon />
@@ -79,6 +79,7 @@ position: sticky;
 top: 0;
 background-color: white;
 z-index: 1;
+background: linear-gradient(to bottom, #FFFFFF, #F8F8F8);
 `
 const Container = styled.div`
 display: flex;
@@ -159,7 +160,7 @@ const NameAndProfile = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 2vw;
-  background-color: #f5f5f5;
+  background-color: gainsboro;
   border: 0.1vw solid #f5f5f5;
   border-radius: 1vw;
   padding: 0.35vw 1vw;
@@ -188,6 +189,9 @@ const SettingsIcon = styled(SlSettings)`
   font-size: 2vw;
   cursor: pointer;
   color: #5B618A;
+  &:hover{
+    color: #FE5F55;
+  }
 `
 
 const LogOutIcon = styled(SlLogout)`
@@ -195,12 +199,18 @@ const LogOutIcon = styled(SlLogout)`
   transform: rotate(-180deg);
   cursor: pointer;
   color: #5B618A;
+  &:hover{
+    color: #FE5F55;
+  }
 `
 const FeedIcon = styled(CgFeed)`
   font-size: 2.25vw;
   cursor: pointer;
   color: #5B618A;
   margin-right: 2.1vw;
+  &:hover{
+    color: #FE5F55;
+  }
 `
 
 export default Navbar

@@ -65,19 +65,19 @@ const ModalContent = styled.div`
 
 `
 const Title = styled.text`
-display: flex;
-align-items: center;
-font-size: 1.875vw;
-font-weight: 900;
-padding: 0 0.625vw;
-color: grey;
+    display: flex;
+    align-items: center;
+    font-size: 1.875vw;
+    font-weight: 900;
+    padding: 0 0.625vw;
+    color: grey;
 `
 const Line = styled.div`
-display: flex;
-background-color: gainsboro;
-width: 100%;
-height: 0.125vw;
-margin-top: 0.3125vw;
+    display: flex;
+    background-color: gainsboro;
+    width: 100%;
+    height: 0.125vw;
+    margin-top: 0.3125vw;
 `
 const AccountsContainer = styled.div`
   display: flex;
