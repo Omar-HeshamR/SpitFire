@@ -136,14 +136,14 @@ const PostObject = ({PostObject}) => {
 
   return (
     <>
-    <Section>
+    <Section onClick={() => console.log(PostObject.postId)}>
         <Header>
           <RapperNameLeft>
-            <Image src={PostObject.rapper1_image} alt="{PostObject.rapper1_name}" /> {PostObject.rapper1_name}
+            <Image src={PostObject.rapper1_image} alt={`${PostObject.rapper1_name}`} /> {PostObject.rapper1_name}
           </RapperNameLeft>
           VS
           <RapperNameRight>
-            <Image src={PostObject.rapper2_image} alt="{PostObject.rapper2_name}" /> {PostObject.rapper2_name}
+            <Image src={PostObject.rapper2_image} alt={`${PostObject.rapper2_name}`} /> {PostObject.rapper2_name}
           </RapperNameRight>
         </Header>
 

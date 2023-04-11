@@ -51,7 +51,7 @@ const CreateModal = ({ showModal, setShowModal }) => {
     setLoading("Creating Battle...")
     const postID = hashString(currentUser.displayName);
     const makeAudio = buildRapBattle(postID, rapper1, rapper2, topicRef);
-    await toast.promise(makeAudio, {
+    const audio_link = await toast.promise(makeAudio, {
       loading: 'Creating Battle...',
       success: 'Rap Battle Created!',
       error: 'Failed to Create Battle',
@@ -63,7 +63,7 @@ const CreateModal = ({ showModal, setShowModal }) => {
       rapper1_name: rapper1,
       rapper2_image: getRapperImage(rapper2),
       rapper2_name: rapper2,
-      audio_link: makeAudio,
+      audio_link: audio_link,
       video_link: "", // not integrated with the our python server edge API yet.
       topic: topicRef,
       isBettingEnabled: enableBetting,
