@@ -166,8 +166,8 @@ const NameAndProfile = styled.div`
   color: #5B618A;
 
   &:hover{
-    border: 0.1vw solid black;
-    background-color: white;
+    border: 0.1vw solid #5B618A;
+    color: #FE5F55;
   }
 `
 
@@ -178,8 +178,6 @@ const NameDisplay = styled.div`
 const ProfileIcon = styled(VscAccount)`
   margin-right: 0.75vw;
   font-size: 2vw;
-  color: #5B618A;
-
 `
 
 const SettingsIcon = styled(SlSettings)`
