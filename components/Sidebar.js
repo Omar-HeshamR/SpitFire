@@ -13,9 +13,6 @@ const Sidebar = () => {
 
     //CREATE 
     const [showCreateModal, setShowCreateModal] = useState(false);
-    const openCreateModal = () => {
-      setShowCreateModal(prev => !prev)
-    }
 
   return (
     <Section>
@@ -26,7 +23,7 @@ const Sidebar = () => {
         </ButtonContainer>
 
         <LatestNews />
-        <YourLiveVotePools />
+        {currentUser && <YourLiveVotePools /> }
 
         <CreateModal showModal={showCreateModal} setShowModal={setShowCreateModal} />
 
