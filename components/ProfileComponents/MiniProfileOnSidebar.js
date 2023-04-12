@@ -65,7 +65,7 @@ const MiniProfileOnSidebar = ({userProfileInfo, isCurrentUser, selectedTool, set
         setIsFollower(false);
       };
 
-      const truncateString = (str) => (str.length > 15 ? str.slice(0, 25) + "..." : str);
+      const truncateString = (str) => (str.length > 12 ? str.slice(0, 12) + "..." : str);
 
   return (
     <>
@@ -74,7 +74,7 @@ const MiniProfileOnSidebar = ({userProfileInfo, isCurrentUser, selectedTool, set
         <>
             <ProfileIcon><Image src={TestProfilePic} alt={`${userProfileInfo.username}`} /></ProfileIcon>
             <ProfileVitals>
-                <UserName>@{userProfileInfo.username}</UserName>
+                <UserName>@{truncateString(userProfileInfo.username)}</UserName>
                 <Name>{userProfileInfo.full_name}</Name>
                 <FollowersRow>
                 <Count onClick={() => setShowFollowersModal(!showFollowersModal)} >{followerCount}  Followers</Count>
