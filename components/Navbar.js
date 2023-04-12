@@ -9,12 +9,10 @@ import { useRouter } from 'next/router'
 import { VscAccount } from "react-icons/vsc";
 import { CgFeed } from "react-icons/cg";
 import { SlSettings, SlLogout } from "react-icons/sl";
-import { IoWalletOutline } from "react-icons/io5";
-
 
 const Navbar = () => {
 
-  const { currentUser, setCurrentUser, userProfileInfo } = useStateContext();
+  const { currentUser, setCurrentUser, userProfileInfo, logOut } = useStateContext();
   const router = useRouter()
 
   //LOG IN
@@ -52,7 +50,7 @@ const Navbar = () => {
           </NameAndProfile>
           <FeedIcon onClick={goToFeed}/>
           <SettingsIcon />
-          <LogOutIcon onClick={() => setCurrentUser(undefined)}/>
+          <LogOutIcon onClick={logOut}/>
         </ProfileItemsContainer>
         : 
         <ButtonContainer>

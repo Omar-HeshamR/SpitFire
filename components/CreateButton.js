@@ -62,7 +62,7 @@ const CreateText = styled.div`
 const LockedCreateButton = styled.button`
   display: flex;
   flex-direction: column;
-  width: 26.5vw;
+  width: 100%;
   height: 5vw;
   background-color: white;
   border: 0.2vw solid #5B618A;

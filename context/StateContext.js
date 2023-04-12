@@ -17,6 +17,9 @@ export const StateContext = ({ children }) => {
   const router = useRouter()
 
   useEffect(() => {
+    if(window.localStorage.getItem("userToken") !== null){
+      setCurrentUser(JSON.parse(window.localStorage.getItem("userToken")));
+    }
     getPosts()
   },[]);
 
@@ -51,8 +54,9 @@ export const StateContext = ({ children }) => {
   async function login(email, password) {
     await signInWithEmailAndPassword(auth, email, password)
     .then( async (userCredential) => {
-      setCurrentUser(userCredential.user);
-      router.push("/")
+      window.localStorage.setItem("userToken", JSON.stringify(userCredential.user))
+      setCurrentUser(JSON.parse(window.localStorage.getItem("userToken")));
+      toast.success(`Signed In !`)
       // console.log("STATE CONTEXT", profileInfo)
     })
     .catch((error) => {
@@ -60,6 +64,13 @@ export const StateContext = ({ children }) => {
       console.log(error)
     });
   
+  }
+
+  function logOut(){
+    window.localStorage.removeItem("userToken")
+    setCurrentUser(undefined)
+    router.push("/")
+    toast.success(`Signed Out`);      
   }
 
   async function storeUser(email, username, fullName){
@@ -122,6 +133,7 @@ return(
       setCurrentUser,
       register,
       login,
+      logOut,
       createPost, 
       Posts,
       getPosts,
