@@ -102,7 +102,7 @@ export const StateContext = ({ children }) => {
       if (snapshot.exists()) {
         // console.log(snapshot.val());
         const final = snapshot.val();
-        console.log(final)
+        // console.log(final)
         setPosts(final)
         return final;
       } else {

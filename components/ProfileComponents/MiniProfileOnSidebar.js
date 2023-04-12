@@ -88,7 +88,7 @@ const MiniProfileOnSidebar = ({userProfileInfo, isCurrentUser, selectedTool, set
                     </ButtonsContainer>
                     :
                     <>
-                        <SelectedButton>@{truncateString(userProfileInfo.username)} Posts</SelectedButton>
+                        <SelectedButton>user posts</SelectedButton>
                         {currentUser && 
                         <>
                          { isFollower ? 
@@ -250,5 +250,14 @@ opacity: 0.8;
 }
 
 `
+const Column = styled.div`
+    display: flex;
+    flex-direction: column;
+    background-color: red;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+`
+
 
 export default MiniProfileOnSidebar

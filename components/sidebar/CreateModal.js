@@ -7,7 +7,7 @@ import SpitFireLogo from '../../public/SpitFireLogo.png'
 import Image from 'next/image';
 import { addPostsNumber } from '@/functionalities/userFunctions';
 import RapperDropDown from "../../utilities/rapperDropDown"
-import {getRapperImage} from '@/functionalities/getRapperImage';
+import {getRapperImage} from '@/utilities/getRapperImage';
 import { buildRapBattle } from "@/functionalities/buildRapVideo"
 import {useRouter} from 'next/router';
 

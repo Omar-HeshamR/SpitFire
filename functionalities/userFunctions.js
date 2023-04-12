@@ -142,3 +142,189 @@ export async function addFollowing(username, newFollower) {
 }
 
 // Post Interactions
+
+export async function upVote(username, PostObject){
+
+    // add post to upvoted post of a user
+    const dbRef2 = ref(database, 'users/' + username );
+    const userSnapshot2 = await get(dbRef2);
+    if (userSnapshot2.exists()) {
+        const userObject = userSnapshot2.val();
+        // check if already upvoted
+        for(let i = 1; i < userObject.up_voted_posts.length; i++){
+            if(userObject.up_voted_posts[i] == PostObject.postId){
+                console.log("Already Upvoted")
+                return ;
+            }
+        }
+
+        userObject.up_voted_posts.push(PostObject.postId);
+        update(dbRef2, userObject);
+      }
+
+    // add 1 upvote to the post
+    const postRef = ref(database, 'posts/' + PostObject.postId);
+    const postSnapshot = await get(postRef);
+    if (postSnapshot.exists()) {
+        const post = postSnapshot.val();
+        const updatedPost = { ...post, upvotes: post.upvotes + 1 };
+        update(postRef, updatedPost); 
+    }
+
+    // increase the count of upvotes of a user by 1
+    const dbRef = ref(database, 'users/' + PostObject.creator );
+    const userSnapshot = await get(dbRef);
+    if (userSnapshot.exists()) {
+        const userObject = userSnapshot.val();
+        userObject.total_upvotes += 1;
+        update(dbRef, userObject);
+      }
+
+}
+
+export async function downVote(username, PostObject){
+
+    // add post to downvotes post of a user
+    const dbRef2 = ref(database, 'users/' + username );
+    const userSnapshot2 = await get(dbRef2);
+    if (userSnapshot2.exists()) {
+        const userObject = userSnapshot2.val();
+
+        // check if already downvoted
+        for(let i = 1; i < userObject.down_voted_posts.length; i++){
+            if(userObject.down_voted_posts[i] == PostObject.postId){
+                console.log("Already downVoted")
+                return ;
+            }
+        }
+
+        userObject.down_voted_posts.push(PostObject.postId);
+        update(dbRef2, userObject);
+    }
+
+    // add 1 downvote to the post
+    const postRef = ref(database, 'posts/' + PostObject.postId);
+    const postSnapshot = await get(postRef);
+    if (postSnapshot.exists()) {
+        const post = postSnapshot.val();
+        const updatedPost = { ...post, downvotes: post.downvotes + 1 };
+        update(postRef, updatedPost); 
+    }
+
+    // increase the count of downvotes of a user by 1
+    const dbRef = ref(database, 'users/' + PostObject.creator );
+    const userSnapshot = await get(dbRef);
+    if (userSnapshot.exists()) {
+        const userObject = userSnapshot.val();
+        userObject.total_downvotes += 1;
+        update(dbRef, userObject);
+      }
+}
+
+export async function hasUpvotedAPost(username, PostObject){
+
+    const dbRef = ref(database, 'users/' + username );
+    const userSnapshot = await get(dbRef);
+    // console.log("TRY ----------------------------")
+    if (userSnapshot.exists()) {
+        const userObject = userSnapshot.val();
+        for(let i = 1; i < userObject.up_voted_posts.length; i++){
+            // console.log(userObject.up_voted_posts[i])
+            // console.log(PostObject.postId)
+            // console.log(userObject.up_voted_posts[i] == PostObject.postId)
+            if(userObject.up_voted_posts[i] == PostObject.postId){
+                return true;
+            }
+        }
+        return false;
+      }
+
+}
+
+export async function hasDownVotedAPost(username, PostObject){
+
+    const dbRef = ref(database, 'users/' + username );
+    const userSnapshot = await get(dbRef);
+
+    if (userSnapshot.exists()) {
+        const userObject = userSnapshot.val();
+        for(let i = 1; i < userObject.down_voted_posts.length; i++){
+            if(userObject.down_voted_posts[i] == PostObject.postId){
+                return true;
+            }
+        }
+        return false;
+      }
+
+}
+
+export async function removeUpVote(username, PostObject){
+
+    // remove post to upvoted post of a user
+    const dbRef2 = ref(database, 'users/' + username );
+    const userSnapshot2 = await get(dbRef2);
+    if (userSnapshot2.exists()) {
+        const userObject = userSnapshot2.val();        
+        const exists = userObject.up_voted_posts.includes(PostObject.postId);
+        if(exists == false){
+            return; // it is not upvoted in the first place
+        }
+        userObject.up_voted_posts = userObject.up_voted_posts.filter(postId => postId !== PostObject.postId);
+        update(dbRef2, userObject);
+      }
+
+    // remove 1 upvote to the post
+    const postRef = ref(database, 'posts/' + PostObject.postId);
+    const postSnapshot = await get(postRef);
+    if (postSnapshot.exists()) {
+        const post = postSnapshot.val();
+        const updatedPost = { ...post, upvotes: post.upvotes - 1 };
+        update(postRef, updatedPost); 
+    }
+
+    // decrease the count of upvotes of a user by 1
+    const dbRef = ref(database, 'users/' + PostObject.creator );
+    const userSnapshot = await get(dbRef);
+    if (userSnapshot.exists()) {
+        const userObject = userSnapshot.val();
+        userObject.total_upvotes -= 1;
+        update(dbRef, userObject);
+      }
+
+}
+
+export async function removeDownVote(username, PostObject){
+    console.log("HERE")
+    // remove post to downvoted post of a user
+    const dbRef2 = ref(database, 'users/' + username );
+    const userSnapshot2 = await get(dbRef2);
+    if (userSnapshot2.exists()) {
+        const userObject = userSnapshot2.val();        
+        const exists = userObject.down_voted_posts.includes(PostObject.postId);
+        if(exists == false){
+            return; // it is not upvoted in the first place
+        }
+        userObject.down_voted_posts = userObject.down_voted_posts.filter(postId => postId !== PostObject.postId);
+        console.log(userObject.down_voted_posts)
+        update(dbRef2, userObject);
+      }
+
+    // remove 1 downvote to the post
+    const postRef = ref(database, 'posts/' + PostObject.postId);
+    const postSnapshot = await get(postRef);
+    if (postSnapshot.exists()) {
+        const post = postSnapshot.val();
+        const updatedPost = { ...post, downvotes: post.downvotes - 1 };
+        update(postRef, updatedPost); 
+    }
+
+    // decrease the count of downvotes of a user by 1
+    const dbRef = ref(database, 'users/' + PostObject.creator );
+    const userSnapshot = await get(dbRef);
+    if (userSnapshot.exists()) {
+        const userObject = userSnapshot.val();
+        userObject.total_downvotes -= 1;
+        update(dbRef, userObject);
+      }
+
+}

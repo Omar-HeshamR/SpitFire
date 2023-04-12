@@ -5,14 +5,13 @@ import BetsModal from "./BetsModal"
 import { useRouter } from 'next/router'
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { TfiCommentAlt } from "react-icons/tfi";
-import { BiDownvote } from "react-icons/bi";
-import { BiUpvote } from "react-icons/bi";
+import { BiDownvote, BiUpvote} from "react-icons/bi";
+import { ImArrowUp, ImArrowDown } from "react-icons/im"
 import { MdOutlineHowToVote } from "react-icons/md";
-import { database } from "../library/firebase"
 import { toast } from 'react-hot-toast'
-import { ref, get, update } from "firebase/database";
 import { useStateContext } from '../context/StateContext';
 import CommentSlider from './sidebar/CommentSection'
+import { upVote, downVote, removeUpVote, removeDownVote, hasUpvotedAPost, hasDownVotedAPost } from '@/functionalities/userFunctions'
 import { getAudio, getDurations } from "../functionalities/storageInteractions"
 
 const PostObject = ({PostObject}) => {
@@ -24,21 +23,34 @@ const PostObject = ({PostObject}) => {
   const [ toggle, setToggle ] = useState(true)
   const rotuer = useRouter()
 
+  // down and up vote postings functionalitites
+  const [ upVoteCounter, setUpVoteCounter ] = useState(PostObject.upvotes)
+  const [ downVoteCounter, setDownVoteCounter ] = useState(PostObject.downvotes)
+  const [ hasUpVotedAPostAlready, setHasUpVotedAPostAlready ] = useState()
+  const [ hasDownVotedAPostAlready, setHasDownVotedAPostAlready ] = useState()
+
+  useEffect(() => {
+    if(currentUser){
+        const asyncfunc = async () =>{
+            const status = await hasUpvotedAPost(currentUser.displayName, PostObject)
+            setHasUpVotedAPostAlready(status)
+            const status2 = await hasDownVotedAPost(currentUser.displayName, PostObject)
+            setHasDownVotedAPostAlready(status2)
+        }
+        asyncfunc()
+        setUpVoteCounter(PostObject.upvotes)
+        setDownVoteCounter(PostObject.downvotes)
+    }
+  }, [currentUser, PostObject])
+
   async function handleUpVote(){
     if(currentUser == undefined){
       toast.error("Log in to Interact !")
       return;
     }
-    const postRef = ref(database, 'posts/' + PostObject.postId);
-    console.log("postRef", postRef)
-    const postSnapshot = await get(postRef);
-    console.log("postSnapshot", postSnapshot)
-    if (postSnapshot.exists()) {
-      const post = postSnapshot.val();
-      console.log("post", post)
-      const updatedPost = { ...post, upvotes: post.upvotes + 1 };
-      update(postRef, updatedPost); // pass only the updated properties
-    }
+    await upVote(currentUser.displayName, PostObject)
+    setUpVoteCounter(PostObject.upvotes + 1)
+    setHasUpVotedAPostAlready(true)
   }
 
   async function handleDownVote(){
@@ -46,15 +58,33 @@ const PostObject = ({PostObject}) => {
       toast.error("Log in to Interact !")
       return;
     }
-    const postRef = ref(database, 'posts/' + PostObject.postId );
-    const postSnapshot = await get(postRef);
-    if (postSnapshot.exists()) {
-      const post = postSnapshot.val();
-      const updatedPost = { ...post, downvotes: post.downvotes + 1 };
-      update(postRef, updatedPost);
+    await downVote(currentUser.displayName, PostObject)
+    setDownVoteCounter(PostObject.downvotes + 1)
+    setHasDownVotedAPostAlready(true)
+  }
+
+  async function handleRemoveUpVote(){
+    if(currentUser == undefined){
+      toast.error("Log in to Interact !")
+      return;
     }
+    await removeUpVote(currentUser.displayName, PostObject)
+    setUpVoteCounter(upVoteCounter - 1)
+    setHasUpVotedAPostAlready(false)
+  }
+
+  async function handleRemoveDownVote(){
+    if(currentUser == undefined){
+      toast.error("Log in to Interact !")
+      return;
+    }
+    await removeDownVote(currentUser.displayName, PostObject)
+    setDownVoteCounter(downVoteCounter - 1)
+    setHasDownVotedAPostAlready(false)
   }
   
+  // AUDIO AND VIDEO FUNCTIONALITIES
+
   function playBase64Mpegs(mpegs) {
     const audioPlayer = document.getElementById('audio-player');
     let currentIndex = 0;
@@ -177,13 +207,17 @@ const PostObject = ({PostObject}) => {
           : <PlayButton onClick={() => playAudio(PostObject.audio_link)}>Play</PlayButton>}
           
           {/* <VotingButton onClick={() => setShowBetsModal(true)}><VoteIcon/></VotingButton> */}
+
           <BottomRight>
-            <Upvote onClick={handleUpVote}/>
-            <VoteCount >{PostObject.upvotes}</VoteCount>
-            <Downvote onClick={handleDownVote}/>
-            <VoteCount >{PostObject.downvotes}</VoteCount>
+
+            {hasUpVotedAPostAlready ? <Upvoted onClick={handleRemoveUpVote}/> : <Upvote onClick={handleUpVote}/> }
+            <VoteCount >{upVoteCounter}</VoteCount>
+            {hasDownVotedAPostAlready ? <Downvoted onClick={handleRemoveDownVote}/>: <Downvote onClick={handleDownVote}/> }
+            <VoteCount >{downVoteCounter}</VoteCount>
+
             <Comment onClick={() => setShowComments(true)}/>
             <ThreeDots />
+
           </BottomRight>
 
         </BottomBar>
@@ -366,6 +400,19 @@ margin-left: 2vw;
 
 }
 `
+
+const Downvoted = styled(ImArrowDown)`
+font-size: 1.25vw;
+margin-left: 2vw;
+color: firebrick;
+
+&:hover{
+  transform: scale(1.01);
+  color: black;
+  cursor: pointer;
+}
+`
+
 const Upvote = styled(BiUpvote)`
 font-size: 1.5vw;
 margin-left: 1vw;
@@ -376,6 +423,17 @@ margin-left: 1vw;
   cursor: pointer;
 }
 `
+const Upvoted = styled(ImArrowUp)`
+  font-size: 1.25vw;
+  margin-left: 1vw;
+  color: green;
+  &:hover{
+    transform: scale(1.01);
+    color: black;
+    cursor: pointer;
+  }
+`
+
 const VoteCount = styled.div`
 font-size: 1vw;
 margin-left: 0.25vw;
