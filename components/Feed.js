@@ -9,6 +9,7 @@ const Feed = ({ FeedFilter }) => {
 
   const { currentUser, Posts, getUserProfileInfo } = useStateContext();
   const [ localFeedPosts, setLocalFeedPosts ] = useState()
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     FilterFeed()
@@ -84,13 +85,16 @@ const Feed = ({ FeedFilter }) => {
       <Container>
         <FeedHeader>
           <SearchBar>
-            <Input placeholder= "Search a particular rap battle..."/>
+            <Input
+            onChange={(e) => setSearchValue(e.target.value)}
+            value={searchValue} 
+            placeholder= "Search a particular rap battle by prompt..."/>
             <SearchButton><Image src={SearchIcon} alt="Search Icon"/></SearchButton>
           </SearchBar>
         </FeedHeader>
 
         {localFeedPosts ? <>
-          {localFeedPosts.map((post) => (
+          {localFeedPosts.filter((post) => post.topic.includes(searchValue)).map((post) => (
            <PostObject key={post.id} PostObject={post}/>
         ))}
         </>: 
