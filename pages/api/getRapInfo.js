@@ -2,6 +2,8 @@
 
 export default async function (req, res) {
     const rapperInformation = await createRap(req.body.rapper1, req.body.rapper2, req.body.topics)
+    // console.log("res", res)
+    // console.log("req", req)
     res.status(200).json({ rapperInformation: rapperInformation})
   }
 

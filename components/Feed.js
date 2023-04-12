@@ -99,7 +99,7 @@ const Feed = ({ FeedFilter }) => {
           ))}
           </>: 
           <IdentifierText>
-            NO POSTS AVALIBLE
+            {/* NO POSTS AVALIBLE */}
           </IdentifierText>
           }
           </> :
