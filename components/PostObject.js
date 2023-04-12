@@ -41,6 +41,10 @@ const PostObject = ({PostObject}) => {
         setUpVoteCounter(PostObject.upvotes)
         setDownVoteCounter(PostObject.downvotes)
     }
+    if(currentUser == undefined){
+      setHasUpVotedAPostAlready(false)
+      setHasDownVotedAPostAlready(false)
+    }
   }, [currentUser, PostObject])
 
   async function handleUpVote(){
