@@ -173,7 +173,8 @@ const PostObject = ({PostObject}) => {
         <BottomBar>
           <BottomLeft onClick={() => rotuer.push(`/profile/${PostObject.creator}`)}>Creator: @{truncateString(PostObject.creator)}</BottomLeft>
 
-          {PostObject.audio_link && <PlayButton onClick={() => playAudio(PostObject.audio_link)}>Play</PlayButton>}
+          {rapping ? <RappingText>Rapping...</RappingText> 
+          : <PlayButton onClick={() => playAudio(PostObject.audio_link)}>Play</PlayButton>}
           
           {/* <VotingButton onClick={() => setShowBetsModal(true)}><VoteIcon/></VotingButton> */}
           <BottomRight>
@@ -420,6 +421,12 @@ const PlayButton = styled.button`
     opacity: 1;
     box-shadow: none;
   }
+`
+
+const RappingText = styled.div`
+  font-size: 1.5vw;
+  font-weight: 900;
+  color: #5B618A;
 `
 
 export default PostObject
