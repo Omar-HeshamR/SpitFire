@@ -1,16 +1,86 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
 import SearchIcon from '../public/SearchIcon.png'
 import PostObject from './PostObject'
 import { useStateContext } from '../context/StateContext';
 
-const Feed = () => {
+const Feed = ({ FeedFilter }) => {
 
-  const { currentUser, Posts } = useStateContext();
+  const { currentUser, Posts, getUserProfileInfo } = useStateContext();
+  const [ localFeedPosts, setLocalFeedPosts ] = useState()
+
+  useEffect(() => {
+    FilterFeed()
+  }, [Posts, currentUser, FeedFilter])
+
+  async function FilterFeed(){
+
+    // no algorithms - special case feeds
+    if(FeedFilter != undefined){
+      if(FeedFilter == "Saved"){
+        // get user's saved posts
+        const localPostsSorted = await get_current_user_Saved_feed()
+        setLocalFeedPosts(localPostsSorted)
+      }else{ 
+        // we are showing a specifc user feed
+        const localPostsSorted = get_posts_of_a_user(Posts)
+        setLocalFeedPosts(localPostsSorted)
+      }
+    }
+
+    // A signed in users' feed
+    if(FeedFilter == undefined && currentUser){
+      const localPostsSorted = user_reccomendation_algorithm(Posts)
+      setLocalFeedPosts(localPostsSorted)
+    }
+
+    // if someone is veiwing the feed without logging in
+    if(FeedFilter == undefined && currentUser == undefined){
+      const localPostsSorted = no_user_reccomendation_algorithm(Posts)
+      setLocalFeedPosts(localPostsSorted)
+    }
+
+  }
+
+  // Special Feeds Filtering methods
+  function get_posts_of_a_user(obj){
+    const arr = Object.values(obj);
+    const final = []
+    for(let i = 0; i < arr.length; i++){
+      if(arr[i].creator == FeedFilter){
+        final.push(arr[i])
+      }
+    }
+    return final
+  }
+
+  async function get_current_user_Saved_feed(){
+    const userProfile = await getUserProfileInfo(currentUser.displayName)
+    return userProfile.saved_posts.slice(1)
+  }
+
+  // [CLASSIFIED] HIGHLY EXCLUSIVE AND SECERTIVE RECCOMENDATION ALGORITHMS - Estimated worth: $91,000,000,000
+
+   // RECCOMENDATION ALGORTHIM OF A SIGNED IN FEED
+  function user_reccomendation_algorithm(obj) {
+    const arr = Object.values(obj);
+    arr.sort((a, b) => b.upvotes - a.upvotes);
+    console.log("FINAL ARRAY", arr)
+    return arr;
+  } 
+
+  // RECCOMENDATION ALGORTHIM OF NON-SIGNED IN FEED
+  function no_user_reccomendation_algorithm(obj) {
+    const arr = Object.values(obj);
+    arr.sort((a, b) => b.upvotes - a.upvotes);
+    console.log("FINAL ARRAY", arr)
+    return arr;
+  }
+
 
   return (
-    <Section>
+    <Section >
       <Container>
         <FeedHeader>
           <SearchBar>
@@ -19,8 +89,8 @@ const Feed = () => {
           </SearchBar>
         </FeedHeader>
 
-        {Posts ? <>
-          {Posts.map((post) => (
+        {localFeedPosts ? <>
+          {localFeedPosts.map((post) => (
            <PostObject key={post.id} PostObject={post}/>
         ))}
         </>: 

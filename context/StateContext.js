@@ -90,7 +90,7 @@ export const StateContext = ({ children }) => {
     const response = await get(child(dbRef, `posts`)).then((snapshot) => {
       if (snapshot.exists()) {
         // console.log(snapshot.val());
-        const final = sortPosts(snapshot.val());
+        const final = snapshot.val();
         console.log(final)
         setPosts(final)
         return final;
@@ -103,14 +103,7 @@ export const StateContext = ({ children }) => {
     });
     return response
   }
-
-  function sortPosts(obj) {
-    const arr = Object.values(obj);
-    arr.sort((a, b) => b.upvotes - a.upvotes);
-    console.log("FINAL ARRAY", arr)
-    return arr;
-  }
-
+  
   // AUDIO FUNCTIONS
   function stopCurrentRap(){
     if(currentRapAudio != null && currentBeatAudio != null){

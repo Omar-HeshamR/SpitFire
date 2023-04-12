@@ -13,7 +13,22 @@ const UserProfile = ({ userProfileInfo }) => {
 
     const { currentUser, Posts } = useStateContext();
     const isCurrentUser = Boolean(currentUser && (currentUser.displayName == userProfileInfo.username) );
+    const [ FeedFilter, setFeedFilter ] = useState(undefined)
+    const [ selectedTool, setSelectedTool ] = useState("My Posts")
     const router = useRouter();
+
+    useEffect(() => {
+      getWhichFeedTypeToDisplay()
+    }, [currentUser, userProfileInfo, FeedFilter, selectedTool])
+
+    function getWhichFeedTypeToDisplay(){
+      if(isCurrentUser && selectedTool == "Saved"){
+        setFeedFilter("Saved")
+      }else{
+        setFeedFilter(userProfileInfo.username)
+      }
+
+    }
 
   return (
     <>
@@ -22,10 +37,11 @@ const UserProfile = ({ userProfileInfo }) => {
 
         <LeftColumn>
 
-            <ProfileSection userProfileInfo={userProfileInfo} isCurrentUser={isCurrentUser}/>
+            <ProfileSection userProfileInfo={userProfileInfo} isCurrentUser={isCurrentUser}
+            selectedTool={selectedTool} setSelectedTool={setSelectedTool}/>
 
               <PostColumn>
-                <Feed />
+                <Feed FeedFilter={FeedFilter} />
               </PostColumn>
 
         </LeftColumn>   

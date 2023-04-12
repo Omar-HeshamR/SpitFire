@@ -8,10 +8,9 @@ import FollowersModal from '@/components/ProfileComponents/FollowersModal'
 import FollowingModal from '@/components/ProfileComponents/FollowingModal'
 import TestProfilePic from '../../public/defualt_profile_image.png'
 
-const ProfileSection = ({userProfileInfo, isCurrentUser}) => {
+const ProfileSection = ({userProfileInfo, isCurrentUser, selectedTool, setSelectedTool}) => {
 
     const { currentUser } = useStateContext()
-    const [ selectedTool, setSelectedTool ] = useState("My Posts")
     const [ showFollowersModal, setShowFollowersModal] = useState()
     const [ showFollowingModal, setShowFollowingModal] = useState()
     const [ followerCount, setFollowerCount ] = useState(userProfileInfo.followers.length - 1)
