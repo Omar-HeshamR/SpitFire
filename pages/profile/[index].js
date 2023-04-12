@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import styled from 'styled-components'
 import Navbar from '../../components/Navbar'
 import Feed from "../../components/Feed"
@@ -27,7 +27,6 @@ const UserProfile = ({ userProfileInfo }) => {
       }else{
         setFeedFilter(userProfileInfo.username)
       }
-
     }
 
   return (
@@ -40,13 +39,14 @@ const UserProfile = ({ userProfileInfo }) => {
             <ProfileSection userProfileInfo={userProfileInfo} isCurrentUser={isCurrentUser}
             selectedTool={selectedTool} setSelectedTool={setSelectedTool}/>
 
-              <PostColumn>
+              <PostColumn > 
                 <Feed FeedFilter={FeedFilter} />
               </PostColumn>
 
         </LeftColumn>   
 
-        <ProfileSidebar userProfileInfo={userProfileInfo}/>
+        <ProfileSidebar userProfileInfo={userProfileInfo} isCurrentUser={isCurrentUser}
+            selectedTool={selectedTool} setSelectedTool={setSelectedTool} />
         
     </Section>
     </>

@@ -42,7 +42,7 @@ const MainButton = styled.button`
   display: flex;
   width: 100%;
   height: 5vw;
-  background-color: white;
+  background-color: #FAFAFA;
   border: 0.25vw solid #5B618A;
   border-radius: 0.5vw;
   justify-content: center;

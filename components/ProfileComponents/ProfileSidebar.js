@@ -1,23 +1,30 @@
-import React, {useState} from 'react'
-import styled from 'styled-components'
-import { AiOutlinePlusCircle } from 'react-icons/ai';
-import Image from 'next/image';
+import React, {useEffect, useState, useRef} from 'react'
+import styled, { keyframes } from 'styled-components'
+import MiniProfileOnSidebar from './MiniProfileOnSidebar';
 import CreateButton from '../CreateButton';
 
-const ProfileSidebar = ({userProfileInfo}) => {
+const ProfileSidebar = ({userProfileInfo, isCurrentUser, selectedTool, setSelectedTool}) => {
 
-    const [ selectedTool, setSelectedTool ] = useState()
+    const [ Ylocation, setYlocation ] = useState(0)
 
-    function ToggleProfile(){
-        setSelectedTool("Profile")
-    }
-    function ToggleButton(){
-        setSelectedTool("Button")
-    }
+    useEffect(() => {
+      function handleScroll() {
+        setYlocation(window.scrollY)
+      }
+      window.addEventListener("scroll", handleScroll)
+      return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
   return (
     <RightHandSide>
-
+        <Container>
+        {Ylocation >= 100 && 
+        <>
+            <MiniProfileOnSidebar  userProfileInfo={userProfileInfo} isCurrentUser={isCurrentUser}
+            selectedTool={selectedTool} setSelectedTool={setSelectedTool} /> 
+        </>
+        }
+        
         <CreateButton />
 
             <StatsDiv>
@@ -47,19 +54,26 @@ const ProfileSidebar = ({userProfileInfo}) => {
                     </AccountDiv>
                 </AccountColumn>      
         </YouMightLikeBox>     */}
-
+        </Container>
     </RightHandSide>
   )
 }
 
 const RightHandSide = styled.div`
-left: 71vw;
-width: 26.5vw;
-position: fixed;
-height: 100%;
-flex-direction: column;
-padding-top: 2vw;
+    left: 71vw;
+    width: 29vw;
+    position: fixed;
+    height: 100%;
+    flex-direction: column;
+    padding-top: 2vw;
+    border-left: 0.2vw ridge gainsboro;
+    background-color: #FAFAFA;
 `
+const Container = styled.div`
+  margin-left: 1vw;
+  width: 86%;
+`
+
 const StatsDiv = styled.div`
 margin: 1vw 0;
 `

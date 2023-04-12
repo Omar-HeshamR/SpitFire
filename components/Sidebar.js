@@ -37,13 +37,13 @@ const Sidebar = () => {
 }
 
 const Section = styled.section`
-display: flex;
-width: 27.5vw;
-height: 50vw;
-// background-color: navajowhite;
-border-left: 0.2vw ridge gainsboro;
-position: fixed;
-left: 70vw;
+  display: flex;
+  width: 27.5vw;
+  height: 50vw;
+  background-color:  #FAFAFA;
+  border-left: 0.2vw ridge gainsboro;
+  position: fixed;
+  left: 70vw;
 `
 
 const Container = styled.div`
