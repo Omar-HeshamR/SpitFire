@@ -61,7 +61,7 @@ const Feed = ({ FeedFilter }) => {
     return userProfile.saved_posts.slice(1)
   }
 
-  // [CLASSIFIED] HIGHLY EXCLUSIVE AND SECERTIVE RECCOMENDATION ALGORITHMS - Estimated worth: $91,000,000,000
+  // [CLASSIFIED] HIGHLY EXCLUSIVE AND SECERTIVE RECCOMENDATION ALGORITHMS - Estimated worth: $91,800,236,150
 
    // RECCOMENDATION ALGORTHIM OF A SIGNED IN FEED
   function user_reccomendation_algorithm(obj) {
@@ -81,7 +81,7 @@ const Feed = ({ FeedFilter }) => {
 
 
   return (
-    <Section >
+    <Section onClick={() => console.log(localFeedPosts)}>
       <Container>
         <FeedHeader>
           <SearchBar>
@@ -93,14 +93,19 @@ const Feed = ({ FeedFilter }) => {
           </SearchBar>
         </FeedHeader>
 
-        {localFeedPosts ? <>
-          {localFeedPosts.filter((post) => post.topic.includes(searchValue)).map((post) => (
-           <PostObject key={post.id} PostObject={post}/>
-        ))}
-        </>: 
-        <>
-        loading...
-        </>
+        { localFeedPosts ? <>{localFeedPosts.length > 0 ? <>
+            {localFeedPosts.filter((post) => post.topic.includes(searchValue)).map((post) => (
+            <PostObject key={post.id} PostObject={post}/>
+          ))}
+          </>: 
+          <IdentifierText>
+            NO POSTS AVALIBLE
+          </IdentifierText>
+          }
+          </> :
+          <IdentifierText>
+            Loading...
+          </IdentifierText>
         }
 
       </Container>
@@ -187,6 +192,11 @@ img{
 
 `
 
+const IdentifierText = styled.div`
+  display: flex;
+  margin-top: 2vw;
+  font-size: 2vw;
+`
 
 
 export default Feed
