@@ -44,7 +44,7 @@ const Feed = ({ FeedFilter }) => {
 
   }
 
-  // Special Feeds Filtering methods
+  // Special Feeds Filtering methods [ SHOULD STILL BE SORTED BASED ON HOW RECENT - NOT DONE YET FOR BOTH ]
   function get_posts_of_a_user(obj){
     const arr = Object.values(obj);
     const final = []
