@@ -328,3 +328,55 @@ export async function removeDownVote(username, PostObject){
       }
 
 }
+
+// Saving Functionalities
+export async function savePost(username, PostObject){
+
+    const dbRef = ref(database, 'users/' + username );
+        const userSnapshot = await get(dbRef);
+        if (userSnapshot.exists()) {
+            const userObject = userSnapshot.val();
+
+            for(let i = 1; i < userObject.saved_posts.length; i++){
+                if(userObject.saved_posts[i] == PostObject.postId){
+                    console.log("Already saved Post")
+                    return ;
+                }
+            }
+
+            userObject.saved_posts.push(PostObject.postId);
+            update(dbRef, userObject);
+          }
+
+}
+
+export async function unSavePost(username, PostObject){
+    const dbRef = ref(database, 'users/' + username );
+    const userSnapshot = await get(dbRef);
+    if (userSnapshot.exists()) {
+        const userObject = userSnapshot.val();        
+        const exists = userObject.saved_posts.includes(PostObject.postId);
+        if(exists == false){
+            return; // it is not saved in the first place
+        }
+        userObject.saved_posts = userObject.saved_posts.filter(postId => postId !== PostObject.postId);
+        update(dbRef, userObject);
+      }
+}
+
+export async function checkIfPostIsSaved(username, PostObject){
+
+    const dbRef = ref(database, 'users/' + username );
+    const userSnapshot = await get(dbRef);
+    if (userSnapshot.exists()) {
+        const userObject = userSnapshot.val();
+
+        for(let i = 1; i < userObject.saved_posts.length; i++){
+            if(userObject.saved_posts[i] == PostObject.postId){
+                return true;
+            }
+        }     
+        return false
+      }
+
+}

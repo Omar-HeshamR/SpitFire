@@ -21,7 +21,7 @@ const Feed = ({ FeedFilter }) => {
     if(FeedFilter != undefined){
       if(FeedFilter == "Saved"){
         // get user's saved posts
-        const localPostsSorted = await get_current_user_Saved_feed()
+        const localPostsSorted = await get_current_user_Saved_feed(Posts)
         setLocalFeedPosts(localPostsSorted)
       }else{ 
         // we are showing a specifc user feed
@@ -56,9 +56,21 @@ const Feed = ({ FeedFilter }) => {
     return final
   }
 
-  async function get_current_user_Saved_feed(){
+  async function get_current_user_Saved_feed(obj){
     const userProfile = await getUserProfileInfo(currentUser.displayName)
-    return userProfile.saved_posts.slice(1)
+    const saved_posts = []
+    const Posts_Array = Object.values(obj);
+    console.log(Posts_Array)
+    const saved_posts_id_list = userProfile.saved_posts.slice(1);
+    for(let i = 0; i < saved_posts_id_list.length; i++ ){
+      for (let j = 0; j < Posts_Array.length; j++) {
+        if (Posts_Array[j].postId === saved_posts_id_list[i]) {
+        saved_posts.push(Posts_Array[j]);
+        break;
+        }
+        }
+    }
+    return saved_posts
   }
 
   // [CLASSIFIED] HIGHLY EXCLUSIVE AND SECERTIVE RECCOMENDATION ALGORITHMS - Estimated worth: $91,800,236,150

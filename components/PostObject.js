@@ -1,9 +1,9 @@
 import React, { useState , useEffect } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
-import BetsModal from "./BetsModal"
+import BetsModal from "./modals/BetsModal"
 import { useRouter } from 'next/router'
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { BsThreeDotsVertical, BsBookmarks, BsShare, BsBookmarksFill } from "react-icons/bs";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { BiDownvote, BiUpvote} from "react-icons/bi";
 import { ImArrowUp, ImArrowDown } from "react-icons/im"
@@ -11,7 +11,8 @@ import { MdOutlineHowToVote } from "react-icons/md";
 import { toast } from 'react-hot-toast'
 import { useStateContext } from '../context/StateContext';
 import CommentSlider from './sidebar/CommentSection'
-import { upVote, downVote, removeUpVote, removeDownVote, hasUpvotedAPost, hasDownVotedAPost } from '@/functionalities/userFunctions'
+import { upVote, downVote, removeUpVote, removeDownVote, hasUpvotedAPost, hasDownVotedAPost,
+  savePost, checkIfPostIsSaved, unSavePost } from '@/functionalities/userFunctions'
 import { getAudio, getDurations } from "../functionalities/storageInteractions"
 
 const PostObject = ({PostObject}) => {
@@ -28,25 +29,32 @@ const PostObject = ({PostObject}) => {
   const [ downVoteCounter, setDownVoteCounter ] = useState(PostObject.downvotes)
   const [ hasUpVotedAPostAlready, setHasUpVotedAPostAlready ] = useState()
   const [ hasDownVotedAPostAlready, setHasDownVotedAPostAlready ] = useState()
+  const [ isPostSaved, setIsPostSaved ] = useState(false)
 
   useEffect(() => {
     if(currentUser){
         const asyncfunc = async () =>{
+            // to get the status as soon as the user is logged in
             const status = await hasUpvotedAPost(currentUser.displayName, PostObject)
             setHasUpVotedAPostAlready(status)
             const status2 = await hasDownVotedAPost(currentUser.displayName, PostObject)
             setHasDownVotedAPostAlready(status2)
+            const status3 = await checkIfPostIsSaved(currentUser.displayName, PostObject)
+            setIsPostSaved(status3)
         }
         asyncfunc()
         setUpVoteCounter(PostObject.upvotes)
         setDownVoteCounter(PostObject.downvotes)
     }
     if(currentUser == undefined){
+      // if signed out, reset all the user identified actions of a post
+      setIsPostSaved(false)
       setHasUpVotedAPostAlready(false)
       setHasDownVotedAPostAlready(false)
     }
   }, [currentUser, PostObject])
 
+  // UPVOTING AND DOWNVOTEING FUNCTIONALITIES
   async function handleUpVote(){
     if(currentUser == undefined){
       toast.error("Log in to Interact !")
@@ -87,8 +95,26 @@ const PostObject = ({PostObject}) => {
     setHasDownVotedAPostAlready(false)
   }
   
-  // AUDIO AND VIDEO FUNCTIONALITIES
+  // POST SAVING FUNCTIONALITY
+  async function handleSavePost(){
+    if(currentUser == undefined){
+      toast.error("Log in to Interact !")
+      return;
+    }
+    await savePost(currentUser.displayName, PostObject)
+    setIsPostSaved(true)
+  }
 
+  async function handleUnsavePost(){
+    if(currentUser == undefined){
+      toast.error("Log in to Interact !")
+      return;
+    }
+    await unSavePost(currentUser.displayName, PostObject)
+    setIsPostSaved(false)
+  }
+
+  // AUDIO AND VIDEO FUNCTIONALITIES
   function playBase64Mpegs(mpegs) {
     const audioPlayer = document.getElementById('audio-player');
     let currentIndex = 0;
@@ -220,7 +246,10 @@ const PostObject = ({PostObject}) => {
             <VoteCount >{downVoteCounter}</VoteCount>
 
             <Comment onClick={() => setShowComments(true)}/>
-            <ThreeDots />
+
+            <Seprator />
+            <ShareIcon />
+            {isPostSaved ? <BookmarkFilledIcon onClick={handleUnsavePost}/> : <BookmarkIcon onClick={handleSavePost}/> }
 
           </BottomRight>
 
@@ -439,9 +468,50 @@ const Upvoted = styled(ImArrowUp)`
 `
 
 const VoteCount = styled.div`
-font-size: 1vw;
-margin-left: 0.25vw;
+  font-size: 1vw;
+  margin-left: 0.25vw;
 `
+
+const BookmarkIcon = styled(BsBookmarks)`
+  font-size: 1.25vw;
+  margin-left: 1vw;
+  margin-right: 0.5vw;
+  &:hover{
+    transform: scale(1.01);
+    color: #504A02;
+    cursor: pointer;
+  }
+`
+
+const BookmarkFilledIcon = styled(BsBookmarksFill)`
+  font-size: 1.25vw;
+  margin-left: 1vw;
+  margin-right: 0.5vw;
+  color: #504A02;
+  &:hover{
+    transform: scale(1.01);
+    color: #691A02;
+    cursor: pointer;
+  }
+`
+
+const ShareIcon = styled(BsShare)`
+  font-size: 1.25vw;
+  margin-left: 0.95vw;
+  &:hover{
+    transform: scale(1.01);
+    color: #024C69;
+    cursor: pointer;
+  }
+`
+
+const Seprator = styled.div`
+  height: 100%;
+  width: 0.1vw;
+  margin-left: 0.95vw;
+  background-color: gainsboro;
+`
+
 const VotingButton = styled.div`
 display: flex;
 background-color: #EBEBEB;

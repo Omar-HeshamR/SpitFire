@@ -2,11 +2,11 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { toast } from 'react-hot-toast';
 import { MdClose } from 'react-icons/md';
-import { useStateContext } from '../context/StateContext';
+import { useStateContext } from '../../context/StateContext';
 import { FaEthereum } from 'react-icons/fa';
 import { RiWallet3Line } from 'react-icons/ri';
 import Image from 'next/image';
-import SpitFireLogo from '../public/SpitFireLogo.png'
+import SpitFireLogo from '../../public/SpitFireLogo.png'
 
 const BetsModal = ({ showModal, setShowModal, PostObject }) => {
 
