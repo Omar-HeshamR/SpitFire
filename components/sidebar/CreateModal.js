@@ -44,6 +44,16 @@ const CreateModal = ({ showModal, setShowModal }) => {
   const modalRef = useRef();  
 
   async function createRapBattle(){
+
+    // CASE CHECKS:
+    if(rapper1 == "" || rapper2 == ""){
+      toast.error("Must Select Rappers !")
+      return;
+    }
+    if(topicRef.length > 500){
+      toast.error("Prompt is too long!")
+      return;
+    }
     
     try{
 
@@ -107,6 +117,7 @@ const CreateModal = ({ showModal, setShowModal }) => {
       setShowModal(false);
     }
   };
+
   const keyPress = useCallback(
     e => {
       if (e.key === 'Escape' && showModal) {
@@ -115,6 +126,7 @@ const CreateModal = ({ showModal, setShowModal }) => {
     },
     [setShowModal, showModal]
   ); 
+
   useEffect(
     () => {
       document.addEventListener('keydown', keyPress);
@@ -149,9 +161,9 @@ const CreateModal = ({ showModal, setShowModal }) => {
               onChange={handleTopicRefChange}
               />
 
-              <Row style={{ justifyContent: 'space-between', width: '90%'}} >
-                <EnableText>Enable voting pools: </EnableText>
-                <Checkbox type="checkbox" checked={enableBetting} onChange={handleEnableBetting}/>
+              <Row style={{ justifyContent: 'flex-end', width: '90%'}} >
+                <CharctarsText>{topicRef.length} / 500 Characters</CharctarsText>
+                {/* <Checkbox type="checkbox" checked={enableBetting} onChange={handleEnableBetting}/> */}
               </Row>
 
               {loading ? <>
@@ -296,6 +308,13 @@ const EnableText = styled.div`
   color: #0A0A0A;
   font-size: 1vw;
   font-weight: 600;
+`
+
+const CharctarsText = styled.div`
+  display: flex;
+  margin-top: 0.5vw;  
+  color: #0A0A0A;
+  font-size: 1vw;
 `
 
 const Checkbox = styled.input`
