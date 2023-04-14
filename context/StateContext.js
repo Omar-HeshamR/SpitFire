@@ -59,10 +59,10 @@ export const StateContext = ({ children }) => {
       toast.success(`Signed In !`)
       // console.log("STATE CONTEXT", profileInfo)
     })
-    .catch((error) => {
-      toast.error(`Invalid Credentials`)
-      console.log(error)
-    });
+    // DISABLED SO THAT TRY-CATCH IN HANDLE WORKS PROPERLY
+    // .catch((error) => {
+    //   console.log(error)
+    // });
   
   }
 

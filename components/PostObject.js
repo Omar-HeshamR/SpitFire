@@ -399,7 +399,7 @@ border-radius: 0.5vw;
   cursor: pointer;
   color: white;
   font-weight: 900;
-  background-color: #ABABAB;
+  background-color: grey;
 }
 `
 const BottomRight = styled.div`

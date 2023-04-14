@@ -5,6 +5,7 @@ import { useStateContext } from '../context/StateContext';
 import { useRouter } from 'next/router'
 import Image from 'next/image';
 import SpitFireLogo from '../public/SpitFireLogo.png'
+import { toast } from 'react-hot-toast';
 
 const Login = ({ showModal, setShowModal }) => {
 
@@ -19,6 +20,7 @@ const Login = ({ showModal, setShowModal }) => {
         await login(logInemailRef.current.value, logInpasswordRef.current.value);
         setShowModal(false)
     }catch(err){
+      toast.error(`Invalid Credentials`)
       console.log(err)
     }
   }
