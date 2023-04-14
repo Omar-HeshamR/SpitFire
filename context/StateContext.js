@@ -32,10 +32,11 @@ export const StateContext = ({ children }) => {
       userCreds = userCredential;
       WillLogIn = true;
     })
-    .catch((error) => {
-      console.log(error)
-      toast.error(`Account Creation Failed`)
-    });
+    // disabled so try=catch in handling works
+    // .catch((error) => {
+    //   console.log(error)
+    //   toast.error(`Account Creation Failed`)
+    // });
 
     await updateProfile(auth.currentUser, {displayName: username})
     .then(() => {

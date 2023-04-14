@@ -4,24 +4,63 @@ import { MdClose } from 'react-icons/md';
 import { useStateContext } from '../context/StateContext';
 import { useRouter } from 'next/router'
 import Image from 'next/image';
+import { checkUniqueUsername } from '@/functionalities/userFunctions';
 import SpitFireLogo from '../public/SpitFireLogo.png'
+import { toast } from 'react-hot-toast';
 
 const Signup = ({ showModal, setShowModal }) => {
 
   const { register, currentUser } = useStateContext();
+  const [username, setUsername] = useState('');
   const emailRef = useRef();
-  const usernameRef = useRef();
   const passwordRef = useRef()
   const nameRef = useRef()
   const modalRef = useRef();  
   const router = useRouter();
 
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value.toLowerCase());
+  };
+
   async function handleRegister(){
+    const nameRegex = /^[a-zA-Z]+ [a-zA-Z]+$/;
+    const emailRegex = /^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    if(nameRef.current.value == undefined || nameRegex.test(nameRef.current.value) == false || nameRef.current.value.length > 128){
+      toast.error(`Invalid full name`)
+      return;
+    }
+    if(emailRef.current == undefined || emailRegex.test(emailRef.current.value) == false || emailRef.current.value.length > 128){
+      toast.error(`Invalid email address`)
+      return;
+    }
+    if(passwordRef.current == undefined || passwordRef.current.value.length < 6 ){
+      toast.error(`Password should be at least 6 charctars`)
+      return;
+    }
+    if(passwordRef.current == undefined || passwordRef.current.value.length > 128){
+      toast.error(`Password cannot be more than 128 charctars`)
+      return;
+    }
+    if(username.length <= 2){
+      toast.error(`Username too short !`)
+      return;
+    }
+    if(username.length > 128 ){
+      toast.error(`Username too long !`)
+      return;
+    }
+    const isvalidUsername = await checkUniqueUsername(username)
+    if(isvalidUsername == false){
+      toast.error(`Username already taken !`)
+      return;
+    }
+
     try{
-        await register(nameRef.current.value, emailRef.current.value, passwordRef.current.value, usernameRef.current.value)
+        await register(nameRef.current.value, emailRef.current.value, passwordRef.current.value, username)
         setShowModal(false)
     }catch(err){
-        console.log(err)
+        // console.log(err)
+        toast.error(`Email Already in use !`)
     }
 }
 
@@ -60,12 +99,12 @@ const Signup = ({ showModal, setShowModal }) => {
               </MainTitle>
               <InputTitle> Enter Your Full Name:</InputTitle>
               <FieldInput type="fname" name="fname" ref={nameRef}/>
-              <InputTitle> Enter a username:</InputTitle>
-              <FieldInput type="text" name="username" ref={usernameRef}/>
               <InputTitle> Enter Email Address:</InputTitle>
               <FieldInput type="email" name="email" ref={emailRef}/>
               <InputTitle> Enter Password:</InputTitle>
               <FieldInput type={"password"} ref={passwordRef}/>
+              <InputTitle> Enter a username:</InputTitle>
+              <FieldInput type="text" name="username" value={username} onChange={handleUsernameChange} />
               <LogInButton onClick={handleRegister}>Sign Up</LogInButton>
             </ModalContent>
             <CloseModalButton

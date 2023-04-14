@@ -394,5 +394,15 @@ export async function commentOnPost(PostObject, comment){
         SnapshotPostObject.comments.push(comment)
         update(dbRef, SnapshotPostObject);
       }
+}
 
+// USERNAME CHECK
+
+export async function checkUniqueUsername(username){
+    const dbRef = ref(database, 'users/' + username );
+    const userSnapshot = await get(dbRef);
+    if (userSnapshot.exists()) {
+        return false
+      }
+      return true
 }
