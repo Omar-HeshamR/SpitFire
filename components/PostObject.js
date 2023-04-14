@@ -3,23 +3,21 @@ import styled from 'styled-components'
 import Image from 'next/image'
 import BetsModal from "./modals/BetsModal"
 import { useRouter } from 'next/router'
-import { BsThreeDotsVertical, BsBookmarks, BsShare, BsBookmarksFill } from "react-icons/bs";
+import { BsBookmarks, BsShare, BsBookmarksFill } from "react-icons/bs";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { BiDownvote, BiUpvote} from "react-icons/bi";
 import { ImArrowUp, ImArrowDown } from "react-icons/im"
 import { MdOutlineHowToVote } from "react-icons/md";
 import { toast } from 'react-hot-toast'
 import { useStateContext } from '../context/StateContext';
-import CommentSlider from './sidebar/CommentSection'
 import { upVote, downVote, removeUpVote, removeDownVote, hasUpvotedAPost, hasDownVotedAPost,
   savePost, checkIfPostIsSaved, unSavePost } from '@/functionalities/userFunctions'
 import { getAudio, getDurations } from "../functionalities/storageInteractions"
 
-const PostObject = ({PostObject}) => {
+const PostObject = ({PostObject, isPostPage}) => {
 
   const { currentUser, stopCurrentRap, setCurrentBeatAudio, setCurrentRapAudio } = useStateContext();
   const [ showBetsModal, setShowBetsModal ] = useState()
-  const [ showComments, setShowComments] = useState()
   const [ rapping, setRapping ] = useState(false)
   const [ toggle, setToggle ] = useState(true)
   const rotuer = useRouter()
@@ -95,7 +93,7 @@ const PostObject = ({PostObject}) => {
     setHasDownVotedAPostAlready(false)
   }
   
-  // POST SAVING FUNCTIONALITY
+  // POST SAVING and SHARING FUNCTIONALITY
   async function handleSavePost(){
     if(currentUser == undefined){
       toast.error("Log in to Interact !")
@@ -112,6 +110,22 @@ const PostObject = ({PostObject}) => {
     }
     await unSavePost(currentUser.displayName, PostObject)
     setIsPostSaved(false)
+  }
+
+  function handleShareButton(){
+    const link = `${window.location.origin}/posts/${PostObject.postId}`;
+    navigator.clipboard.writeText(link);
+    toast.success(`Copied Post Link!`, { 
+      style: {
+        background: 'aliceblue',
+        fontSize: '1.15vw',
+        color: '#006400',
+      }
+    });
+  }
+
+  function goToPostPage(){
+    rotuer.push(`/posts/${PostObject.postId}`)
   }
 
   // AUDIO AND VIDEO FUNCTIONALITIES
@@ -199,7 +213,8 @@ const PostObject = ({PostObject}) => {
 
   return (
     <>
-    <Section onClick={() => console.log(PostObject.postId)}>
+    <Section isPostPage={isPostPage} onClick={() => console.log(PostObject.postId)}>
+
         <Header>
           <RapperNameLeft>
             <Image src={PostObject.rapper1_image} alt={`${PostObject.rapper1_name}`} /> {PostObject.rapper1_name}
@@ -245,17 +260,16 @@ const PostObject = ({PostObject}) => {
             {hasDownVotedAPostAlready ? <Downvoted onClick={handleRemoveDownVote}/>: <Downvote onClick={handleDownVote}/> }
             <VoteCount >{downVoteCounter}</VoteCount>
 
-            <Comment onClick={() => setShowComments(true)}/>
+            {isPostPage == false && <Comment onClick={goToPostPage}/>}
 
             <Seprator />
-            <ShareIcon />
+            <ShareIcon onClick={handleShareButton}/>
             {isPostSaved ? <BookmarkFilledIcon onClick={handleUnsavePost}/> : <BookmarkIcon onClick={handleSavePost}/> }
 
           </BottomRight>
 
         </BottomBar>
 
-      {showComments && <CommentSlider showComments={showComments} setShowComments={setShowComments}/>}
       {showBetsModal && <BetsModal showModal={showBetsModal} setShowModal={setShowBetsModal} PostObject={PostObject}/>}
     </Section>
   </>
@@ -264,11 +278,13 @@ const PostObject = ({PostObject}) => {
 }
 
 const Section = styled.section`
-margin: 1.75vw 0;
+margin: ${props => props.isPostPage ? '0' : '1.75vw 0'};
+height: ${props => props.isPostPage && 'calc(100%)'};
+margin-bottom: ${props => props.isPostPage && '2vw'};
 width: 100%;
 border-radius: 0.5vw;
 border: 0.5vw outset #F8F8F8;
-box-shadow: 0px 0px 5px #5B618A;
+box-shadow: ${props => props.isPostPage ? '0' : '0px 0px 5px #5B618A'};
 &:hover{
   // border: 0.1vw dashed #F8F8F8;
   // box-shadow: 0.1vw 0.1vw 0.1vw gainsboro;
@@ -394,25 +410,7 @@ margin-right: 1vw;
 border-radius: 0.5vw;
 align-items: center;
 `
-const ThreeDots = styled(BsThreeDotsVertical)`
-  font-size: 1.5vw;
-  margin-left: 2vw;
-  margin-right: 0.5vw;
-  &:hover{
-    cursor: pointer;
-    transform: scale(1.15);
-    animation: spin 0.1s linear;
-  }
-  
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(180deg);
-    }
-  }
-`
+
 const Comment = styled(TfiCommentAlt)`
 font-size: 1.5vw;
 margin-left: 2vw;
@@ -499,7 +497,7 @@ const ShareIcon = styled(BsShare)`
   font-size: 1.25vw;
   margin-left: 0.95vw;
   &:hover{
-    transform: scale(1.01);
+    transform: scale(1.25);
     color: #024C69;
     cursor: pointer;
   }

@@ -68,16 +68,16 @@ const Navbar = () => {
 }
 
 const Section = styled.section`
-display: flex;
-height: 5vw;
-justify-content: center;
-align-items: center;
-box-shadow: 0vw 0.1vw 0.1vw gainsboro;
-position: sticky;
-top: 0;
-background-color: white;
-z-index: 1;
-background: linear-gradient(to bottom, #FFFFFF, #F8F8F8);
+  display: flex;
+  height: 5vw;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0vw 0.1vw 0.1vw gainsboro;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+  background: linear-gradient(to bottom, #FFFFFF, #F8F8F8);
 `
 const Container = styled.div`
 display: flex;

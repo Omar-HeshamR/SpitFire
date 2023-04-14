@@ -380,3 +380,19 @@ export async function checkIfPostIsSaved(username, PostObject){
       }
 
 }
+
+// Commenting Functionalities
+
+export async function commentOnPost(PostObject, comment){
+    const dbRef = ref(database, 'posts/' + PostObject.postId );
+    const postSnapshot = await get(dbRef);
+    if (postSnapshot.exists()) {
+        const SnapshotPostObject = postSnapshot.val();    
+        if (!SnapshotPostObject.comments) {
+            SnapshotPostObject.comments = [];
+          }    
+        SnapshotPostObject.comments.push(comment)
+        update(dbRef, SnapshotPostObject);
+      }
+
+}

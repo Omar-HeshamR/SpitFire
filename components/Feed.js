@@ -107,7 +107,7 @@ const Feed = ({ FeedFilter }) => {
 
         { localFeedPosts ? <>{localFeedPosts.length > 0 ? <>
             {localFeedPosts.filter((post) => post.topic.includes(searchValue)).map((post) => (
-            <PostObject key={post.id} PostObject={post}/>
+            <PostObject key={post.id} PostObject={post} isPostPage={false}/>
           ))}
           </>: 
           <IdentifierText>

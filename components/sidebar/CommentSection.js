@@ -103,26 +103,26 @@ const CartContainer = styled.div`
     z-index: 11;
 `
 const CommentContainer = styled.div`
-display: flex;
-// width: 100%;
-margin-top: 5vw;
-height: 21vw;
-overflow: scroll;
-// margin: auto auto;
-justify-content: top;
-align-items: center;
-// background-color: khaki;
-flex-direction: column;
+  display: flex;
+  // width: 100%;
+  margin-top: 5vw;
+  height: 21vw;
+  overflow: scroll;
+  // margin: auto auto;
+  justify-content: top;
+  align-items: center;
+  // background-color: khaki;
+  flex-direction: column;
 `
 const CommentDiv = styled.div`
-display: flex;
-width: 100%;
-// height: 10vw;
-// background-color: orange;   
-flex-direction: column;
-margin-bottom: 2vw;
-padding-bottom: 1vw;
-border-bottom: 0.1vw solid gainsboro;
+  display: flex;
+  width: 100%;
+  // height: 10vw;
+  // background-color: orange;   
+  flex-direction: column;
+  margin-bottom: 2vw;
+  padding-bottom: 1vw;
+  border-bottom: 0.1vw solid gainsboro;
 `
 const Poster = styled.div`
 display: flex;
