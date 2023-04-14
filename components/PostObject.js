@@ -210,6 +210,7 @@ const PostObject = ({PostObject, isPostPage}) => {
   }
 
   const truncateString = (str) => (str.length > 25 ? str.slice(0, 25) + "..." : str);
+  const truncatePrompt = (str) => (str.length > 200 ? str.slice(0, 200) + "..." : str);
 
   return (
     <>
@@ -226,7 +227,11 @@ const PostObject = ({PostObject, isPostPage}) => {
         </Header>
 
         <PromptContainer>
-          <PromptText>Prompt: </PromptText> {PostObject.topic ? PostObject.topic : "None"}
+          {isPostPage ? 
+          <>
+          <PromptText>Prompt: </PromptText> {PostObject.topic ? truncatePrompt(PostObject.topic) : "None"}
+          </>
+          : <><PromptText>Prompt: </PromptText> {PostObject.topic ? PostObject.topic : "None"}</>}
         </PromptContainer>
 
           <audio id="audio-player"></audio>
