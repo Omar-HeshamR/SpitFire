@@ -95,8 +95,8 @@ const PostPage = ({ PostObject }) => {
 
                 <Column>
                     <CommentSectionContainer>
-                        {currentComments ? currentComments.map((comment) => (
-                            <CommentObject comment={comment}/>
+                        {currentComments ? currentComments.map((comment, key) => (
+                            <CommentObject key={key} comment={comment}/>
                         )) : <NoCommentsContainer>
                             <div>
                                 No Comments Yet
