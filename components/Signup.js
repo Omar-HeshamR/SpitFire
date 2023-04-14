@@ -69,6 +69,7 @@ const Signup = ({ showModal, setShowModal }) => {
       setShowModal(false);
     }
   };
+  
   const keyPress = useCallback(
     e => {
       if (e.key === 'Escape' && showModal) {

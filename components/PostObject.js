@@ -214,7 +214,7 @@ const PostObject = ({PostObject, isPostPage}) => {
 
   return (
     <>
-    <Section isPostPage={isPostPage} onClick={() => console.log(PostObject.postId)}>
+    <Section isPostPage={isPostPage} >
 
         <Header>
           <RapperNameLeft>

@@ -79,7 +79,7 @@ const Feed = ({ FeedFilter }) => {
   function user_reccomendation_algorithm(obj) {
     const arr = Object.values(obj);
     arr.sort((a, b) => b.upvotes - a.upvotes);
-    console.log("FINAL ARRAY", arr)
+    // console.log("FINAL ARRAY", arr)
     return arr;
   } 
 
@@ -87,13 +87,13 @@ const Feed = ({ FeedFilter }) => {
   function no_user_reccomendation_algorithm(obj) {
     const arr = Object.values(obj);
     arr.sort((a, b) => b.upvotes - a.upvotes);
-    console.log("FINAL ARRAY", arr)
+    // console.log("FINAL ARRAY", arr)
     return arr;
   }
 
 
   return (
-    <Section onClick={() => console.log(localFeedPosts)}>
+    <Section >
       <Container>
         <FeedHeader>
           <SearchBar>
