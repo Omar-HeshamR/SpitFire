@@ -5,6 +5,7 @@ import SpitFireLogo from '../public/SpitFireLogo.png'
 import { useStateContext } from '../context/StateContext'
 import Login from './Login'
 import Signup from './Signup'
+import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/router'
 import { VscAccount } from "react-icons/vsc";
 import { CgFeed } from "react-icons/cg";
@@ -49,7 +50,7 @@ const Navbar = () => {
             <NameDisplay>@{truncateString(currentUser.displayName)}</NameDisplay> 
           </NameAndProfile>
           <FeedIcon onClick={goToFeed}/>
-          <SettingsIcon />
+          <SettingsIcon onClick={() => toast.error(`Coming soon`)}/>
           <LogOutIcon onClick={logOut}/>
         </ProfileItemsContainer>
         : 
