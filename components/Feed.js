@@ -32,7 +32,8 @@ const Feed = ({ FeedFilter }) => {
 
     // A signed in users' feed
     if(FeedFilter == undefined && currentUser){
-      const localPostsSorted = user_reccomendation_algorithm(Posts)
+      const userProfile = await getUserProfileInfo(currentUser.displayName)
+      const localPostsSorted = user_reccomendation_algorithm(Posts, userProfile)
       setLocalFeedPosts(localPostsSorted)
     }
 
@@ -76,21 +77,114 @@ const Feed = ({ FeedFilter }) => {
   // [CLASSIFIED] HIGHLY EXCLUSIVE AND SECERTIVE RECCOMENDATION ALGORITHMS - Estimated worth: $91,800,236,150
 
    // RECCOMENDATION ALGORTHIM OF A SIGNED IN FEED
-  function user_reccomendation_algorithm(obj) {
+  function user_reccomendation_algorithm(obj, userInfo) {
+    if(userInfo == undefined){
+      return no_user_reccomendation_algorithm(obj)
+    }
     const arr = Object.values(obj);
-    arr.sort((a, b) => b.upvotes - a.upvotes);
-    // console.log("FINAL ARRAY", arr)
-    return arr;
+    if (arr[0] == undefined) return;
+    const orgScoreValues = []
+    let mostRecent = arr[0].timeStamp
+    for(let i=0; i < arr.length; i++){
+      const likeDislikeRatio = getLikeDislikeRatio(arr[i])
+      const followFolloweeScore = determineFollowFolloweeScore(arr[i], userInfo)
+      const seenScore = determineSeenScore(arr[i], userInfo)
+      const timeScore = arr[i].timeStamp
+      if(arr[i].timeStamp > mostRecent){
+        mostRecent = arr[i].timeStamp
+      }
+      orgScoreValues.push({timeScore: timeScore, likeDislikeRatio: likeDislikeRatio, seenScore: seenScore, followFolloweeScore: followFolloweeScore})
+    }
+    const scoreValues = determineTimeScores(orgScoreValues, mostRecent)
+
+    const finalScores = computeTotalScore(scoreValues, true)
+    const sortedPosts = sortByTotalScore(arr, finalScores)
+
+    return sortedPosts;
   } 
 
   // RECCOMENDATION ALGORTHIM OF NON-SIGNED IN FEED
   function no_user_reccomendation_algorithm(obj) {
     const arr = Object.values(obj);
-    arr.sort((a, b) => b.upvotes - a.upvotes);
-    // console.log("FINAL ARRAY", arr)
-    return arr;
+    if (arr[0] == undefined) return;
+    const orgScoreValues = []
+    let mostRecent = arr[0].timeStamp
+    for(let i=0; i < arr.length; i++){
+      const likeDislikeRatio = getLikeDislikeRatio(arr[i])
+      const timeScore = arr[i].timeStamp
+      if(arr[i].timeStamp > mostRecent){
+        mostRecent = arr[i].timeStamp
+      }
+      orgScoreValues.push({timeScore: timeScore, likeDislikeRatio: likeDislikeRatio})
+    }
+    const scoreValues = determineTimeScores(orgScoreValues, mostRecent)
+    const finalScores = computeTotalScore(scoreValues, false)
+    const sortedPosts = sortByTotalScore(arr, finalScores)
+    return sortedPosts;
   }
 
+  function sortByTotalScore(arr, scoreValues){
+    const tuples = arr.map((value, index) => [value, scoreValues[index].totalScore]);
+    tuples.sort((a, b) => b[1] - a[1]);
+    return tuples.map((tuple) => tuple[0]);
+  }
+
+  function computeTotalScore(scoreValues, userStatus){
+    const likeDislikeWeight = 1;
+    const timeWeight = 1;
+    const seenAlreadyWeight = 1;
+    const followFolloweeWeight = 1;
+    
+    if(userStatus){
+      for(let i=0; i<scoreValues.length; i++){
+        const totalScore = scoreValues[i].timeScore * timeWeight + scoreValues[i].likeDislikeRatio * 
+          likeDislikeWeight + scoreValues[i].followFolloweeScore * followFolloweeWeight + scoreValues[i].seenScore * seenAlreadyWeight;
+          scoreValues[i].totalScore = totalScore;
+      } 
+      return scoreValues
+    }else{
+      for(let i=0; i<scoreValues.length; i++){
+        const totalScore = scoreValues[i].timeScore * timeWeight 
+        + scoreValues[i].likeDislikeRatio * likeDislikeWeight;
+        scoreValues[i].totalScore = totalScore;
+      }
+      return scoreValues
+    }
+  }
+
+  function determineTimeScores(scoreValues, mostRecent){
+    for(let i=0; i<scoreValues.length; i++){
+      const newScore = 10 * (1 - scoreValues[i].timeScore / mostRecent)
+      scoreValues[i].timeScore = newScore
+    }
+    return scoreValues
+  }
+
+  function getLikeDislikeRatio(post){
+    return (post.upvotes + 1) / (post.downvotes + 1)
+  }
+
+  function determineFollowFolloweeScore(post, userInfo){
+    if(userInfo.following.includes(post.creator)){
+      return 4
+    }else if(userInfo.followers.includes(post.creator)){
+      return 2
+    }else{
+      return 1
+    }
+  }
+
+  function determineSeenScore(post, userInfo){
+    let visibleScore = 5
+    if(userInfo.down_voted_posts.includes(post.postId)){
+      visibleScore -= 1
+    } else if(userInfo.up_voted_posts.includes(post.postId)){
+      visibleScore -=2
+    } else if(userInfo.saved_posts.includes(post.postId)){
+      visibleScore -=3
+    }
+    return visibleScore
+  }
 
   return (
     <Section >
