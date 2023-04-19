@@ -8,7 +8,7 @@ export async function createRap(rapper1, rapper2, topics){
 
   const openai = new OpenAIApi(configuration);
 
-  const prompt = `Make a unique rap battle between ${rapper1} and ${rapper2} that considers each's personal info. Each of the 3 verses should have 4 lines. End each line with a period, and don't include too many commas. Align the topics of the rap battles with this information: ${topics}`
+  const prompt = `Make a unique rap battle between ${rapper1} and ${rapper2} that considers each's personal info. Each of the 6 verses should have 4 lines. End each line with a period, and don't include too many commas. Align the topics of the rap battles with this information: ${topics}`
 
   const completion = await openai.createChatCompletion({
       model: "gpt-4",
