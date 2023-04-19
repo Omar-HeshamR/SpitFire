@@ -5,16 +5,24 @@ import { database } from "../library/firebase"
 
 export function createUserObject(_email, _username, _full_name){
     const userObject = {
+
+        // Acount Identifiers
         email: `${_email}`,
         username: `${_username}`,
         full_name: `${_full_name}`,
         profile_image: "",
+
+        /* The premium timestamp will determine for how long the user will have his/her premium subscribtion */
+        premium_time_stamp: 0,
+
+        // Account Logistics
         following: [""],
         followers: [""],
         saved_posts: [""],
         up_voted_posts: [""],
         down_voted_posts: [""],
-        // stats
+
+        // Account Stats
         top_posted_rapper: "None",
         post_numbers: 0,
         total_upvotes: 0,
@@ -22,6 +30,41 @@ export function createUserObject(_email, _username, _full_name){
     }
     return userObject;
 }
+
+// Premium Account Functionalities
+export async function upgradeUserToPremium(username){
+    const dbRef = ref(database, 'users/' + username );
+    const userSnapshot = await get(dbRef);
+
+    if (userSnapshot.exists()) {
+
+        const userObject = userSnapshot.val();
+
+        let currentTimeInSeconds = Math.floor(Date.now() / 1000);
+        let OneMonthInSeconeds = 2629746;
+        userObject.premium_time_stamp = currentTimeInSeconds + OneMonthInSeconeds;
+
+        update(dbRef, userObject);
+
+      }
+}
+
+export async function checkIfUserIsPremium(username){
+    const dbRef = ref(database, 'users/' + username );
+    const userSnapshot = await get(dbRef);
+
+    if (userSnapshot.exists()) {
+
+        const userObject = userSnapshot.val();
+        let currentTimeInSeconds = Math.floor(Date.now() / 1000);
+            if(userObject.premium_time_stamp > currentTimeInSeconds){
+                return true
+            }
+        }
+        
+    return false;
+}
+
 
 export async function getUserProfileInfo(username){
     const dbRef = ref(database);
@@ -406,3 +449,26 @@ export async function checkUniqueUsername(username){
       }
       return true
 }
+
+// TESTING FUNCTINOALITIES --> NOT USED IN PROGRAM
+
+// let currentTimeInSeconds = Math.floor(Date.now() / 1000);
+// let OneMonthInSeconeds = 2629746;
+// console.log(currentTimeInSeconds);
+
+// const currentDate = new Date();
+// const day = currentDate.getDate();
+// const month = currentDate.getMonth() + 1;
+// const year = currentDate.getFullYear();
+// const formattedDate = `${day}/${month}/${year}`;
+// console.log(formattedDate);
+
+// console.log( formatDateFromSeconds(currentTimeInSeconds + OneMonthInSeconeds) )
+
+// function formatDateFromSeconds(seconds) {
+//   const date = new Date(seconds * 1000); // convert seconds to milliseconds
+//   const day = date.getDate();
+//   const month = date.getMonth() + 1; // add 1 since month is zero-indexed
+//   const year = date.getFullYear();
+//   return `${day}/${month}/${year}`;
+// }

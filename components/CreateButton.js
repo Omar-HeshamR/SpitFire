@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { checkIfUserIsPremium, getUserProfileInfo } from '@/functionalities/userFunctions';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { useStateContext } from '../context/StateContext';
 import CreateModal from "./sidebar/CreateModal"
 
 const CreateButton = () => {
 
+
+    const [ userAllowedToPost, setUserAllowedToPost ] = useState(undefined)
     const { currentUser } = useStateContext();
 
     //LOG IN
@@ -14,13 +17,53 @@ const CreateButton = () => {
       setShowCreateModal(prev => !prev)
     }
 
+    useEffect(() =>{
+
+      if(currentUser && userAllowedToPost == undefined){
+
+        const asyncfunc = async () =>{
+            const UserObject = await getUserProfileInfo(currentUser.displayName);
+            let isPremium = false;
+            let currentTimeInSeconds = Math.floor(Date.now() / 1000);
+            // console.log(UserObject)
+            if(UserObject != undefined){
+              if( UserObject.premium_time_stamp > currentTimeInSeconds ){
+                isPremium = true;
+                setUserAllowedToPost(true)
+              }
+              if(isPremium == false && UserObject.post_numbers > 2){
+                setUserAllowedToPost(false)
+              }
+              if(isPremium == false && UserObject.post_numbers < 2){
+                setUserAllowedToPost(true)
+              }
+          }
+        }
+        asyncfunc()
+
+      }
+
+    }, [currentUser])
+
 
   return (
     <> 
         { currentUser ? // if the user is logged
-            <MainButton onClick={openCreateModal}>
-            <StyledAiOutlinePlusCircle/> <CreateText>Create</CreateText>
-            </MainButton>
+        <>
+          { userAllowedToPost ? // user is premium or still didnt post twice
+              <MainButton onClick={openCreateModal}>
+              <StyledAiOutlinePlusCircle/> <CreateText>Create</CreateText>
+              </MainButton>
+            :
+            <LockedCreateButton >
+            <Row>
+            <StyledAiOutlinePlusCircle/><CreateText>Create</CreateText>
+            </Row>
+            <MustLogInText>2 free post limit achieved. Upgrade to post more...</MustLogInText>
+            </LockedCreateButton>
+          }
+        </>
+
     : // if the user is not logged
         <LockedCreateButton >
             <Row>
