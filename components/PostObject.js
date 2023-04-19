@@ -12,7 +12,7 @@ import { toast } from 'react-hot-toast'
 import { useStateContext } from '../context/StateContext';
 import { upVote, downVote, removeUpVote, removeDownVote, hasUpvotedAPost, hasDownVotedAPost,
   savePost, checkIfPostIsSaved, unSavePost } from '@/functionalities/userFunctions'
-import { getAudio, getDurations } from "../functionalities/storageInteractions"
+import { getAudio, getDurations, getRandomSong} from "../functionalities/storageInteractions"
 
 const PostObject = ({PostObject, isPostPage}) => {
 
@@ -178,7 +178,7 @@ const PostObject = ({PostObject, isPostPage}) => {
       console.log('no durations found')
     }
     const audio = new Audio(URL_to_be_played);
-    const beatURL = await getAudio('music1.mp3')
+    const beatURL = await getAudio(`beats/beat${getBeatNumber()}.mp3`)
     const beat = new Audio(beatURL)
     beat.volume = 0.15
     setCurrentBeatAudio(beat)
@@ -192,6 +192,14 @@ const PostObject = ({PostObject, isPostPage}) => {
     audio.addEventListener('ended', () => {
       beat.pause()
     });
+  }
+
+  function getBeatNumber(){
+    if(PostObject.beat == undefined){
+      return 0;
+    }else{
+      return PostObject.beat;
+    }
   }
   
   function toggleRap(durations) {

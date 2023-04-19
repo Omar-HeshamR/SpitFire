@@ -10,6 +10,7 @@ import RapperDropDown from "../../utilities/rapperDropDown"
 import {getRapperImage} from '@/utilities/getRapperImage';
 import { buildRapBattle } from "@/functionalities/buildRapVideo"
 import {useRouter} from 'next/router';
+import { selectRandomBeat } from '@/functionalities/storageInteractions';
 
 const crypto = require('crypto');
 
@@ -67,6 +68,7 @@ const CreateModal = ({ showModal, setShowModal }) => {
       error: 'Failed to Create Battle',
       duration: 6000,
     });
+    const beat = await selectRandomBeat()
     const PostObject = {
       postId: postID,
       creator: currentUser.displayName,
@@ -83,6 +85,7 @@ const CreateModal = ({ showModal, setShowModal }) => {
       downvotes: 0,
       comments: [],
       timeStamp: Math.floor(Date.now() / 1000),
+      beat: beat
     }
 
     createPost(postID, PostObject)

@@ -1,5 +1,5 @@
 import { storage } from "../library/firebase"
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL, list } from "firebase/storage";
 
 export async function uploadAudioToFirebaseStorage(postID, audioBase64) {
     const audio_blobs = audioBase64.map(base64ToBlob);
@@ -72,6 +72,20 @@ export async function getAudio(filename){
   // console.log(blob_url)
   return blob_url;
   }
+
+export async function selectRandomBeat(){
+  const listRef = ref(storage, 'beats/');
+  const beats = await list(listRef, {maxResults: 100})
+  
+  // const blob_url = await getDownloadURL(fileRef)
+  // .then((url) => {
+  //   return url
+  // })
+  // .catch((error) => {
+  // });
+
+  return Math.floor(Math.random() * beats.items.length);
+}
 
   export async function getDurations(filename){
 
