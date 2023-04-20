@@ -12,7 +12,7 @@ import { toast } from 'react-hot-toast'
 import { useStateContext } from '../context/StateContext';
 import { upVote, downVote, removeUpVote, removeDownVote, hasUpvotedAPost, hasDownVotedAPost,
   savePost, checkIfPostIsSaved, unSavePost } from '@/functionalities/userFunctions'
-import { getAudio, getDurations, getRandomSong} from "../functionalities/storageInteractions"
+import { getAudio, getDurations } from "../functionalities/storageInteractions"
 
 const PostObject = ({PostObject, isPostPage}) => {
 
@@ -169,7 +169,7 @@ const PostObject = ({PostObject, isPostPage}) => {
   }
 
   async function playAudio(filename){
-    stopCurrentRap()
+    setRapping(true)
     const URL_to_be_played = await getAudio(filename)
     let durations = null
     try {
@@ -181,17 +181,20 @@ const PostObject = ({PostObject, isPostPage}) => {
     const beatURL = await getAudio(`beats/beat${getBeatNumber()}.mp3`)
     const beat = new Audio(beatURL)
     beat.volume = 0.15
+    stopCurrentRap()
     setCurrentBeatAudio(beat)
     setCurrentRapAudio(audio)
-    if(durations != null){
-      setRapping(true)
-      toggleRap(durations)
-    }
+    toggleRap(durations)
     audio.play();
     beat.play();
     audio.addEventListener('ended', () => {
       beat.pause()
     });
+  }
+
+  async function pauseAudio(){
+    setRapping(false)
+    stopCurrentRap()
   }
 
   function getBeatNumber(){
@@ -206,6 +209,9 @@ const PostObject = ({PostObject, isPostPage}) => {
     let index = 0;
     setToggle(false);
     const toggleFunction = () => {
+      if(!rapping){
+        return
+      }
       setToggle(toggle => !toggle);
       index++;
       if (index < durations.length) {
@@ -261,7 +267,7 @@ const PostObject = ({PostObject, isPostPage}) => {
         <BottomBar>
           <BottomLeft onClick={() => rotuer.push(`/profile/${PostObject.creator}`)}>Creator: @{truncateString(PostObject.creator)}</BottomLeft>
 
-          {rapping ? <RappingText>Rapping...</RappingText> 
+          {rapping ? <PauseButton onClick={() => pauseAudio()}>Stop</PauseButton> 
           : <PlayButton onClick={() => playAudio(PostObject.audio_link)}>Play</PlayButton>}
           
           {/* <VotingButton onClick={() => setShowBetsModal(true)}><VoteIcon/></VotingButton> */}
@@ -565,6 +571,26 @@ const PlayButton = styled.button`
     box-shadow: none;
   }
 `
+
+const PauseButton = styled.button`
+  height: 2vw;
+  width: 15vw;
+  background-color: #A9A9A9;
+  border: none;
+  border-radius: 0.5vw;
+  color: white;
+  font-weight: 600;
+  border-radius: 0.5vw;
+  // margin-left: 12vw;
+  opacity: 0.9;
+  box-shadow: 0.1vw 0.1vw 0.5vw gainsboro;
+  &:hover{
+    cursor: pointer;
+    opacity: 1;
+    box-shadow: none;
+  }
+`
+
 
 const RappingText = styled.div`
   font-size: 1.5vw;

@@ -119,8 +119,12 @@ export const StateContext = ({ children }) => {
   // AUDIO FUNCTIONS
   function stopCurrentRap(){
     if(currentRapAudio != null && currentBeatAudio != null){
-      currentRapAudio.pause()
-      currentBeatAudio.pause()
+      currentRapAudio.pause();
+      currentRapAudio.src = '';
+      currentRapAudio.currentTime = 0;
+      currentBeatAudio.pause();
+      currentBeatAudio.src = '';
+      currentBeatAudio.currentTime = 0;
     }
   }
   
@@ -144,7 +148,7 @@ return(
       stopCurrentRap,
       setCurrentBeatAudio,
       setCurrentRapAudio
-
+      
     }}
     >
       {children}
