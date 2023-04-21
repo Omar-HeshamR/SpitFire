@@ -28,7 +28,13 @@ function MyApp({ Component, pageProps, ...appProps }) {
     <>
 
         <Head>
+          
           <title>Spit Fire</title>
+
+          {/* // Google ads hehehehhe */}
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5441230888394514"
+           crossorigin="anonymous"></script>
+
         </Head>
 
         <GlobalStyle />

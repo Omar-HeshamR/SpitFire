@@ -8,7 +8,7 @@ import CreateModal from "./sidebar/CreateModal"
 const CreateButton = () => {
 
 
-    const [ userAllowedToPost, setUserAllowedToPost ] = useState(undefined)
+    const [ userAllowedToPost, setUserAllowedToPost ] = useState(true)
     const { currentUser } = useStateContext();
 
     //LOG IN
@@ -17,33 +17,33 @@ const CreateButton = () => {
       setShowCreateModal(prev => !prev)
     }
 
-    useEffect(() =>{
+    // useEffect(() =>{
 
-      if(currentUser && userAllowedToPost == undefined){
+    //   if(currentUser && userAllowedToPost == undefined){
 
-        const asyncfunc = async () =>{
-            const UserObject = await getUserProfileInfo(currentUser.displayName);
-            let isPremium = false;
-            let currentTimeInSeconds = Math.floor(Date.now() / 1000);
-            // console.log(UserObject)
-            if(UserObject != undefined){
-              if( UserObject.premium_time_stamp > currentTimeInSeconds ){
-                isPremium = true;
-                setUserAllowedToPost(true)
-              }
-              if(isPremium == false && UserObject.post_numbers > 2){
-                setUserAllowedToPost(false)
-              }
-              if(isPremium == false && UserObject.post_numbers < 2){
-                setUserAllowedToPost(true)
-              }
-          }
-        }
-        asyncfunc()
+    //     const asyncfunc = async () =>{
+    //         const UserObject = await getUserProfileInfo(currentUser.displayName);
+    //         let isPremium = false;
+    //         let currentTimeInSeconds = Math.floor(Date.now() / 1000);
+    //         // console.log(UserObject)
+    //         if(UserObject != undefined){
+    //           if( UserObject.premium_time_stamp > currentTimeInSeconds ){
+    //             isPremium = true;
+    //             setUserAllowedToPost(true)
+    //           }
+    //           if(isPremium == false && UserObject.post_numbers > 2){
+    //             setUserAllowedToPost(false)
+    //           }
+    //           if(isPremium == false && UserObject.post_numbers < 2){
+    //             setUserAllowedToPost(true)
+    //           }
+    //       }
+    //     }
+    //     asyncfunc()
 
-      }
+    //   }
 
-    }, [currentUser])
+    // }, [currentUser])
 
 
   return (

@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
 import SpitFireLogo from '../public/SpitFireLogo.png'
 import { useStateContext } from '../context/StateContext'
 import Login from './Login'
 import Signup from './Signup'
+import UpgradeModal from './modals/UpgradeModal'
+import { checkIfUserIsPremium } from '@/functionalities/userFunctions'
+import { MdWorkspacePremium } from "react-icons/md"
+import { GiUpgrade } from "react-icons/gi"
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/router'
 import { VscAccount } from "react-icons/vsc";
@@ -13,7 +17,8 @@ import { SlSettings, SlLogout } from "react-icons/sl";
 
 const Navbar = () => {
 
-  const { currentUser, setCurrentUser, userProfileInfo, logOut } = useStateContext();
+  const { currentUser, logOut } = useStateContext();
+  const [ isPremium, setIsPremium ] = useState()
   const router = useRouter()
 
   //LOG IN
@@ -27,6 +32,25 @@ const Navbar = () => {
   const openSignUpModal = () => {
     setShowSignUpModal(prev => !prev)
   }
+
+  // Show Upgrade Modal
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const openUpgradeModal = () => {
+    setShowUpgradeModal(prev => !prev)
+  } 
+
+  // Check if user is premium
+  useEffect(() => {
+    if(currentUser){
+        const asyncfunc = async () =>{
+            // to get the status as soon as the user is logged in
+            const response = await checkIfUserIsPremium(currentUser.displayName)
+            setIsPremium(response)
+        }
+        asyncfunc()
+    }
+
+  }, [currentUser])
 
   // Routing
   function goToFeed(){
@@ -45,6 +69,7 @@ const Navbar = () => {
 
         {currentUser ? 
         <ProfileItemsContainer>
+          {/* { isPremium ? <PremiumIcon /> : <UpgradeIcon onClick={openUpgradeModal}/> } */}
           <NameAndProfile onClick={() => router.push(`/profile/${currentUser.displayName}`)}>
             <ProfileIcon />
             <NameDisplay>@{truncateString(currentUser.displayName)}</NameDisplay> 
@@ -63,6 +88,7 @@ const Navbar = () => {
 
       <Login showModal={showLogInModal} setShowModal={setShowLogInModal}/>
       <Signup showModal={showSignUpModal} setShowModal={setShowSignUpModal}/>
+      <UpgradeModal showModal={showUpgradeModal} setShowModal={setShowUpgradeModal}/>
 
     </Section>
   )
@@ -179,6 +205,26 @@ const NameDisplay = styled.div`
 const ProfileIcon = styled(VscAccount)`
   margin-right: 0.75vw;
   font-size: 2vw;
+`
+
+const UpgradeIcon = styled(GiUpgrade)`
+  margin-right: 1.75vw;
+  font-size: 2vw;
+  cursor: pointer;
+  color: #5B618A;
+  &:hover{
+    color: #FE5F55;
+  }
+`
+
+const PremiumIcon = styled(MdWorkspacePremium)`
+  margin-right: 0.5vw;
+  font-size: 2vw;
+  color: #FE5F55;
+  opacity: 0.75;
+  &:hover{
+    opacity: 1;
+  }
 `
 
 const SettingsIcon = styled(SlSettings)`
