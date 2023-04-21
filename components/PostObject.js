@@ -19,7 +19,7 @@ const PostObject = ({PostObject, isPostPage}) => {
   const { currentUser, stopCurrentRap, setCurrentBeatAudio, setCurrentRapAudio } = useStateContext();
   const [ showBetsModal, setShowBetsModal ] = useState()
   const [ rapping, setRapping ] = useState(false)
-  const [ toggle, setToggle ] = useState(true)
+  const [ toggle, setToggle ] = useState(null)
   const rotuer = useRouter()
 
   // down and up vote postings functionalitites
@@ -209,15 +209,14 @@ const PostObject = ({PostObject, isPostPage}) => {
     let index = 0;
     setToggle(false);
     const toggleFunction = () => {
-      if(!rapping){
-        return
-      }
-      setToggle(toggle => !toggle);
-      index++;
-      if (index < durations.length) {
-        setTimeout(toggleFunction, durations[index]);
-      }else{
-        setRapping(false)
+      if (!rapping) { // added condition to check if rapping is false
+        setToggle(toggle => !toggle);
+        index++;
+        if (index < durations.length) {
+          setTimeout(toggleFunction, durations[index]);
+        } else {
+          setRapping(false);
+        }
       }
     };
     setTimeout(toggleFunction, durations[index]);
