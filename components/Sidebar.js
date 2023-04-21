@@ -23,7 +23,7 @@ const Sidebar = () => {
         </ButtonContainer>
 
         <LatestNews />
-        {currentUser && <YourLiveVotePools /> }
+        {/* {currentUser && <YourLiveVotePools /> } */}
 
         <CreateModal showModal={showCreateModal} setShowModal={setShowCreateModal} />
 

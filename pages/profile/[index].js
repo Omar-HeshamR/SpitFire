@@ -11,12 +11,16 @@ import ProfileSidebar from '../../components/ProfileComponents/ProfileSidebar'
 
 const UserProfile = ({ userProfileInfo }) => {
 
-    const { currentUser, Posts } = useStateContext();
+    const { currentUser, Posts, getPosts } = useStateContext();
     const isCurrentUser = Boolean(currentUser && (currentUser.displayName == userProfileInfo.username) );
     const [ FeedFilter, setFeedFilter ] = useState(undefined)
     const [ selectedTool, setSelectedTool ] = useState("My Posts")
     const router = useRouter();
 
+    useEffect(() => {
+      getPosts()
+    },[]);
+    
     useEffect(() => {
       getWhichFeedTypeToDisplay()
     }, [currentUser, userProfileInfo, FeedFilter, selectedTool])
