@@ -1,4 +1,4 @@
-<img width="960" alt="Profile " src="https://github.com/Omar-HeshamR/SpitFire/assets/106610412/9ffc1c12-f132-4f8f-9053-5e0f38da9d72">## Spit Fire
+## SpitFire
 
 Rap battle-based social media
 
