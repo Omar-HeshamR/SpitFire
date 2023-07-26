@@ -1,6 +1,17 @@
+<img width="960" alt="Profile " src="https://github.com/Omar-HeshamR/SpitFire/assets/106610412/9328b437-dceb-44d6-8a02-77d9d15e1dd9">
+![Uploading Post.png…]()
 ## Spit Fire
 
 Rap battle-based social media
+
+## Video Demo Link
+https://drive.google.com/file/d/1kUrwjqG8MmXdljeB9AAHqtB4A0qWfbXM/view?usp=sharing
+
+## Screenshots 
+
+![Uploading Feed.png…]()
+![Uploading Create.png…]()
+
 
 ## Inspiration
 
