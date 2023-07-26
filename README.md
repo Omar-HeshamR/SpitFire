@@ -7,16 +7,16 @@ https://drive.google.com/file/d/1kUrwjqG8MmXdljeB9AAHqtB4A0qWfbXM/view?usp=shari
 
 ## Screenshots 
 
-Feed:
+# Feed:
 <img width="952" alt="Feed" src="https://github.com/Omar-HeshamR/SpitFire/assets/106610412/43d7898f-6e2f-4f3b-857e-d7d88c3bfefe">
 
-Post:
+# Post:
 <img width="959" alt="Post" src="https://github.com/Omar-HeshamR/SpitFire/assets/106610412/f94b2bed-0a27-4a90-850e-ff8f311c19d0">
 
-Profile:
+# Profile:
 <img width="960" alt="Profile " src="https://github.com/Omar-HeshamR/SpitFire/assets/106610412/85da8246-2c71-496f-9344-40d15ca38aaf">
 
-Create:
+# Create:
 <img width="960" alt="Create" src="https://github.com/Omar-HeshamR/SpitFire/assets/106610412/c60f69d8-417e-4c9a-b1e8-adc87a064be1">
 
 ## Inspiration
