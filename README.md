@@ -1,6 +1,4 @@
-<img width="960" alt="Profile " src="https://github.com/Omar-HeshamR/SpitFire/assets/106610412/9328b437-dceb-44d6-8a02-77d9d15e1dd9">
-![Uploading Post.png…]()
-## Spit Fire
+<img width="960" alt="Profile " src="https://github.com/Omar-HeshamR/SpitFire/assets/106610412/9ffc1c12-f132-4f8f-9053-5e0f38da9d72">## Spit Fire
 
 Rap battle-based social media
 
@@ -9,9 +7,10 @@ https://drive.google.com/file/d/1kUrwjqG8MmXdljeB9AAHqtB4A0qWfbXM/view?usp=shari
 
 ## Screenshots 
 
-![Uploading Feed.png…]()
-![Uploading Create.png…]()
-
+<img width="952" alt="Feed" src="https://github.com/Omar-HeshamR/SpitFire/assets/106610412/43d7898f-6e2f-4f3b-857e-d7d88c3bfefe">
+<img width="959" alt="Post" src="https://github.com/Omar-HeshamR/SpitFire/assets/106610412/f94b2bed-0a27-4a90-850e-ff8f311c19d0">
+<img width="960" alt="Profile " src="https://github.com/Omar-HeshamR/SpitFire/assets/106610412/85da8246-2c71-496f-9344-40d15ca38aaf">
+<img width="960" alt="Create" src="https://github.com/Omar-HeshamR/SpitFire/assets/106610412/c60f69d8-417e-4c9a-b1e8-adc87a064be1">
 
 ## Inspiration
 
